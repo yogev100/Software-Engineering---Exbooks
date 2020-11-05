@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/register_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4E4E4E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText4"
+            android:layout_width="290dp"
+            android:layout_height="37dp"
+            android:background="#696969"
+            android:hint=" שם משתמש "
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="341dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText7"
+            android:layout_width="290dp"
+            android:layout_height="37dp"
+            android:background="#696969"
+            android:hint=" עיר"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="486dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="102dp"
+            android:layout_height="40dp"
+            android:text="הרשמה"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="154dp"
+            tools:layout_editor_absoluteY="211dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="290dp"
+            android:layout_height="43dp"
+            android:text="הירשם"
+            android:textSize="18sp"
+            app:backgroundTint="#E9967A"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="536dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText6"
+            android:layout_width="290dp"
+            android:layout_height="37dp"
+            android:background="#696969"
+            android:hint=" מייל"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="438dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText"
+            android:layout_width="290dp"
+            android:layout_height="37dp"
+            android:background="#696969"
+            android:hint=" שם מלא "
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="293dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText5"
+            android:layout_width="290dp"
+            android:layout_height="37dp"
+            android:background="#696969"
+            android:hint=" סיסמא"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="390dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
