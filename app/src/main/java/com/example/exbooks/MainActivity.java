@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this,CustomerMenu.class);
             intent.putExtra("username",username.getText().toString());
             intent.putExtra("password",password.getText().toString());
-            Toast.makeText(this,"Thank for Logging in!!",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Thanks for Logging in!!",Toast.LENGTH_LONG).show();
             startActivity(intent);
         }
     }

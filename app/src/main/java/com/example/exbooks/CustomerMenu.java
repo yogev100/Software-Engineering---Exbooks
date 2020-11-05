@@ -17,6 +17,7 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_menu);
+
         search = (Button)findViewById(R.id.search_button);
         search.setOnClickListener(this);
 
@@ -39,6 +40,19 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         if(view == search){
             Intent intent = new Intent(CustomerMenu.this,SearchScreen.class);
             startActivity(intent);
+        }else if(view == upload) {
+            Intent intent = new Intent(CustomerMenu.this, UploadScreen.class);
+            startActivity(intent);
+        }else if(view == events){
+            Intent intent = new Intent(CustomerMenu.this,EventsScreen.class);
+            startActivity(intent);
+        }else if(view == profile){
+            Intent intent = new Intent(CustomerMenu.this,ProfileScreen.class);
+            startActivity(intent);
+        }else if(view == logout){
+            Intent intent = new Intent(CustomerMenu.this,MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
