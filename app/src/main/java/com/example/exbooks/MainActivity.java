@@ -8,34 +8,42 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView register;
     Button login;
+    TextView username;
+    TextView password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView register = (TextView) findViewById(R.id.register_button);
+        register = (TextView) findViewById(R.id.register_button);
+        login = (Button) findViewById(R.id.search_button);
+
+        username = (TextView) findViewById(R.id.username_textview);
+        password = (TextView) findViewById(R.id.password_textview);
+
+        login.setOnClickListener(this);
         register.setOnClickListener(MainActivity.this);
 
-//        TextView register = (TextView) findViewById(R.id.register_button);
-//        register.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                Intent intent = new Intent(MainActivity.this,RegisterScreen.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
     public void onClick(View v) {
         if(v == register){
             Intent intent = new Intent(MainActivity.this,RegisterScreen.class);
+            startActivity(intent);
+        }
+        else if(v == login){
+            Intent intent = new Intent(MainActivity.this,CustomerMenu.class);
+            intent.putExtra("username",username.getText().toString());
+            intent.putExtra("password",password.getText().toString());
+            Toast.makeText(this,"Thank for Logging in!!",Toast.LENGTH_LONG).show();
             startActivity(intent);
         }
     }

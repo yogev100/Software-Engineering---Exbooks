@@ -13,33 +13,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText4"
-            android:layout_width="290dp"
-            android:layout_height="37dp"
-            android:background="#696969"
-            android:hint=" שם משתמש "
-            android:textAlignment="textStart"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            android:textSize="14sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="60dp"
-            tools:layout_editor_absoluteY="341dp" />
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="568dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/exbooks" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText7"
             android:layout_width="290dp"
             android:layout_height="37dp"
+            android:layout_marginTop="16dp"
             android:background="#696969"
             android:hint=" עיר"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="60dp"
-            tools:layout_editor_absoluteY="486dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText6"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/textView2"
@@ -48,60 +48,93 @@
             android:text="הרשמה"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="154dp"
-            tools:layout_editor_absoluteY="211dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.235"
+            tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/search_button"
             android:layout_width="290dp"
             android:layout_height="43dp"
+            android:layout_marginTop="32dp"
             android:text="הירשם"
             android:textSize="18sp"
             app:backgroundTint="#E9967A"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="60dp"
-            tools:layout_editor_absoluteY="536dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText7"
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText6"
             android:layout_width="290dp"
             android:layout_height="37dp"
+            android:layout_marginTop="16dp"
             android:background="#696969"
             android:hint=" מייל"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="60dp"
-            tools:layout_editor_absoluteY="438dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText5"
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText"
+            android:id="@+id/username_textview"
             android:layout_width="290dp"
             android:layout_height="37dp"
+            android:layout_marginTop="32dp"
             android:background="#696969"
             android:hint=" שם מלא "
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="60dp"
-            tools:layout_editor_absoluteY="293dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText4"
+            android:layout_width="290dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="16dp"
+            android:background="#696969"
+            android:hint=" שם משתמש "
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/username_textview"
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText5"
             android:layout_width="290dp"
             android:layout_height="37dp"
+            android:layout_marginTop="16dp"
             android:background="#696969"
             android:hint=" סיסמא"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="60dp"
-            tools:layout_editor_absoluteY="390dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText4"
+            tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

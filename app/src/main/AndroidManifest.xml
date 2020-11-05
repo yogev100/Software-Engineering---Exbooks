@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CustomerMenu"></activity>
+        <activity android:name=".SearchScreen"></activity>
+        <activity android:name=".CustomerMenu" />
         <activity android:name=".RegisterScreen" />
         <activity android:name=".MainActivity">
             <intent-filter>
