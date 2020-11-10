@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4E4E4E"
+    android:foregroundTint="#FFFFFF"
     tools:context=".SearchScreen">
 
     <Button
@@ -31,6 +32,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="שם ספר"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +48,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="שם סופר"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
@@ -53,6 +62,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="מצב הספר"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputEditText3" />
 
@@ -60,7 +72,7 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="568dp"
+        android:layout_marginBottom="564dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -74,6 +86,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="קטגוריה"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -84,6 +100,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="מספר עמודים"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputEditText2" />
 
@@ -91,8 +111,14 @@
         android:id="@+id/textView5"
         android:layout_width="34dp"
         android:layout_height="41dp"
+        android:backgroundTint="#F3EFF0"
         android:text=" -"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         android:textSize="36sp"
+        app:drawableTint="#ECDCDC"
         app:layout_constraintEnd_toStartOf="@+id/textInputEditText3"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -101,7 +127,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:buttonTint="#ECE0E0"
+        android:foregroundTint="#FFFFFF"
         android:text="חדש"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -110,7 +142,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:buttonTint="#FFFFFF"
         android:text="משומש"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="@+id/checkBox" />
 
@@ -119,7 +156,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:buttonTint="#FFFFFF"
         android:text="מעט קרוע"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/checkBox2"
         app:layout_constraintTop_toTopOf="@+id/checkBox" />
 
@@ -130,7 +171,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:text="נקה הכל"
-        android:textColor="#1D3A91"
+        android:textColor="#5579E6"
         android:textColorLink="#A33E3E"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +184,13 @@
         android:layout_width="208dp"
         android:layout_height="43dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
         android:hint="בחרו קטגוריה"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -152,7 +199,12 @@
         android:layout_width="208dp"
         android:layout_height="43dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="בחרו ספר"
+        android:textColor="#F8F1F1"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -161,7 +213,12 @@
         android:layout_width="208dp"
         android:layout_height="43dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="בחרו סופר"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -170,9 +227,14 @@
         android:layout_width="350dp"
         android:layout_height="43dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="חיפוש חופשי"
+        android:textColor="#EDE8E8"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputEditText5" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -180,7 +242,12 @@
         android:layout_width="150dp"
         android:layout_height="43dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="מעמוד"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -188,7 +255,12 @@
         android:id="@+id/textInputEditText4"
         android:layout_width="150dp"
         android:layout_height="43dp"
+        android:backgroundTint="#FFFFFF"
         android:hint="עד עמוד"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
