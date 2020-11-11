@@ -1,4 +1,4 @@
-package com.example.exbooks;
+package com.example.exbooks.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.exbooks.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,9 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         register = (TextView) findViewById(R.id.register_button);
-        login = (Button) findViewById(R.id.search_button);
+        login = (Button) findViewById(R.id.signup_button);
 
-        username = (TextView) findViewById(R.id.username_textview);
+        username = (TextView) findViewById(R.id.fullname_textview);
         password = (TextView) findViewById(R.id.password_textview);
 
         login.setOnClickListener(this);

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "78362018177",
+    "firebase_url": "https://exbooks-45f87.firebaseio.com",
+    "project_id": "exbooks-45f87",
+    "storage_bucket": "exbooks-45f87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78362018177:android:440890164d552e6af72880",
+        "android_client_info": {
+          "package_name": "com.example.exbooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78362018177-ceqabs77smn94q7curu1gskkkjptopc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdWcJq8rqcTwAKNY9Ynok-q39NG2OMLP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78362018177-ceqabs77smn94q7curu1gskkkjptopc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

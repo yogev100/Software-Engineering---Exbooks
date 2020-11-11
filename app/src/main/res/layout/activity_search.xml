@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#4E4E4E"
     android:foregroundTint="#FFFFFF"
-    tools:context=".SearchScreen">
+    tools:context=".Screens.SearchScreen">
 
     <Button
         android:id="@+id/button"
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:buttonTint="#ECE0E0"
+        android:buttonTint="#E9967A"
         android:foregroundTint="#FFFFFF"
         android:text="חדש"
         android:textColor="#FFFFFF"
@@ -142,7 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:buttonTint="#FFFFFF"
+        android:buttonTint="#E9967A"
         android:text="משומש"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
@@ -156,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:buttonTint="#FFFFFF"
+        android:buttonTint="#E9967A"
         android:text="מעט קרוע"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
