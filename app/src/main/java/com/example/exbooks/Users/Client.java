@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Client extends User {
     ArrayList<Book> my_books;
     ArrayList<Book> donated_books;
-    public Client(String username, String fname, String lname, String email, String password, String city, String phone) {
-        super(username, fname, lname, email, password, city, phone);
+    public Client(String username, String fullname, String email, String password, String city, String phone) {
+        super(username, fullname, email, password, city, phone);
         my_books=new ArrayList<Book>();
         donated_books=new ArrayList<Book>();
     }

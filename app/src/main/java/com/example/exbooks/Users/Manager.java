@@ -6,8 +6,8 @@ public class Manager extends User{
     private Event event;
     private int num_of_books_donated;
 
-    public Manager(String username, String fname, String lname, String email, String password, String city, String phone) {
-        super(username, fname, lname, email, password, city, phone);
+    public Manager(String username, String fullname, String email, String password, String city, String phone) {
+        super(username, fullname, email, password, city, phone);
     }
 
     public Event getEvent() {

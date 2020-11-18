@@ -2,18 +2,16 @@ package com.example.exbooks.Users;
 
 public abstract class User {
     private String username,
-            fname,
-            lname,
+            fullname,
             email,
             password,
             city,
             phone;
 
-    public User(String username, String fname, String lname, String email,
+    public User(String username, String fullname, String email,
                 String password, String city, String phone){
         this.username=username;
-        this.fname=fname;
-        this.lname=lname;
+        this.fullname=fullname;
         this.email=email;
         this.password=password;
         this.city=city;
@@ -28,12 +26,8 @@ public abstract class User {
         return email;
     }
 
-    public String getFname() {
-        return fname;
-    }
-
-    public String getLname() {
-        return lname;
+    public String getfullname() {
+        return fullname;
     }
 
     public String getPassword() {
@@ -56,12 +50,8 @@ public abstract class User {
         this.email = email;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setfullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public void setPassword(String password) {
