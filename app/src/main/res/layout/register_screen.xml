@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/register_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4E4E4E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4E4E4E">
 
         <ImageView
             android:id="@+id/imageView6"
@@ -36,9 +30,8 @@
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_textview"
+            app:layout_constraintTop_toBottomOf="@+id/phone_textview"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -47,16 +40,15 @@
             android:layout_height="37dp"
             android:layout_marginTop="16dp"
             android:background="#696969"
-            android:hint=" פלאפון"
+            android:hint="טלפון"
             android:inputType="number"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/city_textview"
+            app:layout_constraintTop_toBottomOf="@+id/repasswordragister_textview"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -78,14 +70,13 @@
             android:id="@+id/signup_button"
             android:layout_width="290dp"
             android:layout_height="43dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="48dp"
             android:text="הירשם"
             android:textSize="18sp"
             app:backgroundTint="#E9967A"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone_textview"
+            app:layout_constraintTop_toBottomOf="@+id/city_textview"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -100,9 +91,8 @@
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/repasswordragister_textview"
+            app:layout_constraintTop_toBottomOf="@+id/fullname_textview"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -117,26 +107,8 @@
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-            tools:ignore="MissingConstraints" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username_textview"
-            android:layout_width="290dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="16dp"
-            android:background="#696969"
-            android:hint=" שם משתמש "
-            android:textAlignment="textStart"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fullname_textview"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -145,16 +117,15 @@
             android:layout_height="37dp"
             android:layout_marginTop="16dp"
             android:background="#696969"
-            android:hint="                                                                   סיסמא  "
+            android:hint="                                                                        סיסמא  "
             android:inputType="textPassword"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username_textview"
+            app:layout_constraintTop_toBottomOf="@+id/email_textview"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -163,14 +134,13 @@
             android:layout_height="37dp"
             android:layout_marginTop="16dp"
             android:background="#696969"
-            android:hint="                                                        אישור סיסמא  "
+            android:hint="                                                             אישור סיסמא  "
             android:inputType="textPassword"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordragister_textview"
             tools:ignore="MissingConstraints" />

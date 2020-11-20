@@ -51,6 +51,7 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(CustomerMenu.this,ProfileScreen.class);
             startActivity(intent);
         }else if(view == logout){
+            cAuth.signOut();
             Intent intent = new Intent(CustomerMenu.this,MainActivity.class);
             startActivity(intent);
             finish();

@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 //import com.google.firebase.auth.AuthResult;
 //import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.example.exbooks.R;
@@ -29,7 +26,6 @@ import com.example.exbooks.R;
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
     final String[] manager_emails = {"yogev2468@gmail.com"};
     EditText fullname;
-    EditText username;
     EditText password;
     EditText re_password;
     EditText city;
@@ -46,7 +42,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.register_screen);
 
         fullname = (EditText)findViewById(R.id.fullname_textview);
-        username = (EditText)findViewById(R.id.username_textview);
         password = (EditText)findViewById(R.id.passwordragister_textview);
         re_password = (EditText)findViewById(R.id.repasswordragister_textview);
         city = (EditText)findViewById(R.id.city_textview);
@@ -63,7 +58,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         String flname=fullname.getText().toString();
-        String usrname=username.getText().toString();
         String pswrd=password.getText().toString();
         String re_pswrd=re_password.getText().toString();
         String cty=city.getText().toString();
@@ -73,11 +67,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         if(flname.isEmpty()){
             fullname.setError("Full name is required!");
             fullname.requestFocus();
-            return;
-        }
-        if(usrname.isEmpty()){
-            username.setError("Username is required!");
-            username.requestFocus();
             return;
         }
         if(pswrd.isEmpty()){
@@ -121,11 +110,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        cAuth.createUserWithEmailAndPassword(mail,mail).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        cAuth.createUserWithEmailAndPassword(mail,pswrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Client client = new Client(username.getText().toString(),fullname.getText().toString(),
+                    Client client = new Client(fullname.getText().toString(),
                             email.getText().toString(),password.getText().toString(),city.getText().toString(),phone.getText().toString());
                     //send it to firebase
                     dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(client).addOnCompleteListener(new OnCompleteListener<Void>() {
