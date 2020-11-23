@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         login.setOnClickListener(this);
         register.setOnClickListener(MainActivity.this);
+        forgetpassword.setOnClickListener(this);
 
     }
 
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ClientLogin();
         }
         else if(v == forgetpassword){
-
+            Intent intent = new Intent(MainActivity.this, ForgetPasswordScreen.class);
+            startActivity(intent);
         }
     }
 

@@ -12,6 +12,11 @@
         <activity android:name=".Screens.SearchScreen"></activity>
         <activity android:name=".Screens.CustomerMenu" />
         <activity android:name=".Screens.RegisterScreen" />
+        <activity android:name=".Screens.ForgetPasswordScreen" />
+        <activity android:name=".Screens.SearchResultScreen" />
+        <activity android:name=".Screens.EventsScreen" />
+        <activity android:name=".Screens.ProfileScreen" />
+        <activity android:name=".Screens.UploadScreen" />
         <activity android:name=".Screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

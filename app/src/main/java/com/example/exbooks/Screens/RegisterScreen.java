@@ -53,6 +53,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         cAuth=FirebaseAuth.getInstance();
         dbRef=FirebaseDatabase.getInstance().getReference().child("Users").child("Clients");
+
     }
 
     @Override
