@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
 import com.example.exbooks.Users.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void ClientLogin() {
         String email = mail.getText().toString().trim();
-        String paswrd = password.getText().toString().trim();
+        final String paswrd = password.getText().toString().trim();
 
         if(email.isEmpty()){
             mail.setError("Email is required!");
@@ -106,10 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     DatabaseReference ClientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                     DatabaseReference ManagerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-
                     //Redirect to user profile:
                     if(user.isEmailVerified()) {
-                        EnterToMenu(ClientRoot, ManagerRoot,user);
+                        EnterToMenu(ClientRoot, ManagerRoot,user,paswrd);
                     }
                     else {
                         user.sendEmailVerification();
@@ -125,12 +125,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void EnterToMenu(DatabaseReference ClientRoot, DatabaseReference ManagerRoot, final FirebaseUser user) {
+    private void EnterToMenu(final DatabaseReference ClientRoot,final DatabaseReference ManagerRoot, final FirebaseUser user, final String pswrd) {
         ClientRoot.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client clientProfile = snapshot.getValue(Client.class);
                 if(clientProfile != null){
+                    // update password if its changed
+                    if(!pswrd.equals(clientProfile.getPassword())) {
+                        clientProfile.setPassword(pswrd);
+                        ClientRoot.child(user.getUid()).setValue(clientProfile);
+                    }
                     startActivity(new Intent(MainActivity.this, CustomerMenu.class));
                 }
             }
@@ -143,8 +148,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ManagerRoot.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
+                Manager managerProfile = snapshot.getValue(Manager.class);
+                if(managerProfile != null){
+                    // update password if its changed
+                    if(!pswrd.equals(managerProfile.getPassword())) {
+                        managerProfile.setPassword(pswrd);
+                        ManagerRoot.child(user.getUid()).setValue(managerProfile);
+                    }
                     startActivity(new Intent(MainActivity.this, CustomerMenu.class));
                 }
             }
