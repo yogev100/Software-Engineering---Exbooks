@@ -1,4 +1,7 @@
 package com.example.exbooks.Objects;
+
+import android.widget.ImageView;
+
 enum Condition{
     NEW,USED,TORN
 }
@@ -9,7 +12,9 @@ public class  Book {
     private int num_pages;
     private Condition book_cond;
     private boolean for_change;
+    private String book_id;
     private String uid;
+    private ImageView img;
 
     public Book(){}
 
@@ -91,5 +96,20 @@ public class  Book {
 
     public void setFor_change(boolean for_change) {
         this.for_change = for_change;
+    }
+
+    public String getBook_id() {
+        return book_id;
+    }
+    public void setBook_id(String book_id) {
+        this.book_id = book_id;
+    }
+
+    public ImageView getImg() {
+        return img;
+    }
+
+    public void setImg(ImageView img) {
+        this.img = img;
     }
 }

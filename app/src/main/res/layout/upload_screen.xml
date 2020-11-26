@@ -10,29 +10,28 @@
         android:id="@+id/textView12"
         android:layout_width="89dp"
         android:layout_height="27dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="44dp"
         android:text="מצב הספר"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/cond_spinner"
+        app:layout_constraintEnd_toStartOf="@+id/add_num_pages"
         app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
 
     <Button
         android:id="@+id/add_button"
         android:layout_width="290dp"
         android:layout_height="43dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="56dp"
         android:text="הוספה"
         android:textSize="18sp"
         app:backgroundTint="#E9967A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.702"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -49,8 +48,6 @@
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/add_category" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -117,23 +114,22 @@
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="256dp"
+        android:layout_marginBottom="312dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintEnd_toStartOf="@+id/textView12"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="243dp"
-        android:layout_height="87dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="173dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="4dp"
         android:text="הוספת ספר"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.291"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
         tools:ignore="MissingConstraints" />
@@ -156,18 +152,19 @@
 
     <RadioGroup
         android:id="@+id/add_radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/add_num_pages"
-        tools:layout_editor_absoluteX="16dp">
+        android:layout_width="194dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_num_pages">
 
         <RadioButton
             android:id="@+id/change_radio_button"
             android:layout_width="97dp"
             android:layout_height="40dp"
-            android:layout_marginTop="8dp"
             android:text="החלפה"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -185,6 +182,31 @@
             android:textSize="18sp" />
 
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="203dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="24dp"
+        android:text="להוספת צילום של הספר לחץ כאן:"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_radio_group" />
+
+    <ImageButton
+        android:id="@+id/camera_btn"
+        android:layout_width="102dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_button"
+        app:layout_constraintEnd_toStartOf="@+id/textView11"
+        app:layout_constraintHorizontal_bias="0.719"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cond_spinner"
+        app:layout_constraintVertical_bias="0.514"
+        app:srcCompat="@drawable/camera" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

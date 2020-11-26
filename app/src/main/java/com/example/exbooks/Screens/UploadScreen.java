@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -16,12 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
+import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UploadScreen extends AppCompatActivity implements View.OnClickListener{
 
@@ -34,9 +40,11 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
     boolean for_change;
     Spinner category_spinner, cond_spinner;
     Button add;
+    Button capture_btn;
+    ImageView image_btn;
 
     private FirebaseAuth cAuth;
-    private DatabaseReference dbRef;
+    private DatabaseReference bookRef;
 
 
     @Override
@@ -54,7 +62,8 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         author_name = (EditText)findViewById(R.id.add_book_author);
         num_pages = (EditText)findViewById(R.id.add_num_pages);
 
-        dbRef= FirebaseDatabase.getInstance().getReference("Books");
+        cAuth = FirebaseAuth.getInstance();
+        bookRef= FirebaseDatabase.getInstance().getReference("Books");
 
     }
 
@@ -136,10 +145,16 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         }
 
         Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid());
-        dbRef.child(new_book.getCategory()).push().setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
+        final String book_id = bookRef.child(new_book.getCategory()).push().getKey();
+
+        bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
+                    DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+                    DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+                    addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id);
+//                   FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                     Toast.makeText(UploadScreen.this,"Your Book upload successfully",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
                     finish();
@@ -148,6 +163,43 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                             "Failed to upload! Try again!",
                             Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+
+    }
+
+    private void addBookToDB(final DatabaseReference managerRoot, final DatabaseReference clientRoot, final String uid, final String book_id) {
+        clientRoot.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Client client = snapshot.getValue(Client.class);
+
+                if(client!=null){
+                    client.getMy_books().add(book_id);
+                    clientRoot.child(uid).setValue(client);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UploadScreen.this,"Something was wrong!",Toast.LENGTH_LONG);
+            }
+        });
+        managerRoot.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Manager manager = snapshot.getValue(Manager.class);
+
+                if(manager!=null){
+                    manager.getMy_books().add(book_id);
+                    managerRoot.child(uid).setValue(manager);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UploadScreen.this,"Something was wrong!",Toast.LENGTH_LONG);
             }
         });
     }
