@@ -8,14 +8,34 @@ public class  Book {
     private String category;
     private int num_pages;
     private Condition book_cond;
+    private boolean for_change;
+    private String uid;
 
-    public Book(String book_name, String category, String author_name, int num_pages, Condition book_cond){
+    public Book(){}
+
+    public Book(String book_name, String category, String author_name, int num_pages, int book_cond, boolean for_change, String uid){
         this.book_name = book_name;
-        this.book_cond = book_cond;
+        this.init_cond(book_cond);
         this.author_name = author_name;
         this.num_pages = num_pages;
-        this.book_cond = book_cond;
         this.category = category;
+        this.for_change = for_change;
+        this.uid = uid;
+    }
+
+    public void init_cond(int book_cond){
+        switch (book_cond){
+            case 0:
+                this.book_cond = Condition.NEW;
+                break;
+            case 2:
+                this.book_cond = Condition.TORN;
+                break;
+            default:
+                this.book_cond = Condition.USED;
+                break;
+        }
+
     }
 
     public Condition getBook_cond() {
@@ -56,5 +76,20 @@ public class  Book {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public boolean isFor_change() {
+        return for_change;
+    }
+
+    public void setFor_change(boolean for_change) {
+        this.for_change = for_change;
     }
 }

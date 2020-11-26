@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">ExBooks</string>
+
+    <string-array name="קטגוריה">
+        <item>רומן</item>
+        <item>מתח ופעולה</item>
+        <item>ביוגרפיה</item>
+        <item>בישול</item>
+        <item>מדע בדיוני ופנטזיה</item>
+        <item>ילדים ונוער</item>
+        <item>אימה</item>
+        <item>היסטוריה</item>
+        <item>יהדות</item>
+        <item>פוליטיקה</item>
+        <item>הורות</item>
+        <item>לימוד</item>
+    </string-array>
+
+    <string-array name="מצב">
+        <item>כמו חדש</item>
+        <item>משומש</item>
+        <item>מעט קרוע</item>
+
+    </string-array>
 </resources>

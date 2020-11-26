@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "100770549401",
+    "firebase_url": "https://exbooks-be378.firebaseio.com",
+    "project_id": "exbooks-be378",
+    "storage_bucket": "exbooks-be378.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100770549401:android:21f53e02c9094ad0403208",
+        "android_client_info": {
+          "package_name": "com.example.exbooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100770549401-f2pb3c3jvp5chl2bmj6dlclakj34b44l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.exbooks",
+            "certificate_hash": "4207dddf40d68e51db998f89fc6b305e35a9e487"
+          }
+        },
+        {
+          "client_id": "100770549401-vq06v4ust2q39hbcrme72950mj0gej8d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR7kmYbuQkICnjDuAlqEoajvcJSkV2uKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100770549401-vq06v4ust2q39hbcrme72950mj0gej8d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
