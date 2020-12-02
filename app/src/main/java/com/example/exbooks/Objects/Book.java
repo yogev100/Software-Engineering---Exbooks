@@ -1,7 +1,5 @@
 package com.example.exbooks.Objects;
 
-import android.widget.ImageView;
-
 enum Condition{
     NEW,USED,TORN
 }
@@ -14,11 +12,11 @@ public class  Book {
     private boolean for_change;
     private String book_id;
     private String uid;
-    private ImageView img;
+    private boolean img_url;
 
     public Book(){}
 
-    public Book(String book_name, String category, String author_name, int num_pages, int book_cond, boolean for_change, String uid){
+    public Book(String book_name, String category, String author_name, int num_pages, int book_cond, boolean for_change, String uid, boolean url){
         this.book_name = book_name;
         this.init_cond(book_cond);
         this.author_name = author_name;
@@ -26,6 +24,7 @@ public class  Book {
         this.category = category;
         this.for_change = for_change;
         this.uid = uid;
+        this.img_url = url;
     }
 
     public void init_cond(int book_cond){
@@ -40,7 +39,6 @@ public class  Book {
                 this.book_cond = Condition.USED;
                 break;
         }
-
     }
 
     public Condition getBook_cond() {
@@ -105,11 +103,11 @@ public class  Book {
         this.book_id = book_id;
     }
 
-    public ImageView getImg() {
-        return img;
+    public boolean getImgURL() {
+        return img_url;
     }
 
-    public void setImg(ImageView img) {
-        this.img = img;
+    public void setImgURL(boolean img_url) {
+        this.img_url = img_url;
     }
 }

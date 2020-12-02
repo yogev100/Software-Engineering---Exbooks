@@ -1,6 +1,7 @@
 package com.example.exbooks.Screens;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,8 @@ import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +39,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class UploadScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,6 +62,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth cAuth;
     private DatabaseReference bookRef;
+    private StorageReference storageRef;
 
 
     @Override
@@ -77,6 +86,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
 
         cAuth = FirebaseAuth.getInstance();
         bookRef = FirebaseDatabase.getInstance().getReference("Books");
+        storageRef = FirebaseStorage.getInstance().getReference();
 
     }
 
@@ -178,27 +188,12 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 for_change = false;
             }
 
-            Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid());
-            final String book_id = bookRef.child(new_book.getCategory()).push().getKey();
 
-            bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-                        DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
-                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id);
-//                   FirebaseDatabase.getInstance().getReference("Users").child("Clients");
-                        Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
-                        finish();
-                    } else {
-                        Toast.makeText(UploadScreen.this,
-                                "Failed to upload! Try again!",
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
+
+            //something for get url
+            final String book_id = bookRef.child(category).push().getKey();
+            BuildAndAddBook(bookName, autohrName, numPages, user, book_id);
+
         }
     }
 
@@ -274,4 +269,79 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
+
+    private void BuildAndAddBook(final String bookName, final String autohrName, final String numPages, final FirebaseUser user, final String book_id) {
+        if (image_uri != null) {
+            final StorageReference fileRef = storageRef.child(book_id + "." + getFileExtension(image_uri));
+            fileRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), true);
+
+                            bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+                                        DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+                                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id);
+                                        Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(UploadScreen.this,
+                                                "Failed to upload! Try again!",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(UploadScreen.this, "Uploading Falied !!!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), false);
+
+            bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+                        DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id);
+                        Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
+                        finish();
+                    } else {
+                        Toast.makeText(UploadScreen.this,
+                                "Failed to upload! Try again!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
+
+
+    private String getFileExtension(Uri mUri) {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(mUri));
+    }
+}
