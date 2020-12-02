@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.exbooks.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class CustomerMenu extends AppCompatActivity implements View.OnClickListener {
 
     Button search,upload,events,profile,logout;
+    FirebaseAuth cAuth;
     ImageButton settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         logout = (Button)findViewById(R.id.logout_button);
         logout.setOnClickListener(this);
 
+        cAuth=FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -51,7 +55,7 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(CustomerMenu.this,ProfileScreen.class);
             startActivity(intent);
         }else if(view == logout){
-//            cAuth.signOut();
+            cAuth.signOut();
             Intent intent = new Intent(CustomerMenu.this,MainActivity.class);
             startActivity(intent);
             finish();

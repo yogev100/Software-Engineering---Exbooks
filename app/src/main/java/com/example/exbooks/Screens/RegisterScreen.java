@@ -14,6 +14,7 @@ import android.widget.Toast;
 //import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseUser;
 import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -110,7 +111,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             phone.requestFocus();
             return;
         }
-
         cAuth.createUserWithEmailAndPassword(mail,pswrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

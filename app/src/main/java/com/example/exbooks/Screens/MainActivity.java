@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         ClientRoot.child(user.getUid()).setValue(clientProfile);
                     }
                     startActivity(new Intent(MainActivity.this, CustomerMenu.class));
+                    finish();
                 }
             }
             @Override
