@@ -10,7 +10,7 @@
     tools:context=".Screens.SearchScreen">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/search_button"
         android:layout_width="290dp"
         android:layout_height="43dp"
         android:layout_marginTop="8dp"
@@ -29,7 +29,6 @@
         android:id="@+id/textView3"
         android:layout_width="58dp"
         android:layout_height="26dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="שם ספר"
         android:textColor="#FFFFFF"
@@ -39,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <TextView
         android:id="@+id/textView7"
@@ -53,7 +52,7 @@
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/newCond_checkBox" />
 
     <TextView
         android:id="@+id/textView6"
@@ -66,16 +65,17 @@
         android:textColorHighlight="#FFFFFF"
         android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText3" />
+        app:layout_constraintTop_toBottomOf="@+id/startBookPage_textview" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="564dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exbooks" />
 
     <TextView
@@ -104,7 +104,7 @@
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText2" />
+        app:layout_constraintTop_toBottomOf="@+id/bookName_Textview" />
 
     <TextView
         android:id="@+id/textView5"
@@ -118,11 +118,11 @@
         android:textColorLink="#FFFFFF"
         android:textSize="36sp"
         app:drawableTint="#ECDCDC"
-        app:layout_constraintEnd_toStartOf="@+id/textInputEditText3"
+        app:layout_constraintEnd_toStartOf="@+id/startBookPage_textview"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/newCond_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -137,7 +137,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/usedCond_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -147,11 +147,11 @@
         android:textColorHighlight="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox"
-        app:layout_constraintTop_toTopOf="@+id/checkBox" />
+        app:layout_constraintEnd_toStartOf="@+id/newCond_checkBox"
+        app:layout_constraintTop_toTopOf="@+id/newCond_checkBox" />
 
     <CheckBox
-        android:id="@+id/checkBox3"
+        android:id="@+id/tornCond_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -160,8 +160,8 @@
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
         android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox2"
-        app:layout_constraintTop_toTopOf="@+id/checkBox" />
+        app:layout_constraintEnd_toStartOf="@+id/usedCond_checkBox"
+        app:layout_constraintTop_toTopOf="@+id/newCond_checkBox" />
 
     <TextView
         android:id="@+id/clean_textview"
@@ -176,25 +176,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText6" />
+        app:layout_constraintTop_toBottomOf="@+id/freeSearch_textView" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
-        android:layout_width="208dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="32dp"
-        android:backgroundTint="#FFFFFF"
-        android:foregroundTint="#FFFFFF"
-        android:hint="בחרו קטגוריה"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textColorLink="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText2"
+        android:id="@+id/bookName_Textview"
         android:layout_width="208dp"
         android:layout_height="43dp"
         android:layout_marginEnd="32dp"
@@ -222,7 +207,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText6"
+        android:id="@+id/freeSearch_textView"
         android:layout_width="350dp"
         android:layout_height="43dp"
         android:layout_marginTop="8dp"
@@ -237,12 +222,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputEditText5" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText3"
+        android:id="@+id/startBookPage_textview"
         android:layout_width="150dp"
         android:layout_height="43dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="#FFFFFF"
         android:hint="מעמוד"
+        android:numeric="integer"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -251,16 +237,160 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText4"
+        android:id="@+id/endBookPage_textview"
         android:layout_width="150dp"
         android:layout_height="43dp"
         android:backgroundTint="#FFFFFF"
         android:hint="עד עמוד"
+        android:numeric="integer"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="352dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/Roman_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="רומן"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/Metach_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="מתח ופעולה"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/Biography_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="ביוגרפיה"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/cooking_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="בישול"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/fantasy_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="מדע בדיוני ופנטזיה"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/Child_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="ילדים ונוער"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/horror_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="אימה"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/history_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="היסטוריה"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/religous_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="יהדות"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/politics_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="פוליטיקה"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/parenting_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="הורות"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+
+                <CheckBox
+                    android:id="@+id/educational_checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#E9967A"
+                    android:text="לימוד"
+                    android:textColor="#FFFFFF"
+                    tools:layout_editor_absoluteX="23dp"
+                    tools:layout_editor_absoluteY="293dp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

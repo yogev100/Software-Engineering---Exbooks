@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ManagerMenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4E4E4E"
+    tools:context=".Screens.ManagerMenu">
+
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="168dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="32dp"
+        android:text="תפריט ראשי"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_signup_button"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:text="חיפוש"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_events_button"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:text="אירועי ספרים"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/M_upload_button"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_logout_button"
+        android:layout_width="150dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="התנתק"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_upload_button"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:text="העלה ספר"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/M_signup_button"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_profile_button"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:text="פרופיל"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/M_events_button"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_new_manager"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:text="מנה מנהל חדש"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/M_profile_button"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/M_newevents_Button"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:text="צור אירוע ספרים"
+        android:textSize="18sp"
+        app:backgroundTint="#E9967A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/M_new_manager"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="568dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/exbooks" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="65dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

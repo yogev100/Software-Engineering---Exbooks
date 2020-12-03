@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.exbooks.R;
 
 
@@ -18,6 +20,9 @@ public class SearchResultScreen extends AppCompatActivity {
         setContentView(R.layout.search_result_screen);
 
         sv=(ScrollView)findViewById(R.id.search_scrollView);
+        ConstraintLayout newBook=(ConstraintLayout)findViewById(R.id.bookForm_Layout);
+        //newBook.get
+
 
     }
 }
