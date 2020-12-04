@@ -235,13 +235,14 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void addBookToDB(final DatabaseReference managerRoot, final DatabaseReference clientRoot, final String uid, final String book_id){
+    private void addBookToDB(final DatabaseReference managerRoot, final DatabaseReference clientRoot,
+                             final String uid, final String book_id,final DatabaseReference book_ref){
             clientRoot.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Client client = snapshot.getValue(Client.class);
-
                     if (client != null) {
+                        book_ref.child("cityOwner").setValue(client.getCity());
                         client.getMy_books().add(book_id);
                         clientRoot.child(uid).setValue(client);
                     }
@@ -256,8 +257,8 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Manager manager = snapshot.getValue(Manager.class);
-
                     if (manager != null) {
+                        book_ref.child("cityOwner").setValue(manager.getCity());
                         manager.getMy_books().add(book_id);
                         managerRoot.child(uid).setValue(manager);
                     }
@@ -280,7 +281,8 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onSuccess(Uri uri) {
 
-                            Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), true);
+
+                            final Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), true);
 
                             bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -288,7 +290,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                                     if (task.isSuccessful()) {
                                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
-                                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id);
+                                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id));
                                         Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
                                         startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
                                         finish();
@@ -316,7 +318,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
             });
         }
         else{
-            Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), false);
+            final Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), false);
 
             bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -324,7 +326,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()) {
                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
-                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id);
+                        addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id));
                         Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
                         finish();

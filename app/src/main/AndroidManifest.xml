@@ -16,6 +16,8 @@
         <activity android:name=".Screens.RegisterScreen" />
         <activity android:name=".Screens.ForgetPasswordScreen" />
         <activity android:name=".Screens.SearchResultScreen" />
+        <activity android:name=".Screens.NewManager" />
+        <activity android:name=".Screens.ManagerMenu" />
         <activity android:name=".Screens.EventsScreen" />
         <activity android:name=".Screens.ProfileScreen" />
         <activity android:name=".Screens.UploadScreen" />

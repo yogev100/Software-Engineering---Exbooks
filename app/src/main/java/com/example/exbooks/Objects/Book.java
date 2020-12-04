@@ -12,6 +12,7 @@ public class  Book {
     private boolean for_change;
     private String book_id;
     private String uid;
+    private String cityOwner;
     private boolean img_url;
 
     public Book(){}
@@ -25,6 +26,7 @@ public class  Book {
         this.for_change = for_change;
         this.uid = uid;
         this.img_url = url;
+        //this.cityOwner="None";
     }
 
     public void init_cond(int book_cond){
@@ -38,6 +40,17 @@ public class  Book {
             default:
                 this.book_cond = Condition.USED;
                 break;
+        }
+    }
+
+    public String cond_toString(Condition cond){
+        switch (cond){
+            case NEW:
+                return "New Book";
+            case TORN:
+                return "Little Torn";
+            default:
+                return "Used Book";
         }
     }
 
@@ -110,4 +123,13 @@ public class  Book {
     public void setImgURL(boolean img_url) {
         this.img_url = img_url;
     }
+
+    public String getCityOwner() {
+        return cityOwner;
+    }
+
+    public void setCityOwner(String cityOwner) {
+        this.cityOwner = cityOwner;
+    }
 }
+

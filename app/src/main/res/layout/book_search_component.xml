@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/book_Form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="#4E4E4E"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/bookId_Button"
+            android:layout_width="91dp"
+            android:layout_height="86dp"
+            android:backgroundTint="#E9967A"
+            android:text="בחר"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nameBookId_TextView"
+            android:layout_width="122dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:text="שם ספר"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/categoryBookId_TextView"
+            android:layout_width="154dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:text="קטגוריה -קטגוריית הספר"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/nameBookId_TextView" />
+
+        <TextView
+            android:id="@+id/authorBookId_TextView"
+            android:layout_width="154dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:text="סופר - כותב הספר"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/categoryBookId_TextView" />
+
+        <TextView
+            android:id="@+id/conditionBookId_TextView"
+            android:layout_width="154dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:text="מצב הספר - מצב הספר"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/authorBookId_TextView" />
+
+        <TextView
+            android:id="@+id/cityBookId_TextView"
+            android:layout_width="154dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:text="עיר - עיר הבעלים"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/conditionBookId_TextView" />
+
+        <ImageView
+            android:id="@+id/ImageBookId_ImageView"
+            android:layout_width="95dp"
+            android:layout_height="110dp"
+            android:src="@android:drawable/ic_dialog_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

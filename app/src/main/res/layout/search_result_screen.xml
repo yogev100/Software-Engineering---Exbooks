@@ -93,100 +93,12 @@
         app:layout_constraintTop_toBottomOf="@+id/newCond_checkBox">
 
         <LinearLayout
+            android:id="@+id/search_scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bookForm_Layout"
-                android:layout_width="match_parent"
-                android:layout_height="145dp">
-
-                <Button
-                    android:id="@+id/bookId_Button"
-                    android:layout_width="91dp"
-                    android:layout_height="86dp"
-                    android:layout_marginStart="8dp"
-                    android:text="בחר"
-                    android:textSize="18sp"
-                    app:backgroundTint="#E9967A"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.491" />
-
-                <TextView
-                    android:id="@+id/nameBookId_TextView"
-                    android:layout_width="122dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="שם ספר"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/categoryBookId_TextView"
-                    android:layout_width="154dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="קטגוריה -קטגוריית הספר"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/nameBookId_TextView" />
-
-                <TextView
-                    android:id="@+id/authorBookId_TextView"
-                    android:layout_width="154dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="סופר - כותב הספר"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryBookId_TextView" />
-
-                <TextView
-                    android:id="@+id/conditionBookId_TextView"
-                    android:layout_width="154dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="מצב הספר - מצב הספר"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/authorBookId_TextView" />
-
-                <TextView
-                    android:id="@+id/cityBookId_TextView"
-                    android:layout_width="154dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="עיר - עיר הבעלים"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toStartOf="@+id/ImageBookId_ImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/conditionBookId_TextView" />
-
-                <ImageView
-                    android:id="@+id/ImageBookId_ImageView"
-                    android:layout_width="95dp"
-                    android:layout_height="110dp"
-                    android:layout_marginEnd="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

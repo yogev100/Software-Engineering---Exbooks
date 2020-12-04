@@ -47,7 +47,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         usedCond=(CheckBox)findViewById(R.id.usedCond_checkBox);
         tornCond=(CheckBox)findViewById(R.id.tornCond_checkBox);
         c=new CheckBox[]{roman,metach,bio,cooking,fantasy,children,horror,history,religous,politics,parenting,educational};
-        authorView=(TextView)findViewById(R.id.authorBookId_TextView);
+        authorView=(TextView)findViewById(R.id.authorBookId);
         freeSearch=(TextView)findViewById(R.id.freeSearch_textView);
 
         search=(Button)findViewById(R.id.search_button);
@@ -58,18 +58,19 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         String bkNm=bookName.getText().toString().trim();
         String strtPg=startPage.getText().toString().trim();
-        String endPg=endPage.getText().toString();
+        String endPg=endPage.getText().toString().trim();
         String athr=authorView.getText().toString().trim();
         String fresrch=freeSearch.getText().toString().trim();
 
 
         if(view==search){
             if(allempty()&&bkNm.isEmpty()&&strtPg.isEmpty()&&endPg.isEmpty()&&athr.isEmpty()&&fresrch.isEmpty()){
-                search.setError("Please fill at least one of the filters");
+                bookName.setError("Please fill at least one of the filters");
                 return;
             }
             if((strtPg.isEmpty()&&!endPg.isEmpty())||(!strtPg.isEmpty()&&endPg.isEmpty())){
-                search.setError("please fill the full range of pages");
+                startPage.setError("please fill the full range of pages");
+                endPage.setError("please fill the full range of pages");
                 return;
             }
             Intent intent=new Intent(SearchScreen.this,SearchResultScreen.class);

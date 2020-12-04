@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         managerProfile.setPassword(pswrd);
                         ManagerRoot.child(user.getUid()).setValue(managerProfile);
                     }
-                    startActivity(new Intent(MainActivity.this, CustomerMenu.class));
+                    startActivity(new Intent(MainActivity.this, ManagerMenu.class));
                 }
             }
             @Override
