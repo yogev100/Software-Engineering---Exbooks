@@ -1,7 +1,7 @@
 package com.example.exbooks.Objects;
 
-import com.example.exbooks.R;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +12,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.example.exbooks.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,7 +42,7 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
     }
 
     public BookFormAdapter(ArrayList<Book> data, Context context) {
-        super(context, R.layout.book_search_component, data);
+        super(context, R.layout.single_book, data);
         this.dataSet = data;
         this.mContext=context;
 
@@ -73,16 +79,16 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.book_search_component, parent, false);
+            convertView = inflater.inflate(R.layout.single_book, parent, false);
 
-            viewHolder.bookName = (TextView) convertView.findViewById(R.id.nameBookId_TextView);
-            viewHolder.category = (TextView) convertView.findViewById(R.id.categoryBookId_TextView);
-            viewHolder.author = (TextView) convertView.findViewById(R.id.authorBookId_TextView);
-            viewHolder.cond = (TextView) convertView.findViewById(R.id.conditionBookId_TextView);
-            viewHolder.city = (TextView) convertView.findViewById(R.id.cityBookId_TextView);
-            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.bookId_Button);
-            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.ImageBookId_ImageView);
-            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
+            viewHolder.bookName = (TextView) convertView.findViewById(R.id.single_book_name);
+            viewHolder.category = (TextView) convertView.findViewById(R.id.single_book_category);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.single_book_author);
+            viewHolder.cond = (TextView) convertView.findViewById(R.id.single_book_cond);
+            viewHolder.city = (TextView) convertView.findViewById(R.id.single_book_city);
+            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.single_book_button);
+            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.single_book_img);
+//            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
 
             result=convertView;
 
@@ -103,7 +109,35 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         viewHolder.city.setText(book.getCityOwner());
         viewHolder.chooseButton.setOnClickListener(this);
         viewHolder.bookImg.setTag(position);
+        set_url_image(position,viewHolder);
         //Return the completed view to render on screen
         return convertView;
     }
-}
+
+    private void set_url_image(int position, final ViewHolder viewHolder){
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        String book_img_name = "";
+        if(dataSet.get(position).getImgURL()){
+            book_img_name = dataSet.get(position).getBook_id()+".jpg";
+        }
+        else{
+            book_img_name = "no_image.png";
+        }
+        StorageReference img_ref = storageRef.child(book_img_name);
+        img_ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(viewHolder.bookImg);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        }
+
+    }
+
+

@@ -29,6 +29,18 @@ public class  Book {
         //this.cityOwner="None";
     }
 
+    public Book(Book other){
+        this.book_name = other.getBook_name();
+        this.book_cond = other.getBook_cond();
+        this.author_name = other.getAuthor_name();
+        this.num_pages = other.getNum_pages();
+        this.category = other.getCategory();
+        this.for_change = other.isFor_change();
+        this.uid = other.getUid();
+        this.img_url = other.getImgURL();
+        this.cityOwner= other.getCityOwner();
+    }
+
     public void init_cond(int book_cond){
         switch (book_cond){
             case 0:
@@ -53,6 +65,19 @@ public class  Book {
                 return "Used Book";
         }
     }
+
+    public String condString(){
+        switch (book_cond){
+            case NEW:
+                return "New Book";
+            case TORN:
+                return "Little Torn";
+            default:
+                return "Used Book";
+        }
+    }
+
+
 
     public Condition getBook_cond() {
         return book_cond;

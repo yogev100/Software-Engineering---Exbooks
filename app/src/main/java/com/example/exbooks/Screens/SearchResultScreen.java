@@ -2,26 +2,23 @@ package com.example.exbooks.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.constraintlayout.widget.ConstraintsChangedListener;
 
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.Objects.BookFormAdapter;
 import com.example.exbooks.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -32,30 +29,34 @@ public class SearchResultScreen extends AppCompatActivity {
 
     Boolean roman,metach,bio,cooking,fantasy,children,horror,history,religous,politics,parenting,educational;
     String bookName;
-    String startPage,endPage;
+    int startPage,endPage;
     Boolean newCond,usedCond,tornCond;
-    String authorView;
+    String bookAuthor;
     String freeSearch;
     ArrayList<Book> bookModels;
+    ArrayList<Book> temp;
     ListView listView;
     private static BookFormAdapter adapter;
+    DatabaseReference books_ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result_screen);
+
         VarInit();
 
 
-        listView=(ListView)findViewById(R.id.list);
+        listView=(ListView)findViewById(R.id.list_book_form);
         bookModels=new ArrayList<>();
-        bookModels.add(new Book("asdfasdf","Horror","asdfg",123,1,true,"asdfasdf2sadf",false));
-        bookModels.add(new Book("51asdf","Holut","assdfsddfg",123,2,true,"asdfasdf2sadf",false));
-        bookModels.add(new Book("dd","kaki","eee",123,2,true,"asdfasdf2sadf",false));
-        bookModels.add(new Book("fff","pipi","aswwwdfg",123,1,true,"asdfasdf2sadf",false));
-        bookModels.add(new Book("sdfs","shlsul","qqqq",500,0,true,"asdfasdf2sadf",false));
-        bookModels.add(new Book("ccc","mama","ffff",500,2,true,"asdfasdf2sadf",false));
-        bookModels.add(new Book("kjmhj","nana","gssgs",500,1,true,"asdfasdf2sadf",false));
+        FindCorrectBooks();
+//        bookModels.add(new Book("מה אומר","בעונה","בגבג",123,1,true,"asdfasdf2sadf",false));
+//        bookModels.add(new Book("51asdf","Holut","assdfsddfg",123,2,true,"asdfasdf2sadf",false));
+//        bookModels.add(new Book("dd","kaki","eee",123,2,true,"asdfasdf2sadf",false));
+//        bookModels.add(new Book("fff","pipi","aswwwdfg",123,1,true,"asdfasdf2sadf",false));
+//        bookModels.add(new Book("sdfs","shlsul","qqqq",500,0,true,"asdfasdf2sadf",false));
+//        bookModels.add(new Book("ccc","mama","ffff",500,2,true,"asdfasdf2sadf",false));
+//        bookModels.add(new Book("kjmhj","nana","gssgs",500,1,true,"asdfasdf2sadf",false));
 
         adapter=new BookFormAdapter(bookModels,getApplicationContext());
 
@@ -73,112 +74,8 @@ public class SearchResultScreen extends AppCompatActivity {
         });
 
 
-//        sv=(ScrollView)findViewById(R.id.search_scrollView);
-
-//        ConstraintLayout c = (ConstraintLayout)findViewById(R.id.bookForm_Layout);
-//        sv.addView(c);
-
-
-        //for
-//        LinearLayout newBook=(LinearLayout)findViewById(R.id.search_scrollView2);
-//        ConstraintSet setNew = new ConstraintSet();
-//        setNew.clone(newBook);
-
-        //Button 1:
-//        Button button = new Button(this);
-//        newBook.addView(button);
-//        setNew.connect(button.getId(), ConstraintSet.LEFT, newBook.getId(), ConstraintSet.LEFT, 0);
-//        setNew.connect(button.getId(), ConstraintSet.RIGHT, newBook.getId(), ConstraintSet.RIGHT, 0);
-//        setNew.connect(button.getId(), ConstraintSet.BOTTOM, newBook.getId(), ConstraintSet.BOTTOM, 0);
-//        setNew.constrainWidth(button.getId(), ConstraintSet.MATCH_CONSTRAINT);
-//        setNew.constrainHeight(button.getId(), 200);
-//        setNew.applyTo(newBook);
-
-
-        //Textview Name
-//        TextView nmtxtview = new TextView(this);
-//        nmtxtview.setText("Harry Potter");
-//        newBook.addView(nmtxtview);
-//        setNew.connect(nmtxtview.getId(), ConstraintSet.LEFT, newBook.getId(), ConstraintSet.LEFT, 0);
-//        setNew.connect(nmtxtview.getId(), ConstraintSet.RIGHT, newBook.getId(), ConstraintSet.RIGHT, 0);
-//        setNew.connect(nmtxtview.getId(), ConstraintSet.BOTTOM, newBook.getId(), ConstraintSet.BOTTOM, 0);
-//        setNew.constrainWidth(nmtxtview.getId(), ConstraintSet.MATCH_CONSTRAINT);
-//        setNew.constrainHeight(nmtxtview.getId(), 200);
-//        setNew.applyTo(newBook);
-
-        //Textview Category
-//        TextView ctgrynme = new TextView(this);
-//        ctgrynme.setText("Horror");
-//        newBook.addView(ctgrynme);
-//        setNew.connect(ctgrynme.getId(), ConstraintSet.LEFT, newBook.getId(), ConstraintSet.LEFT, 0);
-//        setNew.connect(ctgrynme.getId(), ConstraintSet.RIGHT, newBook.getId(), ConstraintSet.RIGHT, 0);
-//        setNew.connect(ctgrynme.getId(), ConstraintSet.BOTTOM, newBook.getId(), ConstraintSet.BOTTOM, 0);
-//        setNew.constrainWidth(ctgrynme.getId(), ConstraintSet.MATCH_CONSTRAINT);
-//        setNew.constrainHeight(ctgrynme.getId(), 200);
-//        setNew.applyTo(newBook);
-
-        //Textview Category
-//        TextView athr = new TextView(this);
-//        athr.setText("JK Rollin");
-//        newBook.addView(athr);
-//        setNew.connect(athr.getId(), ConstraintSet.LEFT, newBook.getId(), ConstraintSet.LEFT, 0);
-//        setNew.connect(athr.getId(), ConstraintSet.RIGHT, newBook.getId(), ConstraintSet.RIGHT, 0);
-//        setNew.connect(athr.getId(), ConstraintSet.BOTTOM, newBook.getId(), ConstraintSet.BOTTOM, 0);
-//        setNew.constrainWidth(athr.getId(), ConstraintSet.MATCH_CONSTRAINT);
-//        setNew.constrainHeight(athr.getId(), 200);
-//        setNew.applyTo(newBook);
-
-        //Textview Condition
-//        TextView cnd = new TextView(this);
-//        cnd.setText("Used");
-//        newBook.addView(cnd);
-//        setNew.connect(cnd.getId(), ConstraintSet.LEFT, newBook.getId(), ConstraintSet.LEFT, 0);
-//        setNew.connect(cnd.getId(), ConstraintSet.RIGHT, newBook.getId(), ConstraintSet.RIGHT, 0);
-//        setNew.connect(cnd.getId(), ConstraintSet.BOTTOM, newBook.getId(), ConstraintSet.BOTTOM, 0);
-//        setNew.constrainWidth(cnd.getId(), ConstraintSet.MATCH_CONSTRAINT);
-//        setNew.constrainHeight(cnd.getId(), 200);
-//        setNew.applyTo(newBook);
-
-        //Textview Category
-//        TextView city = new TextView(this);
-//        city.setText("Netanya");
-//        newBook.addView(city);
-//        setNew.connect(city.getId(), ConstraintSet.LEFT, newBook.getId(), ConstraintSet.LEFT, 0);
-//        setNew.connect(city.getId(), ConstraintSet.RIGHT, newBook.getId(), ConstraintSet.RIGHT, 0);
-//        setNew.connect(city.getId(), ConstraintSet.BOTTOM, newBook.getId(), ConstraintSet.BOTTOM, 0);
-//        setNew.constrainWidth(city.getId(), ConstraintSet.MATCH_CONSTRAINT);
-//        setNew.constrainHeight(city.getId(), 200);
-//        setNew.applyTo(newBook);
-
-//        sv.addView(newBook);
-        //end-fors
-
-
-
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R., menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     public void VarInit(){
         Intent intent=getIntent();
@@ -196,14 +93,292 @@ public class SearchResultScreen extends AppCompatActivity {
         educational = intent.getBooleanExtra("eduacationalC",false);
 
         bookName=intent.getStringExtra("bookName");
-        startPage=intent.getStringExtra("startPage");
-        endPage=intent.getStringExtra("endPage");
+        startPage=intent.getIntExtra("startPage",0);
+        endPage=intent.getIntExtra("endPage",10000);
 
         newCond = intent.getBooleanExtra("newCondC",false);
         usedCond = intent.getBooleanExtra("usedCondC",false);
         tornCond = intent.getBooleanExtra("tornCondC",false);
 
-        authorView=intent.getStringExtra("authorText");
+        bookAuthor=intent.getStringExtra("authorText");
         freeSearch=intent.getStringExtra("freeSearchText");
+
+        books_ref = FirebaseDatabase.getInstance().getReference("Books");
+        System.out.println(bookName.isEmpty());
+    }
+
+    private void FindCorrectBooks() {
+        temp = new ArrayList<>();
+        if(roman){
+            books_ref.child("רומן").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(metach){
+            books_ref.child("מתח ופעולה").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+//                            bookModels.add(book);
+                            bookModels.add(new Book(book));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(bio){
+            books_ref.child("ביוגרפיה").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+//                            bookModels.add(book);
+                            bookModels.add(new Book(book));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(cooking){
+            books_ref.child("בישול").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+//                            bookModels.add(book);
+                            bookModels.add(new Book(book));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(fantasy){
+            books_ref.child("מדע בדיוני ופנטזיה").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            //                            bookModels.add(book);
+                            bookModels.add(new Book(book));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(children){
+            books_ref.child("ילדים ונוער").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(horror){
+            books_ref.child("אימה").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            System.out.println(book.getBook_name());
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(history){
+            books_ref.child("היסטוריה").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(religous){
+            books_ref.child("יהדות").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(politics){
+            books_ref.child("פוליטיקה").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(parenting){
+            books_ref.child("הורות").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            System.out.println(book.getBook_name());
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(educational){
+            books_ref.child("לימוד").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot s: snapshot.getChildren()){
+                        Book book = s.getValue(Book.class);
+                        if(book != null) {
+                            System.out.println(book.getBook_name());
+                            bookModels.add(book);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+        for(int i=0; i<bookModels.size(); i++){
+            if(!bookName.isEmpty()){
+                if(!isSubstring(bookModels.get(i).getBook_name(),bookName)){
+                    bookModels.remove(i);
+                }
+            }
+            if(!bookAuthor.isEmpty()){
+                if(!isSubstring(bookModels.get(i).getAuthor_name(),bookAuthor)){
+                    bookModels.remove(i);
+                }
+            }
+            if(!(startPage<= bookModels.get(i).getNum_pages() && bookModels.get(i).getNum_pages() <= endPage)){
+                bookModels.remove(i);
+            }
+
+            if(newCond){
+               if(!bookModels.get(i).condString().equals("New book")){
+                   bookModels.remove(i);
+               }
+            }
+            if(usedCond){
+                if(!bookModels.get(i).condString().equals("Used Book")){
+                    bookModels.remove(i);
+                }
+            }
+            if(tornCond){
+                if(!bookModels.get(i).condString().equals("Little Torn")){
+                    bookModels.remove(i);
+                }
+            }
+        }
+
+//        bookModels = temp;
+
+    }
+
+    private boolean isSubstring(final String i_StringForSearch, final String i_SubStringToFind) {
+        int j = 0;
+        for (int i = 0; i < i_StringForSearch.length(); i++) {
+            if (i_StringForSearch.charAt(i) == i_SubStringToFind.charAt(j)) {
+                j++;
+                if (j == i_SubStringToFind.length()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
