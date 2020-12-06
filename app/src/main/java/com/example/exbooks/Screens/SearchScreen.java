@@ -1,13 +1,13 @@
 package com.example.exbooks.Screens;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.R;
 
@@ -73,12 +73,18 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                 endPage.setError("please fill the full range of pages");
                 return;
             }
+            int start_page = 0;
+            int end_page = 5000;
+            if( !strtPg.isEmpty() && !endPg.isEmpty()) {
+                start_page = Integer.parseInt(strtPg);
+                end_page = Integer.parseInt(endPg);
+            }
             Intent intent=new Intent(SearchScreen.this,SearchResultScreen.class);
             intent.putExtra("romnanC",roman.isChecked()).putExtra("metachC",metach.isChecked()).putExtra("biographyC",bio.isChecked())
                     .putExtra("cookingC",cooking.isChecked()).putExtra("fantasyC",fantasy.isChecked()).putExtra("childrenC",children.isChecked())
                     .putExtra("horrorC",horror.isChecked()).putExtra("historyC",history.isChecked()).putExtra("religousC",religous.isChecked())
                     .putExtra("politicsC",politics.isChecked()).putExtra("parenting",parenting.isChecked()).putExtra("eduacationalC",educational.isChecked())
-                    .putExtra("bookName",bkNm).putExtra("startPage",strtPg).putExtra("endPage",endPg)
+                    .putExtra("bookName",bkNm).putExtra("startPage",start_page).putExtra("endPage",end_page)
                     .putExtra("newCondC",newCond.isChecked()).putExtra("usedCondC",usedCond.isChecked()).putExtra("tornCondC",tornCond.isChecked())
                     .putExtra("authorText",athr).putExtra("freeSearchText",fresrch);
             startActivity(intent);

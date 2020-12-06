@@ -92,10 +92,12 @@ public class SearchResultScreen extends AppCompatActivity {
         parenting = intent.getBooleanExtra("parenting",false);
         educational = intent.getBooleanExtra("eduacationalC",false);
 
+        System.out.println("roman:"+roman);
         bookName=intent.getStringExtra("bookName");
         startPage=intent.getIntExtra("startPage",0);
         endPage=intent.getIntExtra("endPage",10000);
-
+        System.out.println("start page:"+startPage);
+        System.out.println("end page:"+endPage);
         newCond = intent.getBooleanExtra("newCondC",false);
         usedCond = intent.getBooleanExtra("usedCondC",false);
         tornCond = intent.getBooleanExtra("tornCondC",false);
@@ -115,8 +117,9 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            System.out.println(book.getBook_name());
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -133,7 +136,7 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
+                        if(book != null && book.isFor_change()) {
 //                            bookModels.add(book);
                             bookModels.add(new Book(book));
                         }
@@ -152,7 +155,7 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
+                        if(book != null && book.isFor_change()) {
 //                            bookModels.add(book);
                             bookModels.add(new Book(book));
                         }
@@ -171,7 +174,7 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
+                        if(book != null && book.isFor_change()) {
 //                            bookModels.add(book);
                             bookModels.add(new Book(book));
                         }
@@ -190,7 +193,7 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
+                        if(book != null && book.isFor_change()) {
                             //                            bookModels.add(book);
                             bookModels.add(new Book(book));
                         }
@@ -209,8 +212,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -227,9 +230,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            System.out.println(book.getBook_name());
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -246,8 +248,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -264,8 +266,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -282,8 +284,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -300,9 +302,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            System.out.println(book.getBook_name());
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -319,9 +320,8 @@ public class SearchResultScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot s: snapshot.getChildren()){
                         Book book = s.getValue(Book.class);
-                        if(book != null) {
-                            System.out.println(book.getBook_name());
-                            bookModels.add(book);
+                        if(book != null && book.isFor_change()) {
+                            bookModels.add(new Book(book));
                         }
                     }
                 }
@@ -332,37 +332,55 @@ public class SearchResultScreen extends AppCompatActivity {
                 }
             });
         }
-
+//        bookModels.add(new Book("מה אומר","בעונה","בגבג",123,1,true,"asdfasdf2sadf",false));
+//        bookModels.remove(bookModels.size()-1);
+        System.out.println("before" + bookModels.size());
         for(int i=0; i<bookModels.size(); i++){
             if(!bookName.isEmpty()){
                 if(!isSubstring(bookModels.get(i).getBook_name(),bookName)){
                     bookModels.remove(i);
+                    i--;
+                    continue;
                 }
             }
             if(!bookAuthor.isEmpty()){
                 if(!isSubstring(bookModels.get(i).getAuthor_name(),bookAuthor)){
                     bookModels.remove(i);
+                    i--;
+                    continue;
                 }
             }
             if(!(startPage<= bookModels.get(i).getNum_pages() && bookModels.get(i).getNum_pages() <= endPage)){
                 bookModels.remove(i);
+                i--;
+                continue;
             }
 
-            if(newCond){
-               if(!bookModels.get(i).condString().equals("New book")){
-                   bookModels.remove(i);
-               }
-            }
-            if(usedCond){
-                if(!bookModels.get(i).condString().equals("Used Book")){
-                    bookModels.remove(i);
-                }
-            }
-            if(tornCond){
-                if(!bookModels.get(i).condString().equals("Little Torn")){
-                    bookModels.remove(i);
-                }
-            }
+//            if(newCond){
+//               if(!bookModels.get(i).condString().equals("New book")){
+//                   bookModels.remove(i);
+//                   i--;
+//                   continue;
+//               }
+//            }
+//            if(usedCond){
+//                if(!bookModels.get(i).condString().equals("Used Book")){
+//                    bookModels.remove(i);
+//                    i--;
+//                    continue;
+//                }
+//            }
+//            if(tornCond){
+//                if(!bookModels.get(i).condString().equals("Little Torn")){
+//                    bookModels.remove(i);
+//                    i--;
+//                    continue;
+//                }
+//            }
+        }
+        System.out.println("after" + bookModels.size());
+        for( int i=0; i<bookModels.size(); i++){
+            System.out.println(bookModels.get(i).getBook_name());
         }
 
 //        bookModels = temp;
