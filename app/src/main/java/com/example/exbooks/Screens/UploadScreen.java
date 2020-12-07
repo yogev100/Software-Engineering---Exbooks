@@ -291,6 +291,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id));
+                                        bookRef.child(new_book.getCategory()).child(book_id).child("book_id").setValue(book_id);
                                         Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
                                         startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
                                         finish();
@@ -327,6 +328,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id));
+                        bookRef.child(new_book.getCategory()).child(book_id).child("book_id").setValue(book_id);
                         Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(UploadScreen.this, ProfileScreen.class));
                         finish();

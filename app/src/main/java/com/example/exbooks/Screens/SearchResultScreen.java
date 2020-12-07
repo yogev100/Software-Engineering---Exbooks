@@ -49,7 +49,11 @@ public class SearchResultScreen extends AppCompatActivity {
 
         listView=(ListView)findViewById(R.id.list_book_form);
         bookModels=new ArrayList<>();
-        FindCorrectBooks();
+        try {
+            FindCorrectBooks();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 //        bookModels.add(new Book("מה אומר","בעונה","בגבג",123,1,true,"asdfasdf2sadf",false));
 //        bookModels.add(new Book("51asdf","Holut","assdfsddfg",123,2,true,"asdfasdf2sadf",false));
 //        bookModels.add(new Book("dd","kaki","eee",123,2,true,"asdfasdf2sadf",false));
@@ -58,10 +62,10 @@ public class SearchResultScreen extends AppCompatActivity {
 //        bookModels.add(new Book("ccc","mama","ffff",500,2,true,"asdfasdf2sadf",false));
 //        bookModels.add(new Book("kjmhj","nana","gssgs",500,1,true,"asdfasdf2sadf",false));
 
-        adapter=new BookFormAdapter(bookModels,getApplicationContext());
 
 
-        listView.setAdapter(adapter);
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,282 +113,122 @@ public class SearchResultScreen extends AppCompatActivity {
         System.out.println(bookName.isEmpty());
     }
 
-    private void FindCorrectBooks() {
-        temp = new ArrayList<>();
-        if(roman){
-            books_ref.child("רומן").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            System.out.println(book.getBook_name());
-                            bookModels.add(new Book(book));
+    private void FindCorrectBooks() throws InterruptedException {
+        books_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot category:snapshot.getChildren()){
+                    System.out.println(category.getKey());
+                    if(checkCategory(category.getKey())) {
+                        for (DataSnapshot book : category.getChildren()) {
+                            Book b=book.getValue(Book.class);
+                            if(b!=null&&b.isFor_change()){
+                                System.out.println(b.getBook_name());
+                                bookModels.add(new Book(b));
+                            }
                         }
                     }
                 }
+                for(int i=0; i<bookModels.size(); i++){
+                    if(!bookName.isEmpty()){
+                        if(!isSubstring(bookModels.get(i).getBook_name(),bookName)){
+                            bookModels.remove(i);
+                            System.out.println("name@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                            i--;
+                            continue;
+                        }
+                    }
+                    if(!bookAuthor.isEmpty()){
+                        if(!isSubstring(bookModels.get(i).getAuthor_name(),bookAuthor)){
+                            bookModels.remove(i);
 
-                }
-            });
-        }
-        if(metach){
-            books_ref.child("מתח ופעולה").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-//                            bookModels.add(book);
-                            bookModels.add(new Book(book));
+                            i--;
+                            continue;
+                        }
+                    }
+                    if(!(startPage<= bookModels.get(i).getNum_pages() && bookModels.get(i).getNum_pages() <= endPage)){
+                        bookModels.remove(i);
+
+                        i--;
+                        continue;
+                    }
+
+                    if(!newCond){
+                        if(bookModels.get(i).condString().equals("New book")){
+                            bookModels.remove(i);
+
+                            i--;
+                            continue;
+                        }
+                    }
+                    if(!usedCond){
+                        if(bookModels.get(i).condString().equals("Used Book")){
+                            bookModels.remove(i);
+
+                            i--;
+                            continue;
+                        }
+                    }
+                    if(!tornCond){
+                        if(bookModels.get(i).condString().equals("Little Torn")){
+                            bookModels.remove(i);
+
+                            i--;
+                            continue;
                         }
                     }
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(bio){
-            books_ref.child("ביוגרפיה").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-//                            bookModels.add(book);
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(cooking){
-            books_ref.child("בישול").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-//                            bookModels.add(book);
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(fantasy){
-            books_ref.child("מדע בדיוני ופנטזיה").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            //                            bookModels.add(book);
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(children){
-            books_ref.child("ילדים ונוער").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(horror){
-            books_ref.child("אימה").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(history){
-            books_ref.child("היסטוריה").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(religous){
-            books_ref.child("יהדות").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(politics){
-            books_ref.child("פוליטיקה").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(parenting){
-            books_ref.child("הורות").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-        if(educational){
-            books_ref.child("לימוד").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot s: snapshot.getChildren()){
-                        Book book = s.getValue(Book.class);
-                        if(book != null && book.isFor_change()) {
-                            bookModels.add(new Book(book));
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-//        bookModels.add(new Book("מה אומר","בעונה","בגבג",123,1,true,"asdfasdf2sadf",false));
-//        bookModels.remove(bookModels.size()-1);
-        System.out.println("before" + bookModels.size());
-        for(int i=0; i<bookModels.size(); i++){
-            if(!bookName.isEmpty()){
-                if(!isSubstring(bookModels.get(i).getBook_name(),bookName)){
-                    bookModels.remove(i);
-                    i--;
-                    continue;
-                }
-            }
-            if(!bookAuthor.isEmpty()){
-                if(!isSubstring(bookModels.get(i).getAuthor_name(),bookAuthor)){
-                    bookModels.remove(i);
-                    i--;
-                    continue;
-                }
-            }
-            if(!(startPage<= bookModels.get(i).getNum_pages() && bookModels.get(i).getNum_pages() <= endPage)){
-                bookModels.remove(i);
-                i--;
-                continue;
+                System.out.println("Sise:"+bookModels.size());
+                adapter=new BookFormAdapter(bookModels,getApplicationContext());
+                listView.setAdapter(adapter);
             }
 
-//            if(newCond){
-//               if(!bookModels.get(i).condString().equals("New book")){
-//                   bookModels.remove(i);
-//                   i--;
-//                   continue;
-//               }
-//            }
-//            if(usedCond){
-//                if(!bookModels.get(i).condString().equals("Used Book")){
-//                    bookModels.remove(i);
-//                    i--;
-//                    continue;
-//                }
-//            }
-//            if(tornCond){
-//                if(!bookModels.get(i).condString().equals("Little Torn")){
-//                    bookModels.remove(i);
-//                    i--;
-//                    continue;
-//                }
-//            }
-        }
-        System.out.println("after" + bookModels.size());
-        for( int i=0; i<bookModels.size(); i++){
-            System.out.println(bookModels.get(i).getBook_name());
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-//        bookModels = temp;
+            }
+        });
+    }
 
+    private boolean checkCategory(String category) {
+        if(category.equals("רומן")&&roman){
+            return true;
+        }
+        else if(category.equals("מתח ופעולה")&&metach){
+            return true;
+        }
+        else if(category.equals("ביוגרפיה")&&bio){
+            return true;
+        }
+        else if(category.equals("בישול")&&cooking){
+            return true;
+        }
+        else if(category.equals("מדע בדיוני ופנטזיה")&&fantasy){
+            return true;
+        }
+        else if(category.equals("ילדים ונוער")&&children){
+            return true;
+        }
+        else if(category.equals("אימה")&&horror){
+            return true;
+        }
+        else if(category.equals("היסטוריה")&&history){
+            return true;
+        }
+        else if(category.equals("יהדות")&&religous){
+            return true;
+        }
+        else if(category.equals("פוליטיקה")&&politics){
+            return true;
+        }
+        else if(category.equals("הורות")&&parenting){
+            return true;
+        }
+        else if(category.equals("לימוד")&&educational){
+            return true;
+        }
+        return false;
     }
 
     private boolean isSubstring(final String i_StringForSearch, final String i_SubStringToFind) {

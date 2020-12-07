@@ -39,6 +39,7 @@ public class  Book {
         this.uid = other.getUid();
         this.img_url = other.getImgURL();
         this.cityOwner= other.getCityOwner();
+        this.book_id=other.getBook_id();
     }
 
     public void init_cond(int book_cond){
@@ -156,5 +157,6 @@ public class  Book {
     public void setCityOwner(String cityOwner) {
         this.cityOwner = cityOwner;
     }
+
 }
 

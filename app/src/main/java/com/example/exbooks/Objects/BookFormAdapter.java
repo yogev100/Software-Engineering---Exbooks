@@ -39,6 +39,8 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         TextView city;
         ImageView bookImg;
         Button chooseButton;
+        String bid;
+
     }
 
     public BookFormAdapter(ArrayList<Book> data, Context context) {
@@ -70,6 +72,7 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Book book = getItem(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
@@ -88,6 +91,7 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
             viewHolder.city = (TextView) convertView.findViewById(R.id.single_book_city);
             viewHolder.chooseButton = (Button) convertView.findViewById(R.id.single_book_button);
             viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.single_book_img);
+            viewHolder.bid=book.getBook_id();
 //            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
 
             result=convertView;
@@ -109,6 +113,7 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         viewHolder.city.setText(book.getCityOwner());
         viewHolder.chooseButton.setOnClickListener(this);
         viewHolder.bookImg.setTag(position);
+        viewHolder.bid=book.getBook_id();
         set_url_image(position,viewHolder);
         //Return the completed view to render on screen
         return convertView;
@@ -118,7 +123,8 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         String book_img_name = "";
         if(dataSet.get(position).getImgURL()){
-            book_img_name = dataSet.get(position).getBook_id()+".jpg";
+            System.out.println(viewHolder.bid);
+            book_img_name = viewHolder.bid+".jpg";
         }
         else{
             book_img_name = "no_image.png";

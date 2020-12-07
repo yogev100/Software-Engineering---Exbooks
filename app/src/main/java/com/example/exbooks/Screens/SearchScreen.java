@@ -41,7 +41,8 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         educational=(CheckBox)findViewById(R.id.educational_checkBox);
 
         bookName=(TextView)findViewById(R.id.bookName_Textview);
-        startPage=(TextView)findViewById(R.id.startBookPage_textview);endPage=(TextView)findViewById(R.id.startBookPage_textview);
+        startPage=(TextView)findViewById(R.id.startBookPage_textview);
+        endPage=(TextView)findViewById(R.id.endBookPage_textview);
 
         newCond=(CheckBox)findViewById(R.id.newCond_checkBox);
         usedCond=(CheckBox)findViewById(R.id.usedCond_checkBox);
@@ -66,12 +67,23 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         if(view==search){
             if(allempty()&&bkNm.isEmpty()&&strtPg.isEmpty()&&endPg.isEmpty()&&athr.isEmpty()&&fresrch.isEmpty()){
                 bookName.setError("Please fill at least one of the filters");
+                bookName.requestFocus();
                 return;
             }
-            if((strtPg.isEmpty()&&!endPg.isEmpty())||(!strtPg.isEmpty()&&endPg.isEmpty())){
+            if((strtPg.isEmpty()&&(!endPg.isEmpty()))||((!strtPg.isEmpty())&&endPg.isEmpty())){
                 startPage.setError("please fill the full range of pages");
+                startPage.requestFocus();
                 endPage.setError("please fill the full range of pages");
+                endPage.requestFocus();
                 return;
+            }
+            if(!newCond.isChecked()&&!usedCond.isChecked()&&!tornCond.isChecked()){
+                newCond.setError("Please fill one of the condition check box");
+                newCond.requestFocus();
+                usedCond.setError("Please fill one of the condition check box");
+                usedCond.requestFocus();
+                tornCond.setError("Please fill one of the condition check box");
+                tornCond.requestFocus();
             }
             int start_page = 0;
             int end_page = 5000;
