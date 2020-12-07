@@ -1,7 +1,5 @@
 package com.example.exbooks.Screens;
 
-import android.content.Intent;
-import android.net.http.SslCertificate;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
-import com.example.exbooks.Users.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -144,12 +140,15 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 Toast.makeText(ProfileScreen.this, "the data is not changed", Toast.LENGTH_LONG).show();
             }
             if (isNameChanged()){
+                _NAME = name.getText().toString();
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
             if(isPhoneChanged()){
+                _PHONE = phone.getText().toString();
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
             if(isCityChanged()){
+                _CITY = city.getText().toString();
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
         } else if (view == removeBook) {
@@ -170,7 +169,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     private boolean isPhoneChanged() {
         if (isClient) {
             //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
-            if (!_PHONE.equals(phone.getText().toString())) {
+            if (!_PHONE.equals(phone.getText().toString()) && (phone.getText().toString().length()==10 || phone.getText().toString().length()==11)) {
                 CurrentUser.child("phone").setValue(phone.getText().toString());
                 return true;
             } else {
@@ -178,7 +177,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             }
         } else {
             //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
-            if (!_PHONE.equals(phone.getText().toString())) {
+            if (!_PHONE.equals(phone.getText().toString()) && (phone.getText().toString().length()==10 || phone.getText().toString().length()==11)) {
                 CurrentUser.child("phone").setValue(phone.getText().toString());
                 return true;
             } else {
@@ -190,7 +189,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     private boolean isCityChanged() {
         if (isClient) {
             //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
-            if (!_CITY.equals(city.getText().toString())) {
+            if (!_CITY.equals(city.getText().toString()) && !city.getText().toString().isEmpty()) {
                 CurrentUser.child("city").setValue(city.getText().toString());
                 return true;
             } else {
@@ -198,7 +197,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             }
         } else {
             //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
-            if (!_CITY.equals(city.getText().toString())) {
+            if (!_CITY.equals(city.getText().toString()) && !city.getText().toString().isEmpty()) {
                 CurrentUser.child("city").setValue(city.getText().toString());
                 return true;
             } else {
@@ -210,7 +209,8 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     private boolean isNameChanged() {
         if (isClient) {
             //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
-            if (!_NAME.equals(name.getText().toString())) {
+            System.out.println(name.getText().toString());
+            if (!_NAME.equals(name.getText().toString()) && !name.getText().toString().isEmpty())  {
                 CurrentUser.child("fullname").setValue(name.getText().toString());
                 return true;
             } else {
@@ -218,7 +218,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             }
         } else {
             //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
-            if (!_NAME.equals(name.getText().toString())) {
+            if (!_NAME.equals(name.getText().toString()) && !name.getText().toString().isEmpty()) {
                 CurrentUser.child("fullname").setValue(name.getText().toString());
                 return true;
             } else {
