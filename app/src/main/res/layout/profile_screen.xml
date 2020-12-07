@@ -6,17 +6,20 @@
     android:layout_height="match_parent"
     android:background="#4E4E4E">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editText"
-        android:layout_width="199dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="76dp"
-        android:hint="העיר שלך"
+    <Button
+        android:id="@+id/updateDetailsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#E9967A"
+        android:text="עדכן פרטים"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/phoneNumber"
         android:layout_width="93dp"
         android:layout_height="23dp"
         android:layout_marginTop="32dp"
@@ -28,10 +31,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/city" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/city"
         android:layout_width="93dp"
         android:layout_height="23dp"
         android:layout_marginTop="32dp"
@@ -43,10 +46,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/mail" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/mail"
         android:layout_width="93dp"
         android:layout_height="23dp"
         android:layout_marginTop="32dp"
@@ -58,10 +61,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/fullName"
         android:layout_width="93dp"
         android:layout_height="23dp"
         android:layout_marginTop="32dp"
@@ -74,15 +77,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/PersonalDetails" />
 
     <ScrollView
         android:id="@+id/search_scrollView"
-        android:layout_width="393dp"
-        android:layout_height="200dp"
+        android:layout_width="410dp"
+        android:layout_height="186dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
@@ -120,7 +123,7 @@
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/removeBook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
@@ -149,7 +152,7 @@
         app:srcCompat="@drawable/exbooks" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/PersonalDetails"
         android:layout_width="118dp"
         android:layout_height="34dp"
         android:layout_marginTop="12dp"
@@ -167,53 +170,53 @@
 
     <EditText
         android:id="@+id/editTextPhone"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="מספר הטלפון שלך"
         android:inputType="phone"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/textView18"
-        app:layout_constraintHorizontal_bias="0.386"
+        app:layout_constraintEnd_toStartOf="@+id/phoneNumber"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText8" />
+        app:layout_constraintTop_toBottomOf="@+id/editCity" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText7"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="48dp"
+        android:id="@+id/editName"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="56dp"
         android:hint="השם שלך"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/textView14"
-        app:layout_constraintHorizontal_bias="0.386"
+        app:layout_constraintEnd_toStartOf="@+id/fullName"
+        app:layout_constraintHorizontal_bias="0.358"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/textView19"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/yourMail"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
         android:text="המייל שלך"
         android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView15"
-        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintEnd_toStartOf="@+id/mail"
+        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText7" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText8"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/editCity"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
         android:hint="העיר שלך"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/textView17"
-        app:layout_constraintHorizontal_bias="0.386"
+        app:layout_constraintEnd_toStartOf="@+id/city"
+        app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/yourMail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

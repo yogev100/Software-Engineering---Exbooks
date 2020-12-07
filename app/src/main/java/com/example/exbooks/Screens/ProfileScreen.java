@@ -1,28 +1,229 @@
 package com.example.exbooks.Screens;
 
+import android.content.Intent;
+import android.net.http.SslCertificate;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.R;
+import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
+import com.example.exbooks.Users.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class ProfileScreen extends AppCompatActivity {
+import java.util.ArrayList;
 
-    //ScrollView sv;
+public class ProfileScreen extends AppCompatActivity  implements View.OnClickListener {
+
+    // components
+    ScrollView sv;
+    Button update, removeBook;
+    EditText phone, name, city;
+    TextView email;
+    String _PHONE, _NAME, _CITY,_EMAIL;
+    String UID;
+
+    // Auth and DB references
+    FirebaseAuth cAuth;
+    DatabaseReference ClientRoot;
+    DatabaseReference ManagerRoot;
+    DatabaseReference CurrentUser;
+
+    boolean isClient;
+    Manager m;
+    Client c;
+    ArrayList<String> thisUserBooks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_screen);
 
+        //Scroll view
+        sv = (ScrollView) findViewById(R.id.search_scrollView);
 
-        //sv=(ScrollView)findViewById(R.id.search_scrollView);
+        // Buttons
+        update = (Button) findViewById(R.id.updateDetailsButton);
+        update.setOnClickListener(this);
+        removeBook = (Button) findViewById(R.id.removeBook);
+        removeBook.setOnClickListener(this);
+
+        // Text
+        phone = (EditText) findViewById(R.id.editTextPhone);
+        name = (EditText) findViewById(R.id.editName);
+        city = (EditText) findViewById(R.id.editCity);
+        email = (TextView) findViewById(R.id.yourMail);
+
+        // Database
+        cAuth = FirebaseAuth.getInstance();
+        ClientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+        ManagerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // call to the function that shows all the data from the database and checks if this user is client or manager
+        isClient();
+    }
 
 
+    void isClient() {
+        // ClientRoot.child(UID) -> Ia there a client with this UID
+        ClientRoot.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Client client = snapshot.getValue(Client.class);
+                if (client != null) {
+                    isClient = true;
+                    c=client;
+                    _PHONE = c.getPhone();
+                    _NAME = c.getfullname();
+                    _CITY = c.getCity();
+                    _EMAIL = c.getEmail();
+                    thisUserBooks = c.getMy_books();
+                    // set the data to the text fields
+                    phone.setText(_PHONE);
+                    city.setText(_CITY);
+                    name.setText(_NAME);
+                    email.setText(_EMAIL);
+                    CurrentUser=FirebaseDatabase.getInstance().getReference("Users").child("Clients").child(UID);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ProfileScreen.this, "Something was wrong!", Toast.LENGTH_LONG);
+            }
+        });
 
+        ManagerRoot.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Manager manager = snapshot.getValue(Manager.class);
+                if (manager != null) {
+                    isClient = false;
+                    m=manager;
+                    _PHONE = m.getPhone();
+                    _NAME = m.getfullname();
+                    _CITY = m.getCity();
+                    _EMAIL = m.getEmail();
+                    thisUserBooks = m.getMy_books();
+                    // set the data to the text fields
+                    phone.setText(_PHONE);
+                    city.setText(_CITY);
+                    name.setText(_NAME);
+                    email.setText(_EMAIL);
+                    CurrentUser=FirebaseDatabase.getInstance().getReference("Users").child("Managers").child(UID);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ProfileScreen.this, "Something was wrong!", Toast.LENGTH_LONG);
+            }
+        });
+    }
 
+    @Override
+    public void onClick(View view) {
+        // taking the perosnal information that changed-
+        if (view == update) {
+            if(!isNameChanged() && !isPhoneChanged() && !isCityChanged()){
+                Toast.makeText(ProfileScreen.this, "the data is not changed", Toast.LENGTH_LONG).show();
+            }
+            if (isNameChanged()){
+                Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
+            }
+            if(isPhoneChanged()){
+                Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
+            }
+            if(isCityChanged()){
+                Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
+            }
+        } else if (view == removeBook) {
+
+            /**
+             *
+             *
+             *
+             * make here changes.. delete book
+             *
+             *
+             *
+             */
+            Toast.makeText(ProfileScreen.this, "The book deleted", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isPhoneChanged() {
+        if (isClient) {
+            //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
+            if (!_PHONE.equals(phone.getText().toString())) {
+                CurrentUser.child("phone").setValue(phone.getText().toString());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
+            if (!_PHONE.equals(phone.getText().toString())) {
+                CurrentUser.child("phone").setValue(phone.getText().toString());
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private boolean isCityChanged() {
+        if (isClient) {
+            //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
+            if (!_CITY.equals(city.getText().toString())) {
+                CurrentUser.child("city").setValue(city.getText().toString());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
+            if (!_CITY.equals(city.getText().toString())) {
+                CurrentUser.child("city").setValue(city.getText().toString());
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private boolean isNameChanged() {
+        if (isClient) {
+            //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
+            if (!_NAME.equals(name.getText().toString())) {
+                CurrentUser.child("fullname").setValue(name.getText().toString());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
+            if (!_NAME.equals(name.getText().toString())) {
+                CurrentUser.child("fullname").setValue(name.getText().toString());
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

@@ -51,4 +51,5 @@ public class Manager extends User{
     public void setMy_books(ArrayList<String> my_books) {
         this.my_books = my_books;
     }
+
 }
