@@ -1,25 +1,18 @@
 package com.example.exbooks.Screens;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exbooks.Objects.Book;
-import com.example.exbooks.Objects.BookFormAdapter;
 import com.example.exbooks.Objects.ProfileBookAdapter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
@@ -32,8 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import okhttp3.internal.cache.DiskLruCache;
 
 public class ProfileScreen extends AppCompatActivity  implements View.OnClickListener {
 
@@ -57,7 +48,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     Client c;
     ArrayList<String> thisUserBooks;
     ArrayList<Book> bookModels;
-    RecyclerView listView;
+    ListView listView;
 
     private static ProfileBookAdapter adapter;
 
@@ -88,10 +79,9 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
 
         //Scroll view
 //        sv = (ScrollView) findViewById(R.id.profile_scrollView);
-        listView=(RecyclerView)findViewById(R.id.list_profile);
+        listView=(ListView) findViewById(R.id.list_profile);
         LinearLayoutManager LayoutManage = new LinearLayoutManager(this);
         LayoutManage.setOrientation(LinearLayoutManager.HORIZONTAL);
-        listView.setLayoutManager(LayoutManage);
         bookModels=new ArrayList<>();
         myBookListInit();
 
@@ -129,9 +119,10 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                     }
 
                 }
+
+
                 adapter=new ProfileBookAdapter(bookModels,getApplicationContext());
-                Adapter R = adapter;
-                listView.setAdapter((RecyclerView.Adapter) R);
+                listView.setAdapter(adapter);
             }
 
             @Override

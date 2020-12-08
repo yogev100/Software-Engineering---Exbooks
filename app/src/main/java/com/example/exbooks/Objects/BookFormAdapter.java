@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exbooks.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,7 +30,6 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
 
     // View lookup cache
     private static class ViewHolder {
-        ConstraintLayout constraint;
         TextView bookName;
         TextView category;
         TextView author;
