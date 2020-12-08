@@ -11,13 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.AndroidViewModel;
 
 import com.example.exbooks.R;
+import com.example.exbooks.Screens.ProfileScreen;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -28,41 +33,43 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
     private ArrayList<Book> dataSet;
     Context mContext;
+    DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("Books");
 
     // View lookup cache
     private static class ViewHolder {
-        ConstraintLayout constraint;
         TextView bookName;
-        TextView category;
-        TextView author;
-        TextView cond;
-        TextView city;
         ImageView bookImg;
-        Button chooseButton;
+        Button deleteButton;
         String bid;
-
     }
 
     public ProfileBookAdapter(ArrayList<Book> data, Context context) {
-        super(context, R.layout.single_book, data);
+        super(context, R.layout.book_profile, data);
         this.dataSet = data;
         this.mContext=context;
-
     }
 
     @Override
     public void onClick(View v) {
-
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Book book=(Book)object;
 
-        switch (v.getId())
-        {
-            case R.id.bookId_Button:
-                //Snackbar.make(v, "Release date " +book.getFeature(), Snackbar.LENGTH_LONG)
-                //.setAction("No action", null).show();
+        switch (v.getId()){
+            case R.id.button_profile:
+                deleteTheBook(book);
                 break;
+        }
+    }
+
+    private void deleteTheBook(Book book){
+        bookRef.child(book.getCategory()).child(book.getBook_id()).removeValue();
+        for(int i=0; i<dataSet.size();i++){
+            if(dataSet.get(i).getBook_id() == book.getBook_id()){
+                dataSet.remove(i);
+                Toast.makeText(getContext(), "The book deleted", Toast.LENGTH_LONG).show();
+                break;
+            }
         }
     }
 
@@ -82,17 +89,12 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.single_book, parent, false);
+            convertView = inflater.inflate(R.layout.book_profile, parent, false);
 
-            viewHolder.bookName = (TextView) convertView.findViewById(R.id.single_book_name);
-            viewHolder.category = (TextView) convertView.findViewById(R.id.single_book_category);
-            viewHolder.author = (TextView) convertView.findViewById(R.id.single_book_author);
-            viewHolder.cond = (TextView) convertView.findViewById(R.id.single_book_cond);
-            viewHolder.city = (TextView) convertView.findViewById(R.id.single_book_city);
-            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.single_book_button);
-            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.single_book_img);
+            viewHolder.bookName = (TextView) convertView.findViewById(R.id.book_name_profile);
+            viewHolder.deleteButton = (Button) convertView.findViewById(R.id.button_profile);
+            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.image_profile);
             viewHolder.bid=book.getBook_id();
-//            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
 
             result=convertView;
 
@@ -102,16 +104,12 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.right_to_left : R.anim.left_to_right);
         result.startAnimation(animation);
         lastPosition = position;
 
         viewHolder.bookName.setText(book.getBook_name());
-        viewHolder.category.setText(book.getCategory());
-        viewHolder.author.setText(book.getAuthor_name());
-        viewHolder.cond.setText(book.cond_toString(book.getBook_cond()));
-        viewHolder.city.setText(book.getCityOwner());
-        viewHolder.chooseButton.setOnClickListener(this);
+        viewHolder.deleteButton.setOnClickListener(this);
         viewHolder.bookImg.setTag(position);
         viewHolder.bid=book.getBook_id();
         set_url_image(position,viewHolder);
@@ -138,10 +136,8 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
             }
         });
-
     }
 
 }

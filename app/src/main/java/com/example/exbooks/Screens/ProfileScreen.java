@@ -1,16 +1,26 @@
 package com.example.exbooks.Screens;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exbooks.Objects.Book;
+import com.example.exbooks.Objects.BookFormAdapter;
+import com.example.exbooks.Objects.ProfileBookAdapter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
@@ -23,11 +33,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import okhttp3.internal.cache.DiskLruCache;
+
 public class ProfileScreen extends AppCompatActivity  implements View.OnClickListener {
 
     // components
-    ScrollView sv;
-    Button update, removeBook;
+//    ScrollView sv;
+    Button update;
     EditText phone, name, city;
     TextView email;
     String _PHONE, _NAME, _CITY,_EMAIL;
@@ -38,25 +50,26 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     DatabaseReference ClientRoot;
     DatabaseReference ManagerRoot;
     DatabaseReference CurrentUser;
+    DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("Books");
 
     boolean isClient;
     Manager m;
     Client c;
     ArrayList<String> thisUserBooks;
+    ArrayList<Book> bookModels;
+    RecyclerView listView;
+
+    private static ProfileBookAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_screen);
 
-        //Scroll view
-        sv = (ScrollView) findViewById(R.id.search_scrollView);
-
         // Buttons
         update = (Button) findViewById(R.id.updateDetailsButton);
         update.setOnClickListener(this);
-        removeBook = (Button) findViewById(R.id.removeBook);
-        removeBook.setOnClickListener(this);
 
         // Text
         phone = (EditText) findViewById(R.id.editTextPhone);
@@ -72,6 +85,59 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
 
         // call to the function that shows all the data from the database and checks if this user is client or manager
         isClient();
+
+        //Scroll view
+//        sv = (ScrollView) findViewById(R.id.profile_scrollView);
+        listView=(RecyclerView)findViewById(R.id.list_profile);
+        LinearLayoutManager LayoutManage = new LinearLayoutManager(this);
+        LayoutManage.setOrientation(LinearLayoutManager.HORIZONTAL);
+        listView.setLayoutManager(LayoutManage);
+        bookModels=new ArrayList<>();
+        myBookListInit();
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Book dataModel= bookModels.get(position);
+//                Toast.makeText(ProfileScreen.this, "you click on an item", Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+    }
+
+    private void myBookListInit() {
+        bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(isClient){
+                    for (int i=0; i<c.getMy_books().size();i++){
+                        for (DataSnapshot category : snapshot.getChildren()){
+                            Book b = category.child(c.getMy_books().get(i)).getValue(Book.class);
+                            if(b!=null){
+                                bookModels.add(new Book(b));
+                            }
+                        }
+                    }
+                }else{ // Manager
+                    for (int i=0; i<m.getMy_books().size();i++){
+                        for (DataSnapshot category : snapshot.getChildren()){
+                            Book b = category.child(m.getMy_books().get(i)).getValue(Book.class);
+                            if(b!=null){
+                                bookModels.add(new Book(b));
+                            }
+                        }
+                    }
+
+                }
+                adapter=new ProfileBookAdapter(bookModels,getApplicationContext());
+                Adapter R = adapter;
+                listView.setAdapter((RecyclerView.Adapter) R);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
 
@@ -151,18 +217,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 _CITY = city.getText().toString();
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
-        } else if (view == removeBook) {
-
-            /**
-             *
-             *
-             *
-             * make here changes.. delete book
-             *
-             *
-             *
-             */
-            Toast.makeText(ProfileScreen.this, "The book deleted", Toast.LENGTH_LONG).show();
         }
     }
 
