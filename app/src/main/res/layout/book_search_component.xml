@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/nameBookId_TextView"
-            android:layout_width="122dp"
+            android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginEnd="8dp"
             android:text="שם ספר"

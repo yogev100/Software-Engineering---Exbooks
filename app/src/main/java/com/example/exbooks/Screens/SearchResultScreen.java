@@ -32,9 +32,8 @@ public class SearchResultScreen extends AppCompatActivity {
     int startPage,endPage;
     Boolean newCond,usedCond,tornCond;
     String bookAuthor;
-    String freeSearch;
+    String citySearch;
     ArrayList<Book> bookModels;
-    ArrayList<Book> temp;
     ListView listView;
     private static BookFormAdapter adapter;
     DatabaseReference books_ref;
@@ -107,7 +106,7 @@ public class SearchResultScreen extends AppCompatActivity {
         tornCond = intent.getBooleanExtra("tornCondC",false);
 
         bookAuthor=intent.getStringExtra("authorText");
-        freeSearch=intent.getStringExtra("freeSearchText");
+        citySearch=intent.getStringExtra("citySearchText");
 
         books_ref = FirebaseDatabase.getInstance().getReference("Books");
         System.out.println(bookName.isEmpty());
@@ -133,8 +132,6 @@ public class SearchResultScreen extends AppCompatActivity {
                     if(!bookName.isEmpty()){
                         if(!isSubstring(bookModels.get(i).getBook_name(),bookName)){
                             bookModels.remove(i);
-                            System.out.println("name@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
                             i--;
                             continue;
                         }
@@ -142,14 +139,19 @@ public class SearchResultScreen extends AppCompatActivity {
                     if(!bookAuthor.isEmpty()){
                         if(!isSubstring(bookModels.get(i).getAuthor_name(),bookAuthor)){
                             bookModels.remove(i);
-
+                            i--;
+                            continue;
+                        }
+                    }
+                    if(!citySearch.isEmpty()){
+                        if(!citySearch.equals(bookModels.get(i).getCityOwner())){
+                            bookModels.remove(i);
                             i--;
                             continue;
                         }
                     }
                     if(!(startPage<= bookModels.get(i).getNum_pages() && bookModels.get(i).getNum_pages() <= endPage)){
                         bookModels.remove(i);
-
                         i--;
                         continue;
                     }
@@ -157,7 +159,6 @@ public class SearchResultScreen extends AppCompatActivity {
                     if(!newCond){
                         if(bookModels.get(i).condString().equals("New book")){
                             bookModels.remove(i);
-
                             i--;
                             continue;
                         }
@@ -179,7 +180,6 @@ public class SearchResultScreen extends AppCompatActivity {
                         }
                     }
                 }
-                System.out.println("Sise:"+bookModels.size());
                 adapter=new BookFormAdapter(bookModels,getApplicationContext());
                 listView.setAdapter(adapter);
             }
@@ -192,40 +192,40 @@ public class SearchResultScreen extends AppCompatActivity {
     }
 
     private boolean checkCategory(String category) {
-        if(category.equals("רומן")&&roman){
+        if(category.equals("Roman")&&roman){
             return true;
         }
-        else if(category.equals("מתח ופעולה")&&metach){
+        else if(category.equals("Thriller and action")&&metach){
             return true;
         }
-        else if(category.equals("ביוגרפיה")&&bio){
+        else if(category.equals("Biography")&&bio){
             return true;
         }
-        else if(category.equals("בישול")&&cooking){
+        else if(category.equals("Cooking")&&cooking){
             return true;
         }
-        else if(category.equals("מדע בדיוני ופנטזיה")&&fantasy){
+        else if(category.equals("Science fiction and fantasy")&&fantasy){
             return true;
         }
-        else if(category.equals("ילדים ונוער")&&children){
+        else if(category.equals("Children's and teenagers")&&children){
             return true;
         }
-        else if(category.equals("אימה")&&horror){
+        else if(category.equals("Horror")&&horror){
             return true;
         }
-        else if(category.equals("היסטוריה")&&history){
+        else if(category.equals("History")&&history){
             return true;
         }
-        else if(category.equals("יהדות")&&religous){
+        else if(category.equals("Religion")&&religous){
             return true;
         }
-        else if(category.equals("פוליטיקה")&&politics){
+        else if(category.equals("Politics")&&politics){
             return true;
         }
-        else if(category.equals("הורות")&&parenting){
+        else if(category.equals("Parenting")&&parenting){
             return true;
         }
-        else if(category.equals("לימוד")&&educational){
+        else if(category.equals("Educational")&&educational){
             return true;
         }
         return false;

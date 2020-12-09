@@ -7,6 +7,7 @@ public abstract class User {
             city,
             phone;
 
+
     public User(){}
     public User(String fullname, String email,
                 String password, String city, String phone){

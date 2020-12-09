@@ -94,7 +94,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         category_spinner = (Spinner) findViewById(R.id.category_spinner);
 
         ArrayAdapter<String> category_adapter = new ArrayAdapter<>(UploadScreen.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.קטגוריה));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.category));
 
         category_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category_spinner.setAdapter(category_adapter);

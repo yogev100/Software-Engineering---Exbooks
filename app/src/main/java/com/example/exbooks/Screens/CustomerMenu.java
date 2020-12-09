@@ -15,7 +15,7 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
 
     Button search,upload,events,profile,logout;
     FirebaseAuth cAuth;
-    ImageButton settings;
+    ImageButton notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +36,9 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         logout = (Button)findViewById(R.id.logout_button);
         logout.setOnClickListener(this);
 
+        notification=(ImageButton)findViewById(R.id.notification_button);
+        notification.setOnClickListener(this);
+
         cAuth=FirebaseAuth.getInstance();
 
     }
@@ -53,6 +56,9 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }else if(view == profile){
             Intent intent = new Intent(CustomerMenu.this,ProfileScreen.class);
+            startActivity(intent);
+        }else if(view == notification){
+            Intent intent = new Intent(CustomerMenu.this,NotificationScreen.class);
             startActivity(intent);
         }else if(view == logout){
             cAuth.signOut();

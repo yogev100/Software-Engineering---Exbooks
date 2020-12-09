@@ -18,7 +18,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     TextView startPage,endPage;
     CheckBox newCond,usedCond,tornCond;
     TextView authorView;
-    TextView freeSearch;
+    TextView citySearch;
 
     Button search;
     CheckBox[] c;
@@ -49,7 +49,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         tornCond=(CheckBox)findViewById(R.id.tornCond_checkBox);
         c=new CheckBox[]{roman,metach,bio,cooking,fantasy,children,horror,history,religous,politics,parenting,educational};
         authorView=(TextView)findViewById(R.id.authorBookId);
-        freeSearch=(TextView)findViewById(R.id.freeSearch_textView);
+        citySearch=(TextView)findViewById(R.id.citySearch_textView);
 
         search=(Button)findViewById(R.id.search_button);
         search.setOnClickListener(this);
@@ -61,11 +61,11 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         String strtPg=startPage.getText().toString().trim();
         String endPg=endPage.getText().toString().trim();
         String athr=authorView.getText().toString().trim();
-        String fresrch=freeSearch.getText().toString().trim();
+        String cty=citySearch.getText().toString().trim();
 
 
         if(view==search){
-            if(allempty()&&bkNm.isEmpty()&&strtPg.isEmpty()&&endPg.isEmpty()&&athr.isEmpty()&&fresrch.isEmpty()){
+            if(allempty()&&bkNm.isEmpty()&&strtPg.isEmpty()&&endPg.isEmpty()&&athr.isEmpty()&&cty.isEmpty()){
                 bookName.setError("Please fill at least one of the filters");
                 bookName.requestFocus();
                 return;
@@ -98,7 +98,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                     .putExtra("politicsC",politics.isChecked()).putExtra("parenting",parenting.isChecked()).putExtra("eduacationalC",educational.isChecked())
                     .putExtra("bookName",bkNm).putExtra("startPage",start_page).putExtra("endPage",end_page)
                     .putExtra("newCondC",newCond.isChecked()).putExtra("usedCondC",usedCond.isChecked()).putExtra("tornCondC",tornCond.isChecked())
-                    .putExtra("authorText",athr).putExtra("freeSearchText",fresrch);
+                    .putExtra("authorText",athr).putExtra("citySearchText",cty);
             startActivity(intent);
         }
 

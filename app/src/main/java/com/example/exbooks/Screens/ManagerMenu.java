@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 public class ManagerMenu extends AppCompatActivity implements View.OnClickListener {
 
     Button search,upload,events,profile,logout,newManager,createEvent;
+    ImageButton notification;
     FirebaseAuth cAuth;
     ImageButton settings;
 
@@ -42,6 +43,10 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
         logout = (Button)findViewById(R.id.M_logout_button);
         logout.setOnClickListener(this);
 
+        notification=(ImageButton)findViewById(R.id.M_notification_button);
+        notification.setOnClickListener(this);
+
+
         cAuth=FirebaseAuth.getInstance();
 
     }
@@ -62,6 +67,9 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }else if(view == newManager){
             Intent intent = new Intent(ManagerMenu.this,NewManager.class);
+            startActivity(intent);
+        }else if(view == notification){
+            Intent intent = new Intent(ManagerMenu.this,NotificationScreen.class);
             startActivity(intent);
         }else if(view == createEvent){//Not Done
 //            Intent intent = new Intent(MangerMenu.this,ProfileScreen.class);

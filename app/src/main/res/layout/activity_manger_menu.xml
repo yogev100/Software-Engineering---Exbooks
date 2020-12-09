@@ -126,13 +126,15 @@
         app:srcCompat="@drawable/exbooks" />
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="65dp"
-        android:layout_height="54dp"
+        android:id="@+id/M_notification_button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
+        tools:srcCompat="@drawable/notification" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

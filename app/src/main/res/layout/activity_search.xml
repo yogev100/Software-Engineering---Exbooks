@@ -55,6 +55,19 @@
         app:layout_constraintTop_toBottomOf="@+id/newCond_checkBox" />
 
     <TextView
+        android:id="@+id/textView14"
+        android:layout_width="125dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="32dp"
+        android:text="עיר של בעל הספר"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorBookId" />
+
+    <TextView
         android:id="@+id/textView6"
         android:layout_width="77dp"
         android:layout_height="27dp"
@@ -176,7 +189,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freeSearch_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/citySearch_textView" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/bookName_Textview"
@@ -207,19 +220,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/freeSearch_textView"
-        android:layout_width="350dp"
+        android:id="@+id/citySearch_textView"
+        android:layout_width="208dp"
         android:layout_height="43dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="#FFFFFF"
-        android:hint="חיפוש חופשי"
+        android:hint="עיר"
         android:textColor="#EDE8E8"
         android:textColorHighlight="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textColorLink="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorBookId" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/startBookPage_textview"

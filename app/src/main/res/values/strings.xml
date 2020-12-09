@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">ExBooks</string>
 
-    <string-array name="קטגוריה">
-        <item>רומן</item>
-        <item>מתח ופעולה</item>
-        <item>ביוגרפיה</item>
-        <item>בישול</item>
-        <item>מדע בדיוני ופנטזיה</item>
-        <item>ילדים ונוער</item>
-        <item>אימה</item>
-        <item>היסטוריה</item>
-        <item>יהדות</item>
-        <item>פוליטיקה</item>
-        <item>הורות</item>
-        <item>לימוד</item>
+    <string-array name="category">
+        <item>Roman</item>
+        <item>Thriller and action</item>
+        <item>Biography</item>
+        <item>Cooking</item>
+        <item>Science fiction and fantasy</item>
+        <item>Children and teenager</item>
+        <item>Horror</item>
+        <item>History</item>
+        <item>Religion</item>
+        <item>Politics</item>
+        <item>Parenting</item>
+        <item>Educational</item>
     </string-array>
 
     <string-array name="מצב">

@@ -8,6 +8,18 @@
     android:background="#4E4E4E"
     tools:context=".Screens.CustomerMenu">
 
+    <ImageButton
+        android:id="@+id/notification_button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@drawable/notification" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="168dp"
@@ -95,16 +107,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/exbooks" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="65dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

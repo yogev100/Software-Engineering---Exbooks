@@ -11,25 +11,40 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exbooks.R;
+import com.example.exbooks.Screens.MainActivity;
+import com.example.exbooks.Screens.SearchResultScreen;
+import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickListener{
+public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClickListener{
 
     private ArrayList<Book> dataSet;
     Context mContext;
 
     // View lookup cache
     private static class ViewHolder {
+        ConstraintLayout constraint;
         TextView bookName;
         TextView category;
         TextView author;
@@ -42,7 +57,8 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
     }
 
     public BookFormAdapter(ArrayList<Book> data, Context context) {
-        super(context, R.layout.single_book, data);
+        super(context, R.layout.book_search_component, data);
+        //super(context, R.layout.single_book, data);
         this.dataSet = data;
         this.mContext=context;
 
@@ -50,7 +66,6 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Book book=(Book)object;
@@ -58,10 +73,49 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         switch (v.getId())
         {
             case R.id.bookId_Button:
-                //Snackbar.make(v, "Release date " +book.getFeature(), Snackbar.LENGTH_LONG)
-                        //.setAction("No action", null).show();
+                sendNotificatio(book);
+                Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG)
+                        .setAction("No action", null).show();
                 break;
         }
+    }
+
+    private void sendNotificatio(final Book book) {
+        final DatabaseReference managerRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+        final DatabaseReference clientRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+
+        managerRef.child(book.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Manager m = snapshot.getValue(Manager.class);
+                if(m!=null){
+                    m.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),book.getBook_name()));
+                    managerRef.child(book.getUid()).setValue(m);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        clientRef.child(book.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Client c = snapshot.getValue(Client.class);
+                if(c!=null){
+                    c.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),book.getBook_name()));
+                    managerRef.child(book.getUid()).setValue(c);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private int lastPosition = -1;
@@ -80,15 +134,24 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.single_book, parent, false);
+            convertView = inflater.inflate(R.layout.book_search_component, parent, false);
 
-            viewHolder.bookName = (TextView) convertView.findViewById(R.id.single_book_name);
-            viewHolder.category = (TextView) convertView.findViewById(R.id.single_book_category);
-            viewHolder.author = (TextView) convertView.findViewById(R.id.single_book_author);
-            viewHolder.cond = (TextView) convertView.findViewById(R.id.single_book_cond);
-            viewHolder.city = (TextView) convertView.findViewById(R.id.single_book_city);
-            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.single_book_button);
-            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.single_book_img);
+            viewHolder.bookName = (TextView) convertView.findViewById(R.id.nameBookId_TextView);
+            viewHolder.category = (TextView) convertView.findViewById(R.id.categoryBookId_TextView);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.authorBookId_TextView);
+            viewHolder.cond = (TextView) convertView.findViewById(R.id.conditionBookId_TextView);
+            viewHolder.city = (TextView) convertView.findViewById(R.id.cityBookId_TextView);
+            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.bookId_Button);
+            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.ImageBookId_ImageView);
+
+//            viewHolder.bookName = (TextView) convertView.findViewById(R.id.single_book_name);
+//            viewHolder.category = (TextView) convertView.findViewById(R.id.single_book_category);
+//            viewHolder.author = (TextView) convertView.findViewById(R.id.single_book_author);
+//            viewHolder.cond = (TextView) convertView.findViewById(R.id.single_book_cond);
+//            viewHolder.city = (TextView) convertView.findViewById(R.id.single_book_city);
+//            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.single_book_button);
+//            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.single_book_img);
+
             viewHolder.bid=book.getBook_id();
 //            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
 
@@ -110,7 +173,7 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         viewHolder.cond.setText(book.cond_toString(book.getBook_cond()));
         viewHolder.city.setText(book.getCityOwner());
         viewHolder.chooseButton.setOnClickListener(this);
-        viewHolder.bookImg.setTag(position);
+        viewHolder.chooseButton.setTag(position);
         viewHolder.bid=book.getBook_id();
         set_url_image(position,viewHolder);
         //Return the completed view to render on screen
@@ -121,7 +184,6 @@ public class BookFormAdapter extends ArrayAdapter<Book> implements View.OnClickL
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         String book_img_name = "";
         if(dataSet.get(position).getImgURL()){
-            System.out.println(viewHolder.bid);
             book_img_name = viewHolder.bid+".jpg";
         }
         else{
