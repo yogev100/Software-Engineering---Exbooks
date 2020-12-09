@@ -269,7 +269,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         book_ref.child("cityOwner").setValue(client.getCity());
                         client.getMy_books().add(book_id);
                         clientRoot.child(uid).setValue(client);
+                        Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(UploadScreen.this, CustomerMenu.class));
+                        finish();
                     }
                 }
 
@@ -320,9 +322,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id), new_book);
-//                                        bookRef.child(new_book.getCategory()).child(book_id).child("book_id").setValue(book_id);
-//                                        Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
-//                                        finish();
+
                                     } else {
                                         Toast.makeText(UploadScreen.this,
                                                 "Failed to upload! Try again!",
@@ -356,9 +356,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id),new_book);
-//                        bookRef.child(new_book.getCategory()).child(book_id).child("book_id").setValue(book_id);
-//                        Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
-//                        finish();
+
                     } else {
                         Toast.makeText(UploadScreen.this,
                                 "Failed to upload! Try again!",

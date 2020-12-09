@@ -18,6 +18,14 @@ public abstract class User {
         this.phone=phone;
     }
 
+    public User(User other){
+        this.fullname = other.getfullname();
+        this.city = other.getCity();
+        this.email = other.getEmail();
+        this.password = other.getPassword();
+        this.phone = other.getPhone();
+    }
+
     public String getCity() {
         return city;
     }

@@ -136,7 +136,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 Client client = snapshot.getValue(Client.class);
                 if (client != null) {
                     isClient = true;
-                    c=client;
+                    c=new Client(client);
                     _PHONE = c.getPhone();
                     _NAME = c.getfullname();
                     _CITY = c.getCity();
@@ -163,7 +163,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 Manager manager = snapshot.getValue(Manager.class);
                 if (manager != null) {
                     isClient = false;
-                    m=manager;
+                    m=new Manager(manager);
                     _PHONE = m.getPhone();
                     _NAME = m.getfullname();
                     _CITY = m.getCity();

@@ -26,6 +26,14 @@ public class Manager extends User {
 
     }
 
+    public Manager(Manager other){
+        super(other);
+        this.my_books = other.getMy_books();
+        this.notification = other.getNotification();
+        this.event = other.getEvent();
+        this.num_of_books_donated = other.getNum_of_books_donated();
+    }
+
     public Event getEvent() {
         return event;
     }

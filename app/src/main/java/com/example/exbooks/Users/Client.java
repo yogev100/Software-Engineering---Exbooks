@@ -18,6 +18,13 @@ public class Client extends User {
 
     }
 
+    public Client(Client other){
+        super(other);
+        this.my_books = other.getMy_books();
+        this.notification = other.getNotification();
+
+    }
+
     public ArrayList<String> getMy_books() {
         return my_books;
     }
