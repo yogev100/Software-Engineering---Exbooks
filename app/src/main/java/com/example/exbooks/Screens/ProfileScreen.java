@@ -117,10 +117,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                             }
                         }
                     }
-
                 }
-
-
                 adapter=new ProfileBookAdapter(bookModels,getApplicationContext());
                 listView.setAdapter(adapter);
             }
@@ -130,7 +127,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             }
         });
     }
-
 
     void isClient() {
         // ClientRoot.child(UID) -> Ia there a client with this UID
@@ -271,4 +267,5 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             }
         }
     }
+
 }

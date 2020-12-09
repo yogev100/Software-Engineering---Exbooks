@@ -85,17 +85,18 @@
         android:layout_height="190dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">>
 
             <ListView
                 android:id="@+id/list_profile"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="189dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true" />
 
@@ -104,98 +105,99 @@
     </ScrollView>
 
     <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/exbooks" />
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/exbooks" />
 
-                    <TextView
-                        android:id="@+id/PersonalDetails"
-                        android:layout_width="118dp"
-                        android:layout_height="34dp"
-                        android:layout_marginTop="12dp"
-                        android:text="פרטים אישיים"
-                        android:textAlignment="center"
-                        android:textColor="#FFFFFF"
-                        android:textColorHighlight="#FFFFFF"
-                        android:textColorHint="#FFFFFF"
-                        android:textColorLink="#FFFFFF"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.943"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <TextView
+        android:id="@+id/PersonalDetails"
+        android:layout_width="118dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="12dp"
+        android:text="פרטים אישיים:"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-                    <EditText
-                        android:id="@+id/editTextPhone"
-                        android:layout_width="224dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="16dp"
-                        android:ems="10"
-                        android:hint="מספר הטלפון שלך"
-                        android:inputType="phone"
-                        android:textAlignment="center"
-                        app:layout_constraintEnd_toStartOf="@+id/phoneNumber"
-                        app:layout_constraintHorizontal_bias="0.384"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editCity" />
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="מספר הטלפון שלך"
+        android:inputType="phone"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/phoneNumber"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCity" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editName"
-                        android:layout_width="224dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="56dp"
-                        android:hint="השם שלך"
-                        android:textAlignment="center"
-                        app:layout_constraintEnd_toStartOf="@+id/fullName"
-                        app:layout_constraintHorizontal_bias="0.358"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editName"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="56dp"
+        android:hint="השם שלך"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/fullName"
+        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-                    <TextView
-                        android:id="@+id/yourMail"
-                        android:layout_width="224dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="16dp"
-                        android:text="המייל שלך"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/mail"
-                        app:layout_constraintHorizontal_bias="0.375"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editName" />
+    <TextView
+        android:id="@+id/yourMail"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:text="המייל שלך"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/mail"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editCity"
-                        android:layout_width="224dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="4dp"
-                        android:hint="העיר שלך"
-                        android:textAlignment="center"
-                        app:layout_constraintEnd_toStartOf="@+id/city"
-                        app:layout_constraintHorizontal_bias="0.384"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/yourMail" />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editCity"
+        android:layout_width="224dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:hint="העיר שלך"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/city"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourMail" />
 
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="132dp"
-                        android:layout_height="35dp"
-                        android:layout_marginTop="60dp"
-                        android:text="הספרים שלי:"
-                        android:textColor="#FFFFFF"
-                        android:textColorHighlight="#FFFFFF"
-                        android:textColorHint="#FFFFFF"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/search_scrollView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.854"
-                        app:layout_constraintStart_toEndOf="@+id/updateDetailsButton"
-                        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
-                        app:layout_constraintVertical_bias="0.849" />
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="132dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="60dp"
+        android:text="הספרים שלי:"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/search_scrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintStart_toEndOf="@+id/updateDetailsButton"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+        app:layout_constraintVertical_bias="0.849" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

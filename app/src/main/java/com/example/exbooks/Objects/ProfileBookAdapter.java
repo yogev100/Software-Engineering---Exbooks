@@ -2,6 +2,7 @@ package com.example.exbooks.Objects;
 
 import android.content.Context;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +16,87 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.exbooks.R;
+import com.example.exbooks.Screens.ProfileScreen;
+import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnClickListener{
 
     private ArrayList<Book> dataSet;
     Context mContext;
+    DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("Books");
+    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+    FirebaseAuth cAuth = FirebaseAuth.getInstance();
 
     // View lookup cache
     private static class ViewHolder {
         TextView bookName;
+        TextView category;
+        TextView author;
+        TextView condition;
         ImageView bookImg;
         Button delete;
         String bid;
+
+    }
+
+    public void deleteFromMyBooks(final String UID, final String BID){
+        final DatabaseReference clientRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+        final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+
+        managerRef.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Manager m= snapshot.getValue(Manager.class);
+                if(m!=null){
+                    for(int i=0; i<m.getMy_books().size(); i++){
+                        System.out.println(m.getMy_books().get(i)+ " @@@@@@@@@@@ " + BID);
+                        if(m.getMy_books().get(i).equals(BID)){
+                            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                            System.out.println(m.getMy_books().get(i));
+                            managerRef.child(UID).child("my_books").child(i+"").removeValue();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        clientRef.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Client c = snapshot.getValue(Client.class);
+                if(c!=null){
+                    for(int i=0; i<c.getMy_books().size(); i++){
+                        if(c.getMy_books().get(i).equals(BID)){
+                            clientRef.child(UID).child("my_books").child(i+"").removeValue();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -46,16 +109,19 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
     @Override
     public void onClick(View v) {
-
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Book book=(Book)object;
 
         switch (v.getId())
         {
-            case R.id.bookId_Button:
-                //Snackbar.make(v, "Release date " +book.getFeature(), Snackbar.LENGTH_LONG)
-                //.setAction("No action", null).show();
+            case R.id.button_profile:
+
+                dataSet.remove(position);                                                   // remove from the array list
+                bookRef.child(book.getCategory()).child(book.getBook_id()).removeValue();   // remove from the Books tree
+                storageRef.child(book.getBook_id()+ ".jpg").delete();                       // remove the picture from the storage
+                deleteFromMyBooks(cAuth.getCurrentUser().getUid(),book.getBook_id());       // remove from "my books" list in the User tree
+                notifyDataSetChanged();                                                     // (remove and) update the list view..
                 break;
         }
     }
@@ -79,6 +145,9 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
             convertView = inflater.inflate(R.layout.book_profile, parent, false);
 
             viewHolder.bookName = (TextView) convertView.findViewById(R.id.book_name_profile);
+            viewHolder.category = (TextView) convertView.findViewById(R.id.category_profile);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.author_name);
+            viewHolder.condition = (TextView) convertView.findViewById(R.id.condition_profile);
             viewHolder.delete = (Button) convertView.findViewById(R.id.button_profile);
             viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.image_profile);
             viewHolder.bid=book.getBook_id();
@@ -96,8 +165,11 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         result.startAnimation(animation);
         lastPosition = position;
         viewHolder.bookName.setText(book.getBook_name());
+        viewHolder.category.setText(book.getCategory());
+        viewHolder.author.setText(book.getAuthor_name());
+        viewHolder.condition.setText(book.condString());
         viewHolder.delete.setOnClickListener(this);
-        viewHolder.bookImg.setTag(position);
+        viewHolder.delete.setTag(position);
         viewHolder.bid=book.getBook_id();
         set_url_image(position,viewHolder);
         //Return the completed view to render on screen
@@ -127,6 +199,14 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         });
 
     }
+
+
+
+
+
+
+
+
 
 
 }
