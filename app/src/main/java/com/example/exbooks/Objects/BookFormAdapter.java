@@ -1,7 +1,10 @@
 package com.example.exbooks.Objects;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +79,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
                 sendNotificatio(book);
                 Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
+                v.setClickable(false);
                 break;
         }
     }
@@ -89,7 +93,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
-                    m.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),book.getBook_name()));
+                    m.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),m.getfullname(),book));
                     managerRef.child(book.getUid()).setValue(m);
                 }
             }
@@ -104,7 +108,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
-                    c.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),book.getBook_name()));
+                    c.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),c.getfullname(),book));
                     managerRef.child(book.getUid()).setValue(c);
                 }
             }

@@ -2,21 +2,38 @@ package com.example.exbooks.Objects;
 
 public class Notification {
 
-    private String book_name;
+    private Book book;
     private String userWantsTheBookId;
+    private String wanterName;
 
     public Notification(){}
-    public Notification(String uid,String bookName){
-        this.book_name=bookName;
+    public Notification(String uid,String wanterName,Book book){
+        this.book=book;
         this.userWantsTheBookId=uid;
+        this.wanterName=wanterName;
+
     }
 
-    public void setBook_name(String book_name) {
-        this.book_name = book_name;
+    public Notification(Notification other){
+        this.book=other.getBook();
+        this.userWantsTheBookId=other.getUserWantsTheBookId();
+        this.wanterName=other.getWanterName();
     }
 
-    public String getBook_name() {
-        return book_name;
+    public String getWanterName() {
+        return wanterName;
+    }
+
+    public void setWanterName(String wanterName) {
+        this.wanterName = wanterName;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public String getUserWantsTheBookId() {

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.Objects.BookFormAdapter;
 import com.example.exbooks.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -95,12 +96,9 @@ public class SearchResultScreen extends AppCompatActivity {
         parenting = intent.getBooleanExtra("parenting",false);
         educational = intent.getBooleanExtra("eduacationalC",false);
 
-        System.out.println("roman:"+roman);
         bookName=intent.getStringExtra("bookName");
         startPage=intent.getIntExtra("startPage",0);
         endPage=intent.getIntExtra("endPage",10000);
-        System.out.println("start page:"+startPage);
-        System.out.println("end page:"+endPage);
         newCond = intent.getBooleanExtra("newCondC",false);
         usedCond = intent.getBooleanExtra("usedCondC",false);
         tornCond = intent.getBooleanExtra("tornCondC",false);
@@ -109,7 +107,6 @@ public class SearchResultScreen extends AppCompatActivity {
         citySearch=intent.getStringExtra("citySearchText");
 
         books_ref = FirebaseDatabase.getInstance().getReference("Books");
-        System.out.println(bookName.isEmpty());
     }
 
     private void FindCorrectBooks() throws InterruptedException {
@@ -117,18 +114,22 @@ public class SearchResultScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot category:snapshot.getChildren()){
-                    System.out.println(category.getKey());
                     if(checkCategory(category.getKey())) {
                         for (DataSnapshot book : category.getChildren()) {
                             Book b=book.getValue(Book.class);
                             if(b!=null&&b.isFor_change()){
-                                System.out.println(b.getBook_name());
                                 bookModels.add(new Book(b));
                             }
                         }
                     }
                 }
                 for(int i=0; i<bookModels.size(); i++){
+
+                    if(bookModels.get(i).getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        bookModels.remove(i);
+                        i--;
+                        continue;
+                    }
                     if(!bookName.isEmpty()){
                         if(!isSubstring(bookModels.get(i).getBook_name(),bookName)){
                             bookModels.remove(i);
