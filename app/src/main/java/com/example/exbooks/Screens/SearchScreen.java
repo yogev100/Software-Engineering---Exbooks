@@ -84,6 +84,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                 usedCond.requestFocus();
                 tornCond.setError("Please fill one of the condition check box");
                 tornCond.requestFocus();
+                return;
             }
             int start_page = 0;
             int end_page = 5000;
