@@ -1,9 +1,11 @@
 package com.example.exbooks.Users;
-import com.example.exbooks.Objects.*;
+
+import com.example.exbooks.Objects.Event;
+import com.example.exbooks.Objects.Notification;
 
 import java.util.ArrayList;
 
-public class Manager extends User{
+public class Manager extends User {
     ArrayList<String> my_books;
     ArrayList<Notification> notification;
 
@@ -11,8 +13,10 @@ public class Manager extends User{
     private int num_of_books_donated;
 
     public Manager(){
+
         my_books=new ArrayList<String>();
         notification=new ArrayList<Notification>();
+
     }
 
     public Manager(String fullname, String email, String password, String city, String phone) {
@@ -30,11 +34,11 @@ public class Manager extends User{
         this.event = event;
     }
 
-    public int getNum_of_books_donated() {
-        return num_of_books_donated;
+    public  int getNum_of_books_donated() {
+        return this.num_of_books_donated;
     }
 
-    public void setNum_of_books_donated(int num_of_books_donated) {
+    public  void setNum_of_books_donated(int num_of_books_donated) {
         this.num_of_books_donated = num_of_books_donated;
     }
 
@@ -53,4 +57,10 @@ public class Manager extends User{
     public void setNotification(ArrayList<Notification> notification) {
         this.notification = notification;
     }
+
+    public  void addDonateBook(){
+        num_of_books_donated++;
+    }
+
+
 }

@@ -1,21 +1,19 @@
 package com.example.exbooks.Screens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
-import com.example.exbooks.Users.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if(v == login){
-            ClientLogin();
+            UserLogin();
         }
         else if(v == forgetpassword){
             Intent intent = new Intent(MainActivity.this, ForgetPasswordScreen.class);
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void ClientLogin() {
+    private void UserLogin() {
         String email = mail.getText().toString().trim();
         final String paswrd = password.getText().toString().trim();
 
@@ -139,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(MainActivity.this, CustomerMenu.class));
                     finish();
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -157,7 +156,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         ManagerRoot.child(user.getUid()).setValue(managerProfile);
                     }
                     startActivity(new Intent(MainActivity.this, ManagerMenu.class));
+                    finish();
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

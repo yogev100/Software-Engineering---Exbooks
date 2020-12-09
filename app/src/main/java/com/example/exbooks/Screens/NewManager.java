@@ -1,22 +1,18 @@
 package com.example.exbooks.Screens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Trace;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
-import com.example.exbooks.Users.Manager;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,14 +63,15 @@ public class NewManager extends AppCompatActivity implements View.OnClickListene
                 String newManagerId;
                 for(DataSnapshot c:snapshot.getChildren()){
                     Client cl=c.getValue(Client.class);
-                    if(cl.getEmail().equals(email)){
-                        newManagerId=c.getKey();
+                    if(cl!= null && cl.getEmail().equals(email)){
+                        newManagerId=c.getKey(); //uid client
                         System.out.println(newManagerId);
                         DatabaseReference managers=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-                        managers.setValue(newManagerId);
                         managers.child(newManagerId).setValue(cl);
-
                         dbRef.child(newManagerId).removeValue();
+
+
+                        Toast.makeText(NewManager.this, email+ " promoted to manager", Toast.LENGTH_LONG).show();
                     }
                 }
 

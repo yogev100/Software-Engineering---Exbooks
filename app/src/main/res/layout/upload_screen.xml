@@ -25,13 +25,13 @@
         android:id="@+id/add_button"
         android:layout_width="290dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="36dp"
         android:text="הוספה"
         android:textSize="18sp"
         app:backgroundTint="#E9967A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -113,11 +113,13 @@
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="312dp"
+        android:layout_marginBottom="280dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView12"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_spinner"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -186,7 +188,7 @@
         android:id="@+id/textView11"
         android:layout_width="203dp"
         android:layout_height="62dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:text="להוספת צילום של הספר לחץ כאן:"
         android:textColor="#FFFFFF"

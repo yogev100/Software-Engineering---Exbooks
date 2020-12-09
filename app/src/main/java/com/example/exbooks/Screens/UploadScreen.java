@@ -184,16 +184,42 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
             }
             if (radio_button.getId() == R.id.change_radio_button) {
                 for_change = true;
-            } else if (radio_button.getId() == R.id.change_radio_button) {
+            } else if (radio_button.getId() == R.id.donate_radio_button) {
                 for_change = false;
             }
 
 
-
-            //something for get url
             final String book_id = bookRef.child(category).push().getKey();
             BuildAndAddBook(bookName, autohrName, numPages, user, book_id);
+            DonateCheck();
 
+        }
+    }
+
+    private void DonateCheck() {
+        if(!for_change){
+            final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+            managerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot m:snapshot.getChildren()) {
+                        System.out.println();
+                        Manager manager = m.getValue(Manager.class);
+                        if (manager != null) {
+                            String key = m.getKey();
+                            int num = manager.getNum_of_books_donated();
+                            System.out.println(num);
+                            managerRef.child(key).child("num_of_books_donated").setValue(++num);
+                            System.out.println(num);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 
@@ -266,7 +292,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(UploadScreen.this, "Something was wrong!", Toast.LENGTH_LONG);
+                    Toast.makeText(UploadScreen.this, "Something was wrong!", Toast.LENGTH_LONG).show();
                 }
             });
         }
