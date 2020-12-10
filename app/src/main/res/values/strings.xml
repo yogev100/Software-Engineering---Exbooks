@@ -22,4 +22,9 @@
         <item>מעט קרוע</item>
 
     </string-array>
+
+    <string name="deleteAlert">Confirm Deletion</string>
+    <string name="confirmDelete">Are you sure you want to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

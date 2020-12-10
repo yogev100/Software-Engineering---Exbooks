@@ -1,6 +1,8 @@
 package com.example.exbooks.Objects;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -63,11 +65,13 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
                 Manager m= snapshot.getValue(Manager.class);
                 if(m!=null){
                     for(int i=0; i<m.getMy_books().size(); i++){
-                        System.out.println(m.getMy_books().get(i)+ " @@@@@@@@@@@ " + BID);
-                        if(m.getMy_books().get(i).equals(BID)){
-                            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                            System.out.println(m.getMy_books().get(i));
-                            managerRef.child(UID).child("my_books").child(i+"").removeValue();
+                        if (m.getMy_books().get(i) != null) {
+                            System.out.println(m.getMy_books().get(i) + " @@@@@@@@@@@ " + BID);
+                            if (m.getMy_books().get(i).equals(BID)) {
+                                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                                System.out.println(m.getMy_books().get(i));
+                                managerRef.child(UID).child("my_books").child(i+"").removeValue();
+                            }
                         }
                     }
                 }
@@ -85,8 +89,10 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
                     for(int i=0; i<c.getMy_books().size(); i++){
-                        if(c.getMy_books().get(i).equals(BID)){
-                            clientRef.child(UID).child("my_books").child(i+"").removeValue();
+                        if (c.getMy_books().get(i) != null) {
+                            if (c.getMy_books().get(i).equals(BID)) {
+                                clientRef.child(UID).child("my_books").child(i + "").removeValue();
+                            }
                         }
                     }
                 }
@@ -109,20 +115,38 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        int position=(Integer) v.getTag();
+        final int position=(Integer) v.getTag();
         Object object= getItem(position);
-        Book book=(Book)object;
+        final Book book=(Book)object;
 
         switch (v.getId())
         {
             case R.id.button_profile:
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
-                dataSet.remove(position);                                                   // remove from the array list
-                bookRef.child(book.getCategory()).child(book.getBook_id()).removeValue();   // remove from the Books tree
-                storageRef.child(book.getBook_id()+ ".jpg").delete();                       // remove the picture from the storage
-                deleteFromMyBooks(cAuth.getCurrentUser().getUid(),book.getBook_id());       // remove from "my books" list in the User tree
-                notifyDataSetChanged();                                                     // (remove and) update the list view..
-                break;
+                builder.setMessage(R.string.confirmDelete)
+                        .setTitle(R.string.deleteAlert);
+
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dataSet.remove(position);                                                   // remove from the array list
+                        bookRef.child(book.getCategory()).child(book.getBook_id()).removeValue();   // remove from the Books tree
+                        if (book.getImgURL()) {
+                            storageRef.child(book.getBook_id() + ".jpg").delete();                       // remove the picture from the storage
+                        }
+                        deleteFromMyBooks(cAuth.getCurrentUser().getUid(),book.getBook_id());       // remove from "my books" list in the User tree
+                        notifyDataSetChanged();                                                     // (remove and) update the list view..
+                    }
+                });
+
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
         }
     }
 

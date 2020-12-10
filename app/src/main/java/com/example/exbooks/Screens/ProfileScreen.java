@@ -29,7 +29,6 @@ import java.util.ArrayList;
 public class ProfileScreen extends AppCompatActivity  implements View.OnClickListener {
 
     // components
-//    ScrollView sv;
     Button update;
     EditText phone, name, city;
     TextView email;
@@ -77,48 +76,54 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         // call to the function that shows all the data from the database and checks if this user is client or manager
         isClient();
 
-        //Scroll view
-//        sv = (ScrollView) findViewById(R.id.profile_scrollView);
         listView=(ListView) findViewById(R.id.list_profile);
         LinearLayoutManager LayoutManage = new LinearLayoutManager(this);
         LayoutManage.setOrientation(LinearLayoutManager.HORIZONTAL);
         bookModels=new ArrayList<>();
         myBookListInit();
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Book dataModel= bookModels.get(position);
-//                Toast.makeText(ProfileScreen.this, "you click on an item", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
     }
 
     private void myBookListInit() {
         bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(isClient){
-                    for (int i=0; i<c.getMy_books().size();i++){
-                        for (DataSnapshot category : snapshot.getChildren()){
-                            Book b = category.child(c.getMy_books().get(i)).getValue(Book.class);
-                            if(b!=null){
-                                bookModels.add(new Book(b));
-                            }
-                        }
-                    }
-                }else{ // Manager
-                    for (int i=0; i<m.getMy_books().size();i++){
-                        for (DataSnapshot category : snapshot.getChildren()){
-                            Book b = category.child(m.getMy_books().get(i)).getValue(Book.class);
-                            if(b!=null){
-                                bookModels.add(new Book(b));
+                if (isClient) {
+                    for (int i = 0; i < c.getMy_books().size(); i++) {
+                        if (c.getMy_books().get(i) != null) {
+                            for (DataSnapshot category : snapshot.getChildren()) {
+                                Book b = category.child(c.getMy_books().get(i)).getValue(Book.class);
+                                if (b != null) {
+                                    bookModels.add(new Book(b));
+                                }
                             }
                         }
                     }
                 }
-                adapter=new ProfileBookAdapter(bookModels,getApplicationContext());
+                adapter = new ProfileBookAdapter(bookModels, ProfileScreen.this);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!isClient) { // Manager
+                    for (int i = 0; i < m.getMy_books().size(); i++) {
+                        if (m.getMy_books().get(i) != null) {
+                            for (DataSnapshot category : snapshot.getChildren()) {
+                                Book b = category.child(m.getMy_books().get(i)).getValue(Book.class);
+                                if (b != null) {
+                                    bookModels.add(new Book(b));
+                                }
+                            }
+                        }
+                    }
+                }
+                adapter = new ProfileBookAdapter(bookModels, ProfileScreen.this);
                 listView.setAdapter(adapter);
             }
 
