@@ -5,19 +5,22 @@ public class Notification {
     private Book book;
     private String userWantsTheBookId;
     private String wanterName;
+    private boolean first;
 
-    public Notification(){}
-    public Notification(String uid,String wanterName,Book book){
+    public Notification(){first=true;}
+    public Notification(String uid, String wanterName, Book book, boolean first){
         this.book=book;
         this.userWantsTheBookId=uid;
         this.wanterName=wanterName;
+        this.first=first;
 
     }
 
-    public Notification(Notification other){
+    public Notification(Notification other,boolean first){
         this.book=other.getBook();
         this.userWantsTheBookId=other.getUserWantsTheBookId();
         this.wanterName=other.getWanterName();
+        this.first=first;
     }
 
     public String getWanterName() {
@@ -42,5 +45,13 @@ public class Notification {
 
     public void setUserWantsTheBookId(String userWantsTheBookId) {
         this.userWantsTheBookId = userWantsTheBookId;
+    }
+
+    public boolean isFirst() {
+        return first;
+    }
+
+    public void setFirst(boolean first) {
+        this.first = first;
     }
 }

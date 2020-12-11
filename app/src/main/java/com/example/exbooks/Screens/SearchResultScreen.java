@@ -59,15 +59,6 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        bookModels.add(new Book("מה אומר","בעונה","בגבג",123,1,true,"asdfasdf2sadf",false));
-//        bookModels.add(new Book("51asdf","Holut","assdfsddfg",123,2,true,"asdfasdf2sadf",false));
-//        bookModels.add(new Book("dd","kaki","eee",123,2,true,"asdfasdf2sadf",false));
-//        bookModels.add(new Book("fff","pipi","aswwwdfg",123,1,true,"asdfasdf2sadf",false));
-//        bookModels.add(new Book("sdfs","shlsul","qqqq",500,0,true,"asdfasdf2sadf",false));
-//        bookModels.add(new Book("ccc","mama","ffff",500,2,true,"asdfasdf2sadf",false));
-//        bookModels.add(new Book("kjmhj","nana","gssgs",500,1,true,"asdfasdf2sadf",false));
-
-
 
 
 
@@ -186,7 +177,7 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
                         }
                     }
                 }
-                adapter=new BookFormAdapter(bookModels,getApplicationContext());
+                adapter=new BookFormAdapter(bookModels,getApplicationContext()"search",getSupportFragmentManager());
                 listView.setAdapter(adapter);
             }
 

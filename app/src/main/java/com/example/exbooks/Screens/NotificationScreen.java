@@ -3,7 +3,6 @@ package com.example.exbooks.Screens;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.exbooks.Objects.BookFormAdapter;
 import com.example.exbooks.Objects.Notification;
 import com.example.exbooks.Objects.NotificationAdapter;
 import com.example.exbooks.R;
@@ -17,14 +16,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class NotificationScreen extends AppCompatActivity {
+public class NotificationScreen extends AppCompatActivity implements View.OnClickListener{
     FirebaseAuth mAuth;
     DatabaseReference Mref;
     DatabaseReference Cref;
@@ -40,7 +39,7 @@ public class NotificationScreen extends AppCompatActivity {
         setContentView(R.layout.activity_notification_screen);
 
         listView=(ListView)findViewById(R.id.list_of_notification);
-        notification_model=new ArrayList<>();
+        notification_model =new ArrayList<>();
 
         mAuth=FirebaseAuth.getInstance();
         sv=(ScrollView)findViewById(R.id.notification_scrollView);
@@ -60,10 +59,10 @@ public class NotificationScreen extends AppCompatActivity {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
                     for(Notification n:c.getNotification()){
-                        notification_model.add(new Notification(n));
+                        notification_model.add(new Notification(n,n.isFirst()));
                     }
                     Collections.reverse(notification_model);
-                    adapter=new NotificationAdapter(notification_model,getApplicationContext());
+                    adapter=new NotificationAdapter(notification_model,getApplicationContext(),getSupportFragmentManager());
                     listView.setAdapter(adapter);
                 }
             }
@@ -79,10 +78,10 @@ public class NotificationScreen extends AppCompatActivity {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
                     for(Notification n:m.getNotification()){
-                        notification_model.add(new Notification(n));
+                        notification_model.add(new Notification(n,n.isFirst()));
                     }
                     Collections.reverse(notification_model);
-                    adapter=new NotificationAdapter(notification_model,getApplicationContext());
+                    adapter=new NotificationAdapter(notification_model,getApplicationContext(),getSupportFragmentManager());
                     listView.setAdapter(adapter);
                 }
             }
@@ -92,6 +91,11 @@ public class NotificationScreen extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

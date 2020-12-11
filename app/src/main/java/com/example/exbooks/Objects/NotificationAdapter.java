@@ -1,6 +1,8 @@
 package com.example.exbooks.Objects;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +13,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.exbooks.R;
-import com.example.exbooks.Screens.MainActivity;
-import com.example.exbooks.Screens.SearchResultScreen;
+import com.example.exbooks.Screens.MaybeMatch;
+import com.example.exbooks.Screens.NotificationScreen;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +42,8 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
 
     private ArrayList<Notification> dataSet;
     Context mContext;
+    FragmentManager supportFragmentManager;
+
 
     // View lookup cache
     private static class ViewHolder {
@@ -53,11 +56,11 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
 
     }
 
-    public NotificationAdapter(ArrayList<Notification> data, Context context) {
+    public NotificationAdapter(ArrayList<Notification> data, Context context, FragmentManager supportFragmentManager) {
         super(context, R.layout.notification_view, data);
-        //super(context, R.layout.single_book, data);
         this.dataSet = data;
         this.mContext=context;
+        this.supportFragmentManager=supportFragmentManager;
 
     }
 
@@ -65,20 +68,57 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
-        Notification notification=(Notification)object;
+        Notification notification =(Notification)object;
 
         switch (v.getId())
         {
-            case R.id.bookId_Button:
-                sendNotificatio();
-                Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                break;
+            case R.id.check_Button:
+                if(notification.isFirst()) {
+                    Intent intent = new Intent(mContext, MaybeMatch.class);
+                    intent.putExtra("wanterID",notification.getUserWantsTheBookId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                    break;
+                }else{
+                    openPhoneDialog(notification.getUserWantsTheBookId());
+                }
         }
     }
 
-    private void sendNotificatio() {
+    private void openPhoneDialog(String otherUserId) {
+        DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+        DatabaseReference cRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
 
+        mRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Manager m = snapshot.getValue(Manager.class);
+                if(m!=null){
+                    MatchDialog md = new MatchDialog(m);
+                    md.show(supportFragmentManager,"Match dialog");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        cRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Client c = snapshot.getValue(Client.class);
+                if(c!=null){
+                    MatchDialog md = new MatchDialog(c);
+                    md.show(supportFragmentManager,"Match dialog");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private int lastPosition = -1;
@@ -103,8 +143,8 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
             viewHolder.notification_txt = (TextView) convertView.findViewById(R.id.conditionBookId_TextView1);
             viewHolder.checkButton = (Button) convertView.findViewById(R.id.check_Button);
             viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.ImageBookId_ImageView1);
-            viewHolder.bid=notification.getBook().getBook_id();
-            viewHolder.wanterName=notification.getWanterName();
+            viewHolder.bid= notification.getBook().getBook_id();
+            viewHolder.wanterName= notification.getWanterName();
 
 
             result=convertView;
@@ -119,11 +159,21 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
         result.startAnimation(animation);
         lastPosition = position;
 
-        viewHolder.notification_txt.setText("wants your book-"+notification.getBook().getBook_name()+", check what books he can offer you.");
-        viewHolder.ownerName.setText(notification.getWanterName()+",");
-        viewHolder.checkButton.setOnClickListener(this);
-        viewHolder.checkButton.setTag(position);
-        viewHolder.bid=notification.getBook().getBook_id();
+        if(notification.isFirst()) {
+            viewHolder.notification_txt.setText("wants your book-" + notification.getBook().getBook_name() + ", check what books he can offer you.");
+            viewHolder.ownerName.setText(notification.getWanterName() + ",");
+            viewHolder.checkButton.setOnClickListener(this);
+            viewHolder.checkButton.setText("Check");
+            viewHolder.checkButton.setTag(position);
+            viewHolder.bid = notification.getBook().getBook_id();
+        }else{
+            viewHolder.notification_txt.setText("if you want to exchange the book "+notification.getBook().getBook_name()+" with "+notification.getWanterName()+" click"  );
+            viewHolder.ownerName.setText("M-a-t-c-h !!");
+            viewHolder.checkButton.setOnClickListener(this);
+            viewHolder.checkButton.setText("Exchange");
+            viewHolder.checkButton.setTag(position);
+            viewHolder.bid = notification.getBook().getBook_id();
+        }
         set_url_image(position,viewHolder);
         //Return the completed view to render on screen
         return convertView;
