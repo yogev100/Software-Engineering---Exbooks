@@ -177,7 +177,7 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
                         }
                     }
                 }
-                adapter=new BookFormAdapter(bookModels,getApplicationContext()"search",getSupportFragmentManager());
+                adapter=new BookFormAdapter(bookModels,getApplicationContext(),"search",getSupportFragmentManager());
                 listView.setAdapter(adapter);
             }
 

@@ -9,6 +9,16 @@
     tools:context=".Screens.ManagerMenu">
 
 
+    <include
+        android:id="@+id/bell"
+        layout="@layout/bell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textView10"
         android:layout_width="168dp"
@@ -124,19 +134,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/exbooks" />
-
-    <ImageButton
-        android:id="@+id/M_notification_button"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#00FFFFFF"
-        android:scaleType="fitXY"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@drawable/notification"
-        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
