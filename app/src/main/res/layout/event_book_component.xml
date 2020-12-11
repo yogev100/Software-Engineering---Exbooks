@@ -7,31 +7,20 @@
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/book_Form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/event_comp"
+        android:layout_width="wrap_content"
+        android:layout_height="144dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginEnd="-1dp"
         android:background="#4E4E4E"
         android:padding="10dp">
 
-        <Button
-            android:id="@+id/bookId_Button"
-            android:layout_width="91dp"
-            android:layout_height="86dp"
-            android:backgroundTint="#E9967A"
-            android:text="בחר"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
-            android:id="@+id/nameBookId_TextView"
+            android:id="@+id/eventbook_name"
             android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -39,11 +28,11 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView"
+            app:layout_constraintStart_toEndOf="@+id/img_event"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/categoryBookId_TextView"
+            android:id="@+id/category_event_name"
             android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -51,11 +40,11 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView"
-            app:layout_constraintTop_toBottomOf="@+id/nameBookId_TextView" />
+            app:layout_constraintStart_toEndOf="@+id/img_event"
+            app:layout_constraintTop_toBottomOf="@+id/eventbook_name" />
 
         <TextView
-            android:id="@+id/authorBookId_TextView"
+            android:id="@+id/author_event_name"
             android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -63,11 +52,11 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView"
-            app:layout_constraintTop_toBottomOf="@+id/categoryBookId_TextView" />
+            app:layout_constraintStart_toEndOf="@+id/img_event"
+            app:layout_constraintTop_toBottomOf="@+id/category_event_name" />
 
         <TextView
-            android:id="@+id/conditionBookId_TextView"
+            android:id="@+id/cond_event_name"
             android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -75,11 +64,11 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView"
-            app:layout_constraintTop_toBottomOf="@+id/authorBookId_TextView" />
+            app:layout_constraintStart_toEndOf="@+id/img_event"
+            app:layout_constraintTop_toBottomOf="@+id/author_event_name" />
 
         <TextView
-            android:id="@+id/cityBookId_TextView"
+            android:id="@+id/city_event_name"
             android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -87,16 +76,27 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView"
-            app:layout_constraintTop_toBottomOf="@+id/conditionBookId_TextView" />
+            app:layout_constraintStart_toEndOf="@+id/img_event"
+            app:layout_constraintTop_toBottomOf="@+id/cond_event_name" />
 
         <ImageView
-            android:id="@+id/ImageBookId_ImageView"
+            android:id="@+id/img_event"
             android:layout_width="95dp"
             android:layout_height="110dp"
             android:src="@android:drawable/ic_dialog_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_event"
+            android:layout_width="34dp"
+            android:layout_height="55dp"
+            android:buttonTint="#E9967A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/author_event_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

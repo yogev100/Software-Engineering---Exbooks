@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.Objects.BookFormAdapter;
 import com.example.exbooks.R;
+import com.example.exbooks.Users.Client;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class SearchResultScreen extends AppCompatActivity {
+public class SearchResultScreen extends AppCompatActivity implements View.OnClickListener{
 
     ScrollView sv;
 
@@ -38,6 +40,8 @@ public class SearchResultScreen extends AppCompatActivity {
     ListView listView;
     private static BookFormAdapter adapter;
     DatabaseReference books_ref;
+    Button menu_btn;
+    boolean is_client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,8 @@ public class SearchResultScreen extends AppCompatActivity {
 
         VarInit();
 
-
+        menu_btn = (Button)findViewById(R.id.backToMenuFromSearch_Button);
+        menu_btn.setOnClickListener(this);
         listView=(ListView)findViewById(R.id.list_book_form);
         bookModels=new ArrayList<>();
         try {
@@ -243,5 +248,45 @@ public class SearchResultScreen extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == menu_btn){
+            isClient();
+            if(is_client){
+                startActivity(new Intent(SearchResultScreen.this, CustomerMenu.class));
+                finish();
+            }
+            else{
+                startActivity(new Intent(SearchResultScreen.this, ManagerMenu.class));
+                finish();
+            }
+
+        }
+    }
+
+    private void isClient() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+        DatabaseReference ClientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+        ClientRoot.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Client client = snapshot.getValue(Client.class);
+                if (client != null) {
+                    is_client = true;
+                }
+                else{
+                    is_client = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SearchResultScreen.this, "Something was wrong!", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

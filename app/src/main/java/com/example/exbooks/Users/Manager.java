@@ -23,6 +23,7 @@ public class Manager extends User {
         super(fullname, email, password, city, phone);
         my_books=new ArrayList<String>();
         notification=new ArrayList<Notification>();
+        num_of_books_donated=0;
 
     }
 

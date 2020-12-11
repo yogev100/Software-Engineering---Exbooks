@@ -8,55 +8,49 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exbooks.R;
-import com.example.exbooks.Users.Client;
-import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClickListener{
+public class EventAdapter extends ArrayAdapter<Book> implements View.OnClickListener{
 
     private ArrayList<Book> dataSet;
     Context mContext;
+    final int MinBookNumForEvent = 2;
+    static int num_checked;
+    private static ArrayList<Book> selected_books;
 
     // View lookup cache
     private static class ViewHolder {
-        ConstraintLayout constraint;
         TextView bookName;
         TextView category;
         TextView author;
         TextView cond;
         TextView city;
         ImageView bookImg;
-        Button chooseButton;
+        CheckBox choose_box;
         String bid;
 
     }
 
-    public BookFormAdapter(ArrayList<Book> data, Context context) {
-        super(context, R.layout.book_search_component, data);
-        //super(context, R.layout.single_book, data);
+    public EventAdapter(ArrayList<Book> data, Context context) {
+        super(context, R.layout.event_book_component, data);
         this.dataSet = data;
         this.mContext=context;
+        num_checked = 0;
+        selected_books = new ArrayList<>();
 
     }
 
@@ -65,62 +59,28 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Book book=(Book)object;
-
-        switch (v.getId())
-        {
-            case R.id.bookId_Button:
-                sendNotificatio(book);
-                Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                v.setClickable(false);
-                break;
-        }
-    }
-
-    private void sendNotificatio(final Book book) {
-        final DatabaseReference managerRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-        final DatabaseReference clientRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-
-        managerRef.child(book.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Manager m = snapshot.getValue(Manager.class);
-                if(m!=null){
-                    m.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),m.getfullname(),book));
-                    managerRef.child(book.getUid()).setValue(m);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        clientRef.child(book.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Client c = snapshot.getValue(Client.class);
-                if(c!=null){
-                    c.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),c.getfullname(),book));
-                    managerRef.child(book.getUid()).setValue(c);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
+//        viewHolder.choose_box.seton;
+//        switch (v.getId())
+//        {
+//            case R.id.create_event_button:
+//                if(num_checked>=MinBookNumForEvent) {
+//                    Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG)
+//                            .setAction("No action", null).show();
+//                    v.setClickable(false);
+//                    break;
+//                }
+//                else{
+//
+//                }
+//        }
     }
 
     private int lastPosition = -1;
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Book book = getItem(position);
+        final Book book = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
@@ -131,26 +91,18 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.book_search_component, parent, false);
+            convertView = inflater.inflate(R.layout.event_book_component, parent, false);
 
             viewHolder.bookName = (TextView) convertView.findViewById(R.id.eventbook_name);
             viewHolder.category = (TextView) convertView.findViewById(R.id.category_event_name);
             viewHolder.author = (TextView) convertView.findViewById(R.id.author_event_name);
             viewHolder.cond = (TextView) convertView.findViewById(R.id.cond_event_name);
             viewHolder.city = (TextView) convertView.findViewById(R.id.city_event_name);
-            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.bookId_Button);
+            viewHolder.choose_box = (CheckBox) convertView.findViewById(R.id.checkbox_event);
             viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.img_event);
 
-//            viewHolder.bookName = (TextView) convertView.findViewById(R.id.single_book_name);
-//            viewHolder.category = (TextView) convertView.findViewById(R.id.single_book_category);
-//            viewHolder.author = (TextView) convertView.findViewById(R.id.single_book_author);
-//            viewHolder.cond = (TextView) convertView.findViewById(R.id.single_book_cond);
-//            viewHolder.city = (TextView) convertView.findViewById(R.id.single_book_city);
-//            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.single_book_button);
-//            viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.single_book_img);
 
             viewHolder.bid=book.getBook_id();
-//            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
 
             result=convertView;
 
@@ -169,10 +121,24 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
         viewHolder.author.setText(book.getAuthor_name());
         viewHolder.cond.setText(book.cond_toString(book.getBook_cond()));
         viewHolder.city.setText(book.getCityOwner());
-        viewHolder.chooseButton.setOnClickListener(this);
-        viewHolder.chooseButton.setTag(position);
         viewHolder.bid=book.getBook_id();
         set_url_image(position,viewHolder);
+        viewHolder.choose_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    num_checked++;
+                    System.out.println("book id:"+ book.getBook_id());
+                    selected_books.add(new Book(dataSet.get(position)));
+
+                }
+                else{
+                    num_checked--;
+                    System.out.println("book id:"+ book.getBook_id());
+                    selected_books.remove(book);
+                }
+            }
+        });
         //Return the completed view to render on screen
         return convertView;
     }
@@ -199,8 +165,16 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
             }
         });
 
-        }
-
     }
+
+    public static int getNum_checked(){
+        return num_checked;
+    }
+
+    public static ArrayList<Book> getSelectedBooks(){
+        return selected_books;
+    }
+
+}
 
 

@@ -158,5 +158,14 @@ public class  Book {
         this.cityOwner = cityOwner;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Book){
+            obj = (Book)obj;
+            return this.getBook_id()== ((Book) obj).getBook_id();
+        }
+        return false;
+    }
+
 }
 
