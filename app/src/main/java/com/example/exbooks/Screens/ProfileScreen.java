@@ -59,6 +59,12 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_screen);
 
+        // Database
+        cAuth = FirebaseAuth.getInstance();
+        ClientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+        ManagerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         // call to the function that shows all the data from the database and checks if this user is client or manager
         isClient();
 
@@ -72,18 +78,13 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         city = (EditText) findViewById(R.id.editCity);
         email = (TextView) findViewById(R.id.yourMail);
 
-        // Database
-        cAuth = FirebaseAuth.getInstance();
-        ClientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
-        ManagerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // listView and Layout
         listView=(ListView) findViewById(R.id.list_profile);
         LinearLayoutManager LayoutManage = new LinearLayoutManager(this);
         LayoutManage.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        // init arraylist of books
+        // init array list of books
         bookModels=new ArrayList<>();
         myBookListInit();
     }
