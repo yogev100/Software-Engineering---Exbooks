@@ -68,6 +68,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    // Method that update the number of notifications
     private void findNumOfNotification() {
         DatabaseReference mRef=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -90,6 +91,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    // Method that checks if there enough donated books for event. and make the button visible/invisible in accordance
     private void CheckDonate() {
         String uid = cAuth.getCurrentUser().getUid();
         DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
@@ -99,7 +101,9 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
                 Manager manager = snapshot.getValue(Manager.class);
                 if(manager != null){
                     current_donated = manager.getNum_of_books_donated();
-                    System.out.println(current_donated);
+                    //System.out.println(current_donated);
+
+                    // visible/invisible the button according to the number of donated books.
                     if(current_donated<minBookSizeForEvent){
                         createEvent.setVisibility(View.INVISIBLE);
                     }

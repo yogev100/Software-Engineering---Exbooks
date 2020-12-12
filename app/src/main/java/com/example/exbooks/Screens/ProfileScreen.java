@@ -34,6 +34,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     TextView email;
     String _PHONE, _NAME, _CITY,_EMAIL;
     String UID;
+    ListView listView;
 
     // Auth and DB references
     FirebaseAuth cAuth;
@@ -42,13 +43,14 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     DatabaseReference CurrentUser;
     DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("Books");
 
+    // Variables
     boolean isClient;
     Manager m;
     Client c;
     ArrayList<String> thisUserBooks;
     ArrayList<Book> bookModels;
-    ListView listView;
 
+    // Adapter
     private static ProfileBookAdapter adapter;
 
 
@@ -76,20 +78,24 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         ManagerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
-
+        // listView and Layout
         listView=(ListView) findViewById(R.id.list_profile);
         LinearLayoutManager LayoutManage = new LinearLayoutManager(this);
         LayoutManage.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        // init arraylist of books
         bookModels=new ArrayList<>();
         myBookListInit();
     }
 
+    // Method that init the book list.
     private void myBookListInit() {
         bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isClient) {
+                if (isClient) { //Client
+                    // go all over the books, and check- if its not null, go all over the categories-
+                    // and add the books to the list.
                     for (int i = 0; i < c.getMy_books().size(); i++) {
                         if (c.getMy_books().get(i) != null) {
                             for (DataSnapshot category : snapshot.getChildren()) {
@@ -101,6 +107,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                         }
                     }
                 }
+                // turn the adapter on and set its on the listview.
                 adapter = new ProfileBookAdapter(bookModels, ProfileScreen.this);
                 listView.setAdapter(adapter);
             }
@@ -114,6 +121,8 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!isClient) { // Manager
+                    // go all over the books, and check- if its not null, go all over the categories-
+                    // and add the books to the list.
                     for (int i = 0; i < m.getMy_books().size(); i++) {
                         if (m.getMy_books().get(i) != null) {
                             for (DataSnapshot category : snapshot.getChildren()) {
@@ -125,6 +134,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                         }
                     }
                 }
+                // turn the adapter on and set its on the listview.
                 adapter = new ProfileBookAdapter(bookModels, ProfileScreen.this);
                 listView.setAdapter(adapter);
             }
@@ -135,25 +145,30 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         });
     }
 
+    // isClient method checks if the user is client or manager
     void isClient() {
         // ClientRoot.child(UID) -> Ia there a client with this UID
         ClientRoot.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client client = snapshot.getValue(Client.class);
+                // if its client-
                 if (client != null) {
-                    isClient = true;
-                    c=new Client(client);
-                    _PHONE = c.getPhone();
+                    isClient = true;                            // update the boolean
+                    c=new Client(client);                       // make a new client for the "work  on"
+                    _PHONE = c.getPhone();                      // take the user parameters from the DB
                     _NAME = c.getfullname();
                     _CITY = c.getCity();
                     _EMAIL = c.getEmail();
                     thisUserBooks = c.getMy_books();
+
                     // set the data to the text fields
-                    phone.setText(_PHONE);
+                    phone.setText(_PHONE);                      // set the parameters to the TextView/EditText fields
                     city.setText(_CITY);
                     name.setText(_NAME);
                     email.setText(_EMAIL);
+
+                    // update the current user to be client.
                     CurrentUser=FirebaseDatabase.getInstance().getReference("Users").child("Clients").child(UID);
                 }
             }
@@ -168,19 +183,23 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager manager = snapshot.getValue(Manager.class);
+                // if its manager-
                 if (manager != null) {
-                    isClient = false;
-                    m=new Manager(manager);
-                    _PHONE = m.getPhone();
+                    isClient = false;                           // update the boolean
+                    m=new Manager(manager);                     // make a new client for the "work  on"
+                    _PHONE = m.getPhone();                      // take the user parameters from the DB
                     _NAME = m.getfullname();
                     _CITY = m.getCity();
                     _EMAIL = m.getEmail();
                     thisUserBooks = m.getMy_books();
+
                     // set the data to the text fields
-                    phone.setText(_PHONE);
+                    phone.setText(_PHONE);                      // set the parameters to the TextView/EditText fields
                     city.setText(_CITY);
                     name.setText(_NAME);
                     email.setText(_EMAIL);
+
+                    // update the current user to be manager.
                     CurrentUser=FirebaseDatabase.getInstance().getReference("Users").child("Managers").child(UID);
                 }
             }
@@ -194,7 +213,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        // taking the perosnal information that changed-
+        // taking the personal information that changed-
         if (view == update) {
             if(!isNameChanged() && !isPhoneChanged() && !isCityChanged()){
                 Toast.makeText(ProfileScreen.this, "the data is not changed", Toast.LENGTH_LONG).show();
@@ -214,9 +233,9 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         }
     }
 
+    // isPhoneChanged method checks if the user's phone changed by comparison between DB and EditText field
     private boolean isPhoneChanged() {
         if (isClient) {
-            //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
             if (!_PHONE.equals(phone.getText().toString()) && (phone.getText().toString().length()==10 || phone.getText().toString().length()==11)) {
                 CurrentUser.child("phone").setValue(phone.getText().toString());
                 return true;
@@ -224,7 +243,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 return false;
             }
         } else {
-            //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
             if (!_PHONE.equals(phone.getText().toString()) && (phone.getText().toString().length()==10 || phone.getText().toString().length()==11)) {
                 CurrentUser.child("phone").setValue(phone.getText().toString());
                 return true;
@@ -234,6 +252,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         }
     }
 
+    // isCityChanged method checks if the user's phone changed by comparison between DB and EditText field
     private boolean isCityChanged() {
         if (isClient) {
             //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
@@ -254,6 +273,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         }
     }
 
+    // isNameChanged method checks if the user's phone changed by comparison between DB and EditText field
     private boolean isNameChanged() {
         if (isClient) {
             //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..

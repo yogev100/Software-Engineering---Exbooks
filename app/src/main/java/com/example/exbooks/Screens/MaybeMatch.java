@@ -36,11 +36,9 @@ public class MaybeMatch extends AppCompatActivity {
         listView=(ListView)findViewById(R.id.list_of_maybe_books);
         bookModels=new ArrayList<>();
         FindCorrectBooks();
-
-
-
     }
 
+    // Method that find and show the offered books from the user that wants your book
     private void FindCorrectBooks() {
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         DatabaseReference cRef= FirebaseDatabase.getInstance().getReference("Users").child("Clients");
@@ -78,9 +76,9 @@ public class MaybeMatch extends AppCompatActivity {
 
     }
 
+    //
     private void getTheUserBooksByArray(final ArrayList<String> my_books) {
         DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("Books");
-
         bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -89,8 +87,8 @@ public class MaybeMatch extends AppCompatActivity {
                         Book b = book.getValue(Book.class);
                         if(b!=null) {
                             for (String a : my_books) {
-                                System.out.println("a:"+a);
-                                System.out.println("b:"+b.getBook_id());
+//                                System.out.println("a:"+a);
+//                                System.out.println("b:"+b.getBook_id());
                                 if(b.getBook_id().equals(a)&&b.isFor_change()){
                                     bookModels.add(new Book(b));
                                 }

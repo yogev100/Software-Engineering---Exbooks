@@ -55,26 +55,29 @@ public class NewManager extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    // Method that promote a Client to be Manager.
     private void PromoteClientToManager(final String email){
-        System.out.println("In MAAGER PROMOTWE");
+//        System.out.println("In MAAGER PROMOTWE");
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String newManagerId;
                 for(DataSnapshot c:snapshot.getChildren()){
                     Client cl=c.getValue(Client.class);
+                    // check if the client user is not null, and if this is his email..
                     if(cl!= null && cl.getEmail().equals(email)){
                         newManagerId=c.getKey(); //uid client
-                        System.out.println(newManagerId);
+//                        System.out.println(newManagerId);
                         DatabaseReference managers=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-                        managers.child(newManagerId).setValue(cl);
-                        dbRef.child(newManagerId).removeValue();
 
+                        // update the new manager at the Manager tree
+                        managers.child(newManagerId).setValue(cl);
+                        // and remove from the Client tree.
+                        dbRef.child(newManagerId).removeValue();
 
                         Toast.makeText(NewManager.this, email+ " promoted to manager", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
 
             @Override

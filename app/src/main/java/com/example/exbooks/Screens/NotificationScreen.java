@@ -47,11 +47,9 @@ public class NotificationScreen extends AppCompatActivity implements View.OnClic
         Cref= FirebaseDatabase.getInstance().getReference("Users").child("Clients");
 
         NotificationUpload();
-
-
-        
     }
 
+    //
     private void NotificationUpload() {
         Cref.child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

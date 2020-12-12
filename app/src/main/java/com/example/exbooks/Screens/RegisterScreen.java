@@ -123,12 +123,14 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 if(task.isSuccessful()){
                     Client client = new Client(fullname.getText().toString(),
                             email.getText().toString(),password.getText().toString(),city.getText().toString(),phone.getText().toString());
+
                     //send it to firebase
                     dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(client).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if(task.isSuccessful()) {
+                                // Email verification
                                 user.sendEmailVerification();
                                 Toast.makeText(RegisterScreen.this,"Registration successfully, mail verification sent to your email",Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(RegisterScreen.this, MainActivity.class));

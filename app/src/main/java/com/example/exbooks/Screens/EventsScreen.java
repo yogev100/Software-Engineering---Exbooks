@@ -54,6 +54,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
         books_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // go all over the books, and check if its not null and not for change = for donate. add to the list.
                 for (DataSnapshot category:snapshot.getChildren()){
                     for (DataSnapshot book : category.getChildren()){
                         Book b=book.getValue(Book.class);
@@ -81,7 +82,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
             String hourr = hour.getText().toString();
             String minutee = minute.getText().toString();
 
-            System.out.println("in create click");
+//            System.out.println("in create click");
             if(monthh.isEmpty()){
                 month.setError("You must fill the month!");
                 month.requestFocus();
