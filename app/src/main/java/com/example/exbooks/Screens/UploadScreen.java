@@ -90,6 +90,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /*
+    function that initializing the category and condition spinners
+     */
     public void initSpinners() {
         category_spinner = (Spinner) findViewById(R.id.category_spinner);
 
@@ -108,6 +111,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         cond_spinner.setAdapter(cond_adapter);
     }
 
+    /*
+    function that cast the condition string to integer number
+     */
     public int condition_casting() {
         int ans = -1;
         switch (cond_spinner.getSelectedItem().toString()) {
@@ -129,6 +135,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        // image button pressed - get permissions for user camera
         if (v == image_btn) {
             // request runtime permission
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -137,7 +144,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                     //permission not enabled, request it
                     String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                     //show popup to request permissions
-                    requestPermissions(permission, PERMISSION_CODE);
+                    requestPermissions(permission, PERMISSION_CODE); //request for permission
                 }
                 else{
                     //permission already granted
@@ -148,7 +155,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 //sys
             }
         }
-        else {
+        else { // the user pressed on upload, execute check for data inserted
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -188,12 +195,15 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
             }
 
 
-            final String book_id = bookRef.child(category).push().getKey();
+            final String book_id = bookRef.child(category).push().getKey();// get book id for unique key
             DonateCheck();
             BuildAndAddBook(bookName, autohrName, numPages, user, book_id);
         }
     }
 
+    /*
+    function that check if the inserted book is for donate and if it is - update the 'number of donated book' field in all managers
+     */
     private void DonateCheck() {
         if(!for_change){
             final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
@@ -221,6 +231,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*
+    function that initializing the camera of the user to be ready for take a picture
+     */
     private void openCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
@@ -250,6 +263,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*
+    function that set the image of the user inside the image view
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -259,6 +275,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*
+    function that update the new inserted book into the firebase, and check if the user is client or manager
+     */
     private void addBookToDB(final DatabaseReference managerRoot, final DatabaseReference clientRoot,
                              final String uid, final String book_id,final DatabaseReference book_ref, final Book new_book){
             clientRoot.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -302,9 +321,14 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
             });
         }
 
+    /*
+       function that insert the new book and the new image the user took(if he took) to the firebase,
+       include to the user books list
+
+     */
     private void BuildAndAddBook(final String bookName, final String autohrName, final String numPages, final FirebaseUser user, final String book_id) {
         if (image_uri != null) {
-            final StorageReference fileRef = storageRef.child(book_id + "." + getFileExtension(image_uri));
+            final StorageReference fileRef = storageRef.child(book_id + "." + getFileExtension(image_uri));// insert to image the firebase storage
             fileRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -346,7 +370,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
-        else{
+        else{ // the user don't took a picture
             final Book new_book = new Book(bookName, category, autohrName, Integer.parseInt(numPages), book_cond, for_change, user.getUid(), false);
 
             bookRef.child(new_book.getCategory()).child(book_id).setValue(new_book).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -367,7 +391,9 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    /*
+    function that extract the type of the file
+     */
     private String getFileExtension(Uri mUri) {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();

@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*
+    function that check validation of the mail and the password of the user (include verify email after registration)
+    and if its ok - navigate the user to the menu screen, else - show an error
+     */
     private void UserLogin() {
         String email = mail.getText().toString().trim();
         final String paswrd = password.getText().toString().trim();
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-
+        // here execute the mail and password verification
         cAuth.signInWithEmailAndPassword(email,paswrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -123,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /*
+    function that gets 2 references (to client root and manager root) and navigate the user to the correct menu screen
+     */
     private void EnterToMenu(final DatabaseReference ClientRoot,final DatabaseReference ManagerRoot, final FirebaseUser user, final String pswrd) {
         ClientRoot.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

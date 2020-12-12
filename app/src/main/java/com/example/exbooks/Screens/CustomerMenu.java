@@ -1,12 +1,12 @@
 package com.example.exbooks.Screens;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,9 +51,9 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         }else if(view == upload) {
             Intent intent = new Intent(CustomerMenu.this, UploadScreen.class);
             startActivity(intent);
-        }else if(view == events){
-            Intent intent = new Intent(CustomerMenu.this,EventsScreen.class);
-            startActivity(intent);
+//        }else if(view == events){
+//            Intent intent = new Intent(CustomerMenu.this,EventsScreen.class);
+//            startActivity(intent);
         }else if(view == profile){
             Intent intent = new Intent(CustomerMenu.this,ProfileScreen.class);
             startActivity(intent);

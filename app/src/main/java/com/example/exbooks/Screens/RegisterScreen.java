@@ -1,8 +1,5 @@
 package com.example.exbooks.Screens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -10,11 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-//import com.google.firebase.auth.AuthResult;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
-import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,7 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.exbooks.R;
+
+//import com.google.firebase.auth.AuthResult;
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
     final String[] manager_emails = {"yogev2468@gmail.com"};
@@ -56,7 +57,10 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         dbRef=FirebaseDatabase.getInstance().getReference().child("Users").child("Clients");
 
     }
-
+    /*
+    function that execute when the user click on the register button,
+    check all the inserted data and register the new user.
+     */
     @Override
     public void onClick(View view) {
         String flname=fullname.getText().toString();
@@ -111,6 +115,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             phone.requestFocus();
             return;
         }
+
+        //here we create user with email and password
         cAuth.createUserWithEmailAndPassword(mail,pswrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

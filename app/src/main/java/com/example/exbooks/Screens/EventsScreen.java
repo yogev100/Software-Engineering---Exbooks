@@ -44,6 +44,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
         hour = (EditText)findViewById(R.id.hour);
         minute = (EditText)findViewById(R.id.minute);
         create = (Button)findViewById(R.id.create_event_button);
+        create.setOnClickListener(this);
 
         ShowDonateBooks();
 
@@ -75,22 +76,28 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v==create){
-            if(month.getText().toString().isEmpty()){
+            String monthh = month.getText().toString();
+            String dayy = day.getText().toString();
+            String hourr = hour.getText().toString();
+            String minutee = minute.getText().toString();
+
+            System.out.println("in create click");
+            if(monthh.isEmpty()){
                 month.setError("You must fill the month!");
                 month.requestFocus();
                 return;
             }
-            if(day.getText().toString().isEmpty()){
+            if(dayy.isEmpty()){
                 day.setError("You must fill the day!");
                 day.requestFocus();
                 return;
             }
-            if(hour.getText().toString().isEmpty()){
+            if(hourr.isEmpty()){
                 hour.setError("You must fill the hour!");
                 hour.requestFocus();
                 return;
             }
-            if(minute.getText().toString().isEmpty()){
+            if(minutee.isEmpty()){
                 minute.setError("You must fill the minute!");
                 minute.requestFocus();
                 return;
@@ -116,6 +123,8 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(EventsScreen.this, "You must choose at least "+MinNumBooksForEvent +" books", Toast.LENGTH_LONG).show();
                 return;
             }
+
+
         }
     }
 }

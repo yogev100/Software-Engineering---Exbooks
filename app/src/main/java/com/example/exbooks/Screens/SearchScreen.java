@@ -55,6 +55,11 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         search.setOnClickListener(this);
     }
 
+    /*
+    when the user click on the search button - we check all the inserted data,
+    if some of the data incorrect - he gets error message
+    else - he will navigate to the result screen
+     */
     @Override
     public void onClick(View view) {
         String bkNm=bookName.getText().toString().trim();
@@ -92,6 +97,8 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                 start_page = Integer.parseInt(strtPg);
                 end_page = Integer.parseInt(endPg);
             }
+
+            // we pass all the inserted data to the result screen for filtering
             Intent intent=new Intent(SearchScreen.this,SearchResultScreen.class);
             intent.putExtra("romnanC",roman.isChecked()).putExtra("metachC",metach.isChecked()).putExtra("biographyC",bio.isChecked())
                     .putExtra("cookingC",cooking.isChecked()).putExtra("fantasyC",fantasy.isChecked()).putExtra("childrenC",children.isChecked())
@@ -105,6 +112,9 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /*
+    function that return true if all the category donsnt checked
+     */
     private boolean allempty(){
         for(int i=0;i<c.length;i++){
             if(c[i].isChecked()) return false;

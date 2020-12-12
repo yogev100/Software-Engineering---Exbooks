@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,6 +63,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
         notificationCounter=new NotificationCounter(findViewById(R.id.bell),num);
         System.out.println(num+"out2");
         notificationCounter.increaseNumber(num);
+//        notification.get
 
 
 
@@ -153,8 +153,8 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
         }else if(view == upload) {
             Intent intent = new Intent(ManagerMenu.this, UploadScreen.class);
             startActivity(intent);
-        }else if(view == events){
-            Intent intent = new Intent(ManagerMenu.this,EventsScreen.class);
+//        }else if(view == events){
+//            Intent intent = new Intent(ManagerMenu.this,EventsScreen.class);
             startActivity(intent);
         }else if(view == profile){
             Intent intent = new Intent(ManagerMenu.this,ProfileScreen.class);
