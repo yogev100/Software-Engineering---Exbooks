@@ -1,5 +1,10 @@
 package com.example.exbooks.Users;
 
+
+/**
+ * This abstract class represent a User,
+ * there are few methods (getters and setters) that will help us to use with the firebase
+ */
 public abstract class User {
     private String fullname,
             email,

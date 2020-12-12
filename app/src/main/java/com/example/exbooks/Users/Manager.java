@@ -5,12 +5,17 @@ import com.example.exbooks.Objects.Notification;
 
 import java.util.ArrayList;
 
+/**
+ * This class extends from User class and represent a Manager,
+ * there are few methods (getters and setters) that will help us to use with the firebase
+ */
 public class Manager extends User {
-    ArrayList<String> my_books;
-    ArrayList<Notification> notification;
+    ArrayList<String> my_books; //field for save all books the manager uploaded
+    ArrayList<Notification> notification; // field for save all notifications and show them to the manager
 
-    private Event event;
+    private Event event; // for create new event with all the fields
 
+    // default constructor for firebase
     public Manager(){
 
         my_books=new ArrayList<String>();
@@ -18,12 +23,15 @@ public class Manager extends User {
 
     }
 
+    //arguments constructor for register
     public Manager(String fullname, String email, String password, String city, String phone) {
         super(fullname, email, password, city, phone);
         my_books=new ArrayList<String>();
         notification=new ArrayList<Notification>();
 
     }
+
+    //copy constructor for adapter
 
     public Manager(Manager other){
         super(other);

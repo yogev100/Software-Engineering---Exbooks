@@ -3,14 +3,21 @@ import com.example.exbooks.Objects.Notification;
 
 import java.util.ArrayList;
 
-public class Client extends User {
-    ArrayList<String> my_books;
-    ArrayList<Notification> notification;
 
+/**
+ * This class extends from User class and represent a Client,
+ * there are few methods (getters and setters) that will help us to use with the firebase
+ */
+public class Client extends User {
+    ArrayList<String> my_books;//field for save all books the client uploaded
+    ArrayList<Notification> notification; // field for save all notifications and show them to the client
+
+    // default constructor for firebase
     public Client(){
         my_books=new ArrayList<String>();
         notification=new ArrayList<Notification>();
     }
+    //arguments constructor for register
     public Client(String fullname, String email, String password, String city, String phone) {
         super(fullname, email, password, city, phone);
         my_books=new ArrayList<String>();
@@ -18,6 +25,7 @@ public class Client extends User {
 
     }
 
+    // copy constructor for firebase
     public Client(Client other){
         super(other);
         this.my_books = other.getMy_books();
