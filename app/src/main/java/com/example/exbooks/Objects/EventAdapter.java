@@ -12,9 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.example.exbooks.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +22,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * This class built in order to allow us to adapt the custom view of book event in the search screen.
+ */
 public class EventAdapter extends ArrayAdapter<Book> implements View.OnClickListener{
 
     private ArrayList<Book> dataSet;
@@ -51,7 +52,6 @@ public class EventAdapter extends ArrayAdapter<Book> implements View.OnClickList
         this.mContext=context;
         num_checked = 0;
         selected_books = new ArrayList<>();
-
     }
 
     @Override
@@ -128,13 +128,11 @@ public class EventAdapter extends ArrayAdapter<Book> implements View.OnClickList
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     num_checked++;
-                    System.out.println("book id:"+ book.getBook_id());
                     selected_books.add(new Book(dataSet.get(position)));
 
                 }
                 else{
                     num_checked--;
-                    System.out.println("book id:"+ book.getBook_id());
                     selected_books.remove(book);
                 }
             }

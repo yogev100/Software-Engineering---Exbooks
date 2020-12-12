@@ -347,7 +347,6 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id), new_book);
-
                                     } else {
                                         Toast.makeText(UploadScreen.this,
                                                 "Failed to upload! Try again!",
@@ -381,7 +380,6 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id),new_book);
-
                     } else {
                         Toast.makeText(UploadScreen.this,
                                 "Failed to upload! Try again!",

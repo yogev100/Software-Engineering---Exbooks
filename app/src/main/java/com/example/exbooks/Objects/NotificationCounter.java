@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.exbooks.R;
 
-
+/**
+ * This class responsible for the notification bell counter
+ */
 public class NotificationCounter {
     private TextView notificationNumber;
     private final int MAX_NUMBER = 99;
@@ -13,20 +15,12 @@ public class NotificationCounter {
 
     // Constructor
     public NotificationCounter(View view,int num){
-        System.out.println(num+"in");
         notificationNumber=view.findViewById(R.id.notificationNumber);
-        notification_number_counter=num;
-        notificationNumber.setText(String.valueOf(notification_number_counter));
-    }
-
-    // Method that increase the number of the notifications
-    public void increaseNumber(int num){
-        notification_number_counter=num;
-
-        if(notification_number_counter>MAX_NUMBER){
-            Log.d("Counter","Maximum Number Reached!");
-        }else{
-            notificationNumber.setText(String.valueOf(notification_number_counter));
+        if(num<MAX_NUMBER) {
+            notification_number_counter = num;
+        }else {
+            notification_number_counter = MAX_NUMBER;
         }
+        notificationNumber.setText(String.valueOf(notification_number_counter));
     }
 }

@@ -55,22 +55,6 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Book dataModel= bookModels.get(position);
-//                Toast.makeText(SearchResultScreen.this, "you clic on an item", Toast.LENGTH_LONG).show();
-////                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-////                        .setAction("No action", null).show();
-//
-//            }
-//        });
-
-
-
     }
 
     /*

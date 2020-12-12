@@ -38,6 +38,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+
+/**
+ * This class built in order to allow us to adapt the custom view of user notification in the NotificationScreen.
+ */
 public class NotificationAdapter extends  ArrayAdapter<Notification> implements View.OnClickListener{
 
     private ArrayList<Notification> dataSet;
@@ -88,11 +92,12 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
         }
     }
 
-    // Method that makes the dialog
+    // Method that shows the match dialog
     private void openPhoneDialog(String otherUserId) {
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         DatabaseReference cRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
 
+        //opens dialog with other user info(phone, name)
         mRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -11,11 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
-
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
@@ -34,12 +32,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * This class built in order to allow us to adapt the custom view of book in the search screen.
+ */
 public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClickListener{
 
     private ArrayList<Book> dataSet;
     Context mContext;
-    String screen;
-    FragmentManager supportFragmentManager;
+    String screen;//from which screen im clicked
+    FragmentManager supportFragmentManager;//in order to show dialog
 
 
     // View lookup cache
@@ -58,7 +59,6 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
     public BookFormAdapter(ArrayList<Book> data, Context context, String screen, FragmentManager supportFragmentManager) {
         super(context, R.layout.book_search_component, data);
-        //super(context, R.layout.single_book, data);
         this.dataSet = data;
         this.mContext=context;
         this.screen=screen;
@@ -75,25 +75,27 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
         switch (v.getId()) {
             case R.id.bookId_Button:
-                System.out.println(screen);
-                if(screen.equals("search")) {
+                if(screen.equals("search")) {//if its the first notification sending in the search screen
                     sendNotification(book, true);
                     Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG).setAction("No action", null).show();
                     v.setClickable(false);
                     break;
-                }else if(screen.equals("match")){
+                }else if(screen.equals("match")){//if its the second notification send(its a match) from MaybeMatch screen
                     sendNotification(book, false);
-                    openPhoneDialog(book.getUid());
+                    openPhoneDialog(book.getUid());// if its a match open a dialog
                 }
         }
     }
 
-
+    /**
+     * this function show a dialog with the other user details in the match
+     * @param otherUserId - other user id in the match
+     */
     private void openPhoneDialog(String otherUserId) {
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         DatabaseReference cRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
 
-        mRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {//if manager
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
@@ -108,7 +110,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
             }
         });
-        cRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+        cRef.child(otherUserId).addListenerForSingleValueEvent(new ValueEventListener() {//if client
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
@@ -125,11 +127,17 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
         });
     }
 
+    /**
+     * This function responsible for setting a notification in the other user object.
+     * @param book
+     * @param first
+     */
     private void sendNotification(final Book book, final boolean first) {
         final DatabaseReference managerRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         final DatabaseReference clientRef= FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         final String[] sentNotificationName = new String[1];
 
+        // SEARCHING MY NAME IN THE DATABASE
         managerRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -141,7 +149,6 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
         clientRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -155,10 +162,10 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
+        // SENDING THE OTHER USER NOTIFICATION WITH MY ID AND NAME
         managerRef.child(book.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -171,7 +178,6 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
         clientRef.child(book.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -180,17 +186,14 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
                     c.getNotification().add(new Notification(FirebaseAuth.getInstance().getCurrentUser().getUid(),sentNotificationName[0],book,first));
-                    managerRef.child(book.getUid()).setValue(c);
+                    clientRef.child(book.getUid()).setValue(c);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-
     }
 
     private int lastPosition = -1;

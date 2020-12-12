@@ -1,6 +1,9 @@
 package com.example.exbooks.Objects;
 import java.util.ArrayList;
 
+/**
+ * This class represent a lone book event that shown if there are much books donated
+ */
 public class Event {
     private int day;
     private int month;

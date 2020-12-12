@@ -13,9 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
@@ -32,6 +30,9 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
+/**
+ * This class built in order to allow us to adapt the custom view of user profile in the ProfileScreen.
+ */
 public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnClickListener{
 
     private ArrayList<Book> dataSet;

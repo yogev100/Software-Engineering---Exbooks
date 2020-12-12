@@ -5,6 +5,9 @@ enum Condition{
     NEW,USED,TORN
 }
 
+/**
+ * This class represent a book object
+ */
 public class  Book {
     private String book_name;
     private String author_name;
@@ -70,6 +73,7 @@ public class  Book {
                 return "Used Book";
         }
     }
+
     // Enum to string
     public String condString(){
         switch (book_cond){
@@ -82,8 +86,10 @@ public class  Book {
         }
     }
 
-
-
+    /**
+     * Getters and setters
+     * @return
+     */
     public Condition getBook_cond() {
         return book_cond;
     }

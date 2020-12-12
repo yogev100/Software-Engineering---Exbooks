@@ -4,11 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatDialogFragment;
-
 import com.example.exbooks.Users.User;
 
+/**
+ * This class represent a match dialog
+ */
 public class MatchDialog extends AppCompatDialogFragment {
     User user;
 
@@ -16,6 +17,12 @@ public class MatchDialog extends AppCompatDialogFragment {
         this.user=user;
     }
 
+
+    /**
+     * setting the dialog text and title and show it
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());

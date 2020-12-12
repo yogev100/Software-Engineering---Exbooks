@@ -1,11 +1,14 @@
 package com.example.exbooks.Objects;
 
+/**
+ * This class represent a single user notification
+ */
 public class Notification {
 
     private Book book;
     private String userWantsTheBookId;
     private String wanterName;
-    private boolean first;
+    private boolean first;//if its the first notification, or false if its the second(match)
 
     public Notification(){first=true;}
     public Notification(String uid, String wanterName, Book book, boolean first){

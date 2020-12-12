@@ -71,5 +71,4 @@ public class Manager extends User {
         num_of_books_donated++;
     }
 
-
 }
