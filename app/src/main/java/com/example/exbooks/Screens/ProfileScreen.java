@@ -57,6 +57,9 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_screen);
 
+        // call to the function that shows all the data from the database and checks if this user is client or manager
+        isClient();
+
         // Buttons
         update = (Button) findViewById(R.id.updateDetailsButton);
         update.setOnClickListener(this);
@@ -73,8 +76,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         ManagerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // call to the function that shows all the data from the database and checks if this user is client or manager
-        isClient();
+
 
         listView=(ListView) findViewById(R.id.list_profile);
         LinearLayoutManager LayoutManage = new LinearLayoutManager(this);

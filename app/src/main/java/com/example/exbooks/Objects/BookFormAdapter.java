@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 
@@ -127,7 +127,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
     private void sendNotification(final Book book, final boolean first) {
         final DatabaseReference managerRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-        final DatabaseReference clientRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+        final DatabaseReference clientRef= FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         final String[] sentNotificationName = new String[1];
 
         managerRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

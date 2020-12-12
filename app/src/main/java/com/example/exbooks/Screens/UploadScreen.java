@@ -288,6 +288,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         book_ref.child("cityOwner").setValue(client.getCity());
                         client.getMy_books().add(book_id);
                         clientRoot.child(uid).setValue(client);
+                        bookRef.child(new_book.getCategory()).child(book_id).child("book_id").setValue(book_id);
                         Toast.makeText(UploadScreen.this, "Your Book upload successfully", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(UploadScreen.this, CustomerMenu.class));
                         finish();

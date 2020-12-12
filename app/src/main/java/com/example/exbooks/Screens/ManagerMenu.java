@@ -11,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exbooks.Objects.NotificationCounter;
 import com.example.exbooks.R;
-import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +25,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     ConstraintLayout notification;
     FirebaseAuth cAuth;
     NotificationCounter notificationCounter;
+    final int[] num = new int[1];
     final int minBookSizeForEvent = 2;
     int current_donated;
 
@@ -33,6 +33,8 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manger_menu);
+
+        findNumOfNotification();
 
         current_donated = 0;
         search = (Button)findViewById(R.id.M_signup_button);
@@ -58,11 +60,13 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
         notification=(ConstraintLayout)findViewById(R.id.bell);
         notification.setOnClickListener(this);
-        int num=findNumOfNotification();
-        System.out.println(num+"out1");
-        notificationCounter=new NotificationCounter(findViewById(R.id.bell),num);
-        System.out.println(num+"out2");
-        notificationCounter.increaseNumber(num);
+
+
+        cAuth=FirebaseAuth.getInstance();
+
+        CheckDonate();
+
+
 //        notification.get
 
 
@@ -70,24 +74,27 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
 
 
-        cAuth=FirebaseAuth.getInstance();
 
-        CheckDonate();
 
     }
 
-    private int findNumOfNotification() {
+    private void findNumOfNotification() {
         DatabaseReference mRef=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-        DatabaseReference cRef=FirebaseDatabase.getInstance().getReference("Users").child("Clients");
+//        DatabaseReference cRef=FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final int[] num = new int[1];
+//        final int[] num = new int[1];
         mRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
+//                    num[0] = m.getNotification().size();
                     num[0] = m.getNotification().size();
-                    System.out.println(num[0]);
+                    System.out.println("num inside on DataChange:"+num[0]);
+                    System.out.println(num[0]+"out1");
+                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),num[0]);
+                    System.out.println(num[0]+"out2");
+                    notificationCounter.increaseNumber(num[0]);
                 }
             }
 
@@ -96,24 +103,24 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
             }
         });
-        cRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Client c = snapshot.getValue(Client.class);
-                if(c!=null){
-                    num[0] = c.getNotification().size();
-                    System.out.println(num[0]);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    return num[0];
+//        cRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Client c = snapshot.getValue(Client.class);
+//                if(c!=null){
+//                    num[0] = c.getNotification().size();
+//                    System.out.println(num[0]);
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        System.out.println("num outside on DataChange:"+num[0]);
+//    return num[0];
     }
 
     private void CheckDonate() {

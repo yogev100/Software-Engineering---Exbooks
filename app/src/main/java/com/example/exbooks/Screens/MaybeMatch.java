@@ -1,5 +1,9 @@
 package com.example.exbooks.Screens;
 
+import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,10 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class MaybeMatch extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
-                if(m!=null){
+                if(m!=null && m.getMy_books()!=null){
                     getTheUserBooksByArray(m.getMy_books());
                     exchange.setText("Books of "+m.getfullname()+" :");
                 }
@@ -64,7 +64,7 @@ public class MaybeMatch extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
-                if(c!=null){
+                if(c!=null && c.getMy_books()!=null ){
                     getTheUserBooksByArray(c.getMy_books());
                     exchange.setText("Books of "+c.getfullname()+" :");
                 }
@@ -89,6 +89,8 @@ public class MaybeMatch extends AppCompatActivity {
                         Book b = book.getValue(Book.class);
                         if(b!=null) {
                             for (String a : my_books) {
+                                System.out.println("a:"+a);
+                                System.out.println("b:"+b.getBook_id());
                                 if(b.getBook_id().equals(a)&&b.isFor_change()){
                                     bookModels.add(new Book(b));
                                 }

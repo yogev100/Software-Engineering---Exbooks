@@ -3,10 +3,8 @@ package com.example.exbooks.Screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,8 +26,6 @@ import java.util.ArrayList;
 
 public class SearchResultScreen extends AppCompatActivity implements View.OnClickListener{
 
-    ScrollView sv;
-
     Boolean roman,metach,bio,cooking,fantasy,children,horror,history,religous,politics,parenting,educational;
     String bookName;
     int startPage,endPage;
@@ -47,36 +43,39 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result_screen);
-
-        VarInit();
+        isClient(); // check client or manager
+        VarInit(); // initializing all the variables
 
         menu_btn = (Button)findViewById(R.id.backToMenuFromSearch_Button);
         menu_btn.setOnClickListener(this);
         listView=(ListView)findViewById(R.id.list_book_form);
         bookModels=new ArrayList<>();
         try {
-            FindCorrectBooks();
+            FindCorrectBooks(); // extract from firebase all the correct book to the user search
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
 
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book dataModel= bookModels.get(position);
-                Toast.makeText(SearchResultScreen.this, "you clic on an item", Toast.LENGTH_LONG).show();
-//                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-//                        .setAction("No action", null).show();
-
-            }
-        });
+//
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Book dataModel= bookModels.get(position);
+//                Toast.makeText(SearchResultScreen.this, "you clic on an item", Toast.LENGTH_LONG).show();
+////                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+////                        .setAction("No action", null).show();
+//
+//            }
+//        });
 
 
 
     }
 
+    /*
+    function that get the values from the previous intent and initializing all the variables
+     */
     public void VarInit(){
         Intent intent=getIntent();
         roman = intent.getBooleanExtra("romnanC",false);
@@ -105,20 +104,25 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         books_ref = FirebaseDatabase.getInstance().getReference("Books");
     }
 
+    /*
+    function that extract the correct books from firebase depend on the user filtering
+     */
     private void FindCorrectBooks() throws InterruptedException {
         books_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // go through all the books in which category
                 for (DataSnapshot category:snapshot.getChildren()){
                     if(checkCategory(category.getKey())) {
                         for (DataSnapshot book : category.getChildren()) {
                             Book b=book.getValue(Book.class);
-                            if(b!=null&&b.isFor_change()){
+                            if(b!=null&&b.isFor_change()){ // add the book to the list
                                 bookModels.add(new Book(b));
                             }
                         }
                     }
                 }
+                //a loop that filtering the current list by remove all the unwanted books
                 for(int i=0; i<bookModels.size(); i++){
 
                     if(bookModels.get(i).getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
@@ -177,6 +181,7 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
                         }
                     }
                 }
+                // set the adapter to the list for show all of them in custom layout
                 adapter=new BookFormAdapter(bookModels,getApplicationContext(),"search",getSupportFragmentManager());
                 listView.setAdapter(adapter);
             }
@@ -188,6 +193,10 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         });
     }
 
+    /*
+    side function that return true when the category is marked,
+    otherwise - return false
+     */
     private boolean checkCategory(String category) {
         if(category.equals("Roman")&&roman){
             return true;
@@ -228,6 +237,10 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         return false;
     }
 
+    /*
+    side function that return true when the second string is substring of the first string,
+    otherwise - return false
+     */
     private boolean isSubstring(final String i_StringForSearch, final String i_SubStringToFind) {
         int j = 0;
         for (int i = 0; i < i_StringForSearch.length(); i++) {
@@ -241,10 +254,12 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         return false;
     }
 
+    /*
+    function that navigate the user to the correct menu screen depend on the user type (client or manager)
+     */
     @Override
     public void onClick(View v) {
         if (v == menu_btn){
-            isClient();
             if(is_client){
                 startActivity(new Intent(SearchResultScreen.this, CustomerMenu.class));
                 finish();
@@ -257,6 +272,10 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /*
+    function that assign to the 'is_client' variable true when the current user is client,
+    otherwise - assign false
+     */
     private void isClient() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
