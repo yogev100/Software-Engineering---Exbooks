@@ -31,7 +31,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     ConstraintLayout notification;
     FirebaseAuth cAuth;
     NotificationCounter notificationCounter;
-    final int[] num = new int[1];
+    final int[] numOfNotifications = new int[1];
     final int minBookSizeForEvent = 2;
     int current_donated;
 
@@ -75,7 +75,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     }
 
     // Method that update the number of notifications
-    private void findNumOfNotification() {
+    private void findNumOfNotification(){
         DatabaseReference mRef=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
         mRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,8 +83,8 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
-                    num[0] = m.getNotification().size();
-                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),num[0]);
+                    numOfNotifications[0] = m.getNotification().size();
+                    notificationCounter=new NotificationCounter(findViewById(R.id.bell), numOfNotifications[0]);
                 }
             }
 
@@ -105,13 +105,12 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Integer i = snapshot.getValue(Integer.class);
                 if(i!=null){
-                    if(i<minBookSizeForEvent){
+                    if(i<minBookSizeForEvent){                      // there not enough books for event
                         createEvent.setVisibility(View.INVISIBLE);
-                    }else{
+                    }else{                                          // enough books. can make event.
                         createEvent.setVisibility(View.VISIBLE);
                     }
                 }
-
             }
 
             @Override
@@ -150,6 +149,5 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
             finish();
         }
-
     }
 }

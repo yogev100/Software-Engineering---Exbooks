@@ -44,6 +44,7 @@ public class ForgetPasswordScreen extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         String mail=email.getText().toString().trim();
 
+        // check the email validation
         if(mail.isEmpty()){
             email.setError("Email address required!");
             email.requestFocus();

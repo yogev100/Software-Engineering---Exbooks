@@ -162,7 +162,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 Client client = snapshot.getValue(Client.class);
                 // if its client-
                 if (client != null) {
-                    isClient = true;                            // update the boolean
+                    isClient = true;                            // update the boolean isClient
                     c=new Client(client);                       // make a new client for the "work  on"
                     _PHONE = c.getPhone();                      // take the user parameters from the DB
                     _NAME = c.getfullname();
@@ -193,7 +193,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 Manager manager = snapshot.getValue(Manager.class);
                 // if its manager-
                 if (manager != null) {
-                    isClient = false;                           // update the boolean
+                    isClient = false;                           // update the boolean isClient
                     m=new Manager(manager);                     // make a new client for the "work  on"
                     _PHONE = m.getPhone();                      // take the user parameters from the DB
                     _NAME = m.getfullname();
@@ -227,15 +227,15 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 Toast.makeText(ProfileScreen.this, "the data is not changed", Toast.LENGTH_LONG).show();
             }
             if (isNameChanged()){
-                _NAME = name.getText().toString();
+                _NAME = name.getText().toString();      // update the String for the change
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
             if(isPhoneChanged()){
-                _PHONE = phone.getText().toString();
+                _PHONE = phone.getText().toString();    // update the String for the change
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
             if(isCityChanged()){
-                _CITY = city.getText().toString();
+                _CITY = city.getText().toString();      // update the String for the change
                 Toast.makeText(ProfileScreen.this, "The personal information updated!", Toast.LENGTH_LONG).show();
             }
         }
@@ -245,14 +245,14 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     private boolean isPhoneChanged() {
         if (isClient) {
             if (!_PHONE.equals(phone.getText().toString()) && (phone.getText().toString().length()==10 || phone.getText().toString().length()==11)) {
-                CurrentUser.child("phone").setValue(phone.getText().toString());
+                CurrentUser.child("phone").setValue(phone.getText().toString());    // update the data base from the EditText field
                 return true;
             } else {
                 return false;
             }
         } else {
             if (!_PHONE.equals(phone.getText().toString()) && (phone.getText().toString().length()==10 || phone.getText().toString().length()==11)) {
-                CurrentUser.child("phone").setValue(phone.getText().toString());
+                CurrentUser.child("phone").setValue(phone.getText().toString());    // update the data base from the EditText field
                 return true;
             } else {
                 return false;
@@ -264,14 +264,14 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     private boolean isCityChanged() {
         if (isClient) {
             if (!_CITY.equals(city.getText().toString()) && !city.getText().toString().isEmpty()) {
-                CurrentUser.child("city").setValue(city.getText().toString());
+                CurrentUser.child("city").setValue(city.getText().toString());      // update the data base from the EditText field
                 return true;
             } else {
                 return false;
             }
         } else {
             if (!_CITY.equals(city.getText().toString()) && !city.getText().toString().isEmpty()) {
-                CurrentUser.child("city").setValue(city.getText().toString());
+                CurrentUser.child("city").setValue(city.getText().toString());      // update the data base from the EditText field
                 return true;
             } else {
                 return false;
@@ -284,14 +284,14 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
         if (isClient) {
             System.out.println(name.getText().toString());
             if (!_NAME.equals(name.getText().toString()) && !name.getText().toString().isEmpty())  {
-                CurrentUser.child("fullname").setValue(name.getText().toString());
+                CurrentUser.child("fullname").setValue(name.getText().toString());      // update the data base from the EditText field
                 return true;
             } else {
                 return false;
             }
         } else {
             if (!_NAME.equals(name.getText().toString()) && !name.getText().toString().isEmpty()) {
-                CurrentUser.child("fullname").setValue(name.getText().toString());
+                CurrentUser.child("fullname").setValue(name.getText().toString());      // update the data base from the EditText field
                 return true;
             } else {
                 return false;

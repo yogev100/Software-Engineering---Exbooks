@@ -98,6 +98,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
     function that initializing the category and condition spinners
      */
     public void initSpinners() {
+        // Category spinner
         category_spinner = (Spinner) findViewById(R.id.category_spinner);
 
         ArrayAdapter<String> category_adapter = new ArrayAdapter<>(UploadScreen.this,
@@ -106,6 +107,8 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
         category_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category_spinner.setAdapter(category_adapter);
 
+
+        // Consition spinner
         cond_spinner = (Spinner) findViewById(R.id.cond_spinner);
 
         ArrayAdapter<String> cond_adapter = new ArrayAdapter<>(UploadScreen.this,
@@ -168,6 +171,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
             int radio_id = radio_group.getCheckedRadioButtonId();
             RadioButton radio_button = findViewById(radio_id);
 
+            // validation checks
             if (bookName.isEmpty()) {
                 book_name.setError("Book name is required!");
                 book_name.requestFocus();
@@ -193,7 +197,6 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 for_change = false;
             }
 
-
             final String book_id = bookRef.child(category).push().getKey();// get book id for unique key
             DonateCheck();
             BuildAndAddBook(bookName, autohrName, numPages, user, book_id);
@@ -204,14 +207,13 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
     function that check if the inserted book is for donate and if it is - update the 'number of donated book' field in managers tree
      */
     private void DonateCheck() {
-        if(!for_change){
+        if(!for_change){   // donated
             final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
             managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Integer i = snapshot.getValue(Integer.class);
-                    managerRef.child("num_of_books_donated").setValue(++i);
-
+                    managerRef.child("num_of_books_donated").setValue(++i);         // the num of books is ++, because we added a book.
                 }
 
                 @Override
@@ -274,7 +276,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Client client = snapshot.getValue(Client.class);
-                    if (client != null) {
+                    if (client != null) {       // its client
                         book_ref.child("cityOwner").setValue(client.getCity());
                         client.getMy_books().add(book_id);
                         clientRoot.child(uid).setValue(client);
@@ -294,7 +296,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Manager manager = snapshot.getValue(Manager.class);
-                    if (manager != null) {
+                    if (manager != null) {      //its manager
                         book_ref.child("cityOwner").setValue(manager.getCity());
                         manager.getMy_books().add(book_id);
                         managerRoot.child(uid).setValue(manager);
@@ -357,7 +359,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(UploadScreen.this, "Uploading Falied !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadScreen.this, "Uploading Failed !!!", Toast.LENGTH_SHORT).show();
                 }
             });
         }

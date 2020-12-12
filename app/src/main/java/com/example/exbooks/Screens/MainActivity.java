@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = mail.getText().toString().trim();
         final String paswrd = password.getText().toString().trim();
 
+        // validation checks
         if(email.isEmpty()){
             mail.setError("Email is required!");
             mail.requestFocus();
@@ -125,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else{
 
                     Toast.makeText(MainActivity.this,"Email or Password was incorrect!",Toast.LENGTH_LONG).show();
-
                 }
             }
         });
@@ -134,17 +134,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*
     function that gets 2 references (to client root and manager root) and navigate the user to the correct menu screen
      */
-    private void EnterToMenu(final DatabaseReference ClientRoot,final DatabaseReference ManagerRoot, final FirebaseUser user, final String pswrd) {
+    private void EnterToMenu(final DatabaseReference ClientRoot,final DatabaseReference ManagerRoot, final FirebaseUser user, final String pswrd){
         ClientRoot.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client clientProfile = snapshot.getValue(Client.class);
                 if(clientProfile != null){
+
                     // update password if its changed
                     if(!pswrd.equals(clientProfile.getPassword())) {
                         clientProfile.setPassword(pswrd);
                         ClientRoot.child(user.getUid()).setValue(clientProfile);
                     }
+                    //Enter to menu (client)
                     startActivity(new Intent(MainActivity.this, CustomerMenu.class));
                     finish();
                 }
@@ -161,11 +163,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager managerProfile = snapshot.getValue(Manager.class);
                 if(managerProfile != null){
+
                     // update password if its changed
                     if(!pswrd.equals(managerProfile.getPassword())) {
                         managerProfile.setPassword(pswrd);
                         ManagerRoot.child(user.getUid()).setValue(managerProfile);
                     }
+                    //Enter to menu (manager)
                     startActivity(new Intent(MainActivity.this, ManagerMenu.class));
                     finish();
                 }

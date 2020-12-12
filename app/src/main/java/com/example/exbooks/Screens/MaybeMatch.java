@@ -87,18 +87,19 @@ public class MaybeMatch extends AppCompatActivity {
         bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot category:snapshot.getChildren()){
-                    for(DataSnapshot book:category.getChildren()){
-                        Book b = book.getValue(Book.class);
-                        if(b!=null) {
-                            for (String a : my_books) {
-                                if(b.getBook_id().equals(a)&&b.isFor_change()){
-                                    bookModels.add(new Book(b));
+                for(DataSnapshot category:snapshot.getChildren()){                  //go all over the categories
+                    for(DataSnapshot book:category.getChildren()){                  //go all over the books
+                        Book b = book.getValue(Book.class);                         //"take" the book
+                        if(b!=null) {                                               //check if exist
+                            for (String a : my_books) {                             //if yes- go all over my_books
+                                if(b.getBook_id().equals(a)&&b.isFor_change()){     //find the correct book
+                                    bookModels.add(new Book(b));                    //add to the list.
                                 }
                             }
                         }
                     }
                 }
+                // show the list with the adapter.
                 adapter=new BookFormAdapter(bookModels,getApplicationContext(),"match", getSupportFragmentManager());
                 listView.setAdapter(adapter);
             }

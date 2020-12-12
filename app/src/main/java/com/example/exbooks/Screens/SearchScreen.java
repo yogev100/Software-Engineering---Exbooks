@@ -73,6 +73,8 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
 
 
         if(view==search){
+
+            // validation checks
             if(allempty()&&bkNm.isEmpty()&&strtPg.isEmpty()&&endPg.isEmpty()&&athr.isEmpty()&&cty.isEmpty()){
                 bookName.setError("Please fill at least one of the filters");
                 bookName.requestFocus();

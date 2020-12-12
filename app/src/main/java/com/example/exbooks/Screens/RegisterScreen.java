@@ -67,6 +67,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         String mail=email.getText().toString();
         String phn=phone.getText().toString();
 
+        // validation checks
         if(flname.isEmpty()){
             fullname.setError("Full name is required!");
             fullname.requestFocus();

@@ -253,7 +253,6 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
                 startActivity(new Intent(SearchResultScreen.this, ManagerMenu.class));
                 finish();
             }
-
         }
     }
 

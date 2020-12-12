@@ -58,18 +58,19 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
     // Method that delete the book from "my_books" list by UID,BID.
     public void deleteFromMyBooks(final String UID, final String BID){
+        // takes the references
         final DatabaseReference clientRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-
+        // if manager
         managerRef.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m= snapshot.getValue(Manager.class);
-                if(m!=null){
-                    for(int i=0; i<m.getMy_books().size(); i++){
-                        if (m.getMy_books().get(i) != null) {
-                            if (m.getMy_books().get(i).equals(BID)) {
-                                managerRef.child(UID).child("my_books").child(i+"").removeValue();
+                if(m!=null){    // manager exist
+                    for(int i=0; i<m.getMy_books().size(); i++){    // go all over the books
+                        if (m.getMy_books().get(i) != null) {       // check if not null
+                            if (m.getMy_books().get(i).equals(BID)) {   // BID comparison
+                                managerRef.child(UID).child("my_books").child(i+"").removeValue();  // remove the value from the my_books list.
                             }
                         }
                     }
@@ -82,15 +83,16 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
             }
         });
 
+        // if client
         clientRef.child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
-                if(c!=null){
-                    for(int i=0; i<c.getMy_books().size(); i++){
-                        if (c.getMy_books().get(i) != null) {
-                            if (c.getMy_books().get(i).equals(BID)) {
-                                clientRef.child(UID).child("my_books").child(i + "").removeValue();
+                if(c!=null){    // client exist
+                    for(int i=0; i<c.getMy_books().size(); i++){    // go all over the books
+                        if (c.getMy_books().get(i) != null) {       // check if not null
+                            if (c.getMy_books().get(i).equals(BID)) {// BID comparison
+                                clientRef.child(UID).child("my_books").child(i + "").removeValue(); // remove the value from the my_books list.
                             }
                         }
                     }
@@ -108,12 +110,11 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         super(context, R.layout.book_profile, data);
         this.dataSet = data;
         this.mContext=context;
-
     }
 
     // method that checks if the click is on the right button's position
     @Override
-    public void onClick(View v) {
+    public void onClick(View v){
         final int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Book book=(Book)object;
@@ -226,13 +227,13 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         function that check if the deleted book is for donate and if it is - update the 'number of donated book' field in managers tree
          */
     private void DonateCheck(boolean for_change) {
-        if(!for_change){
+        if(!for_change){ // if donate book
             final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
             managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Integer i = snapshot.getValue(Integer.class);
-                    managerRef.child("num_of_books_donated").setValue(--i);
+                    managerRef.child("num_of_books_donated").setValue(--i);     // the num of books is --. because of deletion.
                 }
 
                 @Override

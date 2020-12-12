@@ -54,6 +54,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    // method that set the donated books to the list, and show them by adapter.
     private void ShowDonateBooks() {
         books_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -80,12 +81,13 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v==create){
+        if(v==create){      // create an event.
             String monthh = month.getText().toString();
             String dayy = day.getText().toString();
             String hourr = hour.getText().toString();
             String minutee = minute.getText().toString();
 
+            // validation checks
             if(monthh.isEmpty()){
                 month.setError("You must fill the month!");
                 month.requestFocus();

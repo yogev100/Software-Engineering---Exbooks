@@ -53,9 +53,9 @@ public class NewManager extends AppCompatActivity implements View.OnClickListene
         String email = mail.getText().toString().trim();
 
         if(view==createMangaer){
-            PromoteClientToManager(email);
+            PromoteClientToManager(email);      // this client --> promote to manager
         }
-        else if(view == menu){
+        else if(view == menu){                  // go back to the menu..
             startActivity(new Intent(this, ManagerMenu.class));
         }
     }
@@ -66,16 +66,16 @@ public class NewManager extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String newManagerId;
-                for(DataSnapshot c:snapshot.getChildren()){
+                for(DataSnapshot c:snapshot.getChildren()){         // go all over the clients
                     Client cl=c.getValue(Client.class);
                     // check if the client user is not null, and if this is his email..
                     if(cl!= null && cl.getEmail().equals(email)){
-                        newManagerId=c.getKey(); //uid client
+                        newManagerId=c.getKey();                    //uid client
                         DatabaseReference managers=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                         // update the new manager at the Manager tree
-                        managers.child(newManagerId).setValue(cl);
+                        managers.child(newManagerId).setValue(cl);      // set the user in manager tree
                         // and remove from the Client tree.
-                        dbRef.child(newManagerId).removeValue();
+                        dbRef.child(newManagerId).removeValue();        // remove the user from the client tree
                         Toast.makeText(NewManager.this, email+ " promoted to manager", Toast.LENGTH_LONG).show();
                     }
                 }

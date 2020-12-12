@@ -58,10 +58,10 @@ public class NotificationScreen extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
-                    for(Notification n:c.getNotification()){
-                        notification_model.add(new Notification(n,n.isFirst()));
+                    for(Notification n:c.getNotification()){                                // go all over the notifications
+                        notification_model.add(new Notification(n,n.isFirst()));            // add the notification to the list
                     }
-                    Collections.reverse(notification_model);
+                    Collections.reverse(notification_model);                                // make it reverse, and show by the adapter.
                     adapter=new NotificationAdapter(notification_model,getApplicationContext(),getSupportFragmentManager());
                     listView.setAdapter(adapter);
                 }
@@ -77,10 +77,10 @@ public class NotificationScreen extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
-                    for(Notification n:m.getNotification()){
-                        notification_model.add(new Notification(n,n.isFirst()));
+                    for(Notification n:m.getNotification()){                                // go all over the notifications
+                        notification_model.add(new Notification(n,n.isFirst()));            // add the notification to the list
                     }
-                    Collections.reverse(notification_model);
+                    Collections.reverse(notification_model);                                // make it reverse, and show by the adapter.
                     adapter=new NotificationAdapter(notification_model,getApplicationContext(),getSupportFragmentManager());
                     listView.setAdapter(adapter);
                 }
