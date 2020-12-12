@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.exbooks.R;
-import com.example.exbooks.Screens.ProfileScreen;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,6 +53,7 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
     }
 
+    // Method that delete the book from "my_books" list by UID,BID.
     public void deleteFromMyBooks(final String UID, final String BID){
         final DatabaseReference clientRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
@@ -66,10 +65,7 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
                 if(m!=null){
                     for(int i=0; i<m.getMy_books().size(); i++){
                         if (m.getMy_books().get(i) != null) {
-                            System.out.println(m.getMy_books().get(i) + " @@@@@@@@@@@ " + BID);
                             if (m.getMy_books().get(i).equals(BID)) {
-                                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                                System.out.println(m.getMy_books().get(i));
                                 managerRef.child(UID).child("my_books").child(i+"").removeValue();
                             }
                         }
@@ -103,7 +99,6 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
             }
         });
-
     }
 
     public ProfileBookAdapter(ArrayList<Book> data, Context context) {
@@ -113,32 +108,32 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
     }
 
+    // method that checks if the click is on the right button's position
     @Override
     public void onClick(View v) {
         final int position=(Integer) v.getTag();
         Object object= getItem(position);
         final Book book=(Book)object;
 
-        switch (v.getId())
-        {
-            case R.id.button_profile:
+        switch (v.getId()) {
+            // if the click is on the "delete"
+            case R.id.delete_button_profile:
+                // make alert dialog "are you sure?"
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-                builder.setMessage(R.string.confirmDelete)
-                        .setTitle(R.string.deleteAlert);
-
+                builder.setMessage(R.string.confirmDelete).setTitle(R.string.deleteAlert);
+                // user clicks on the position button- Yes, delete.
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dataSet.remove(position);                                                   // remove from the array list
                         bookRef.child(book.getCategory()).child(book.getBook_id()).removeValue();   // remove from the Books tree
-                        if (book.getImgURL()) {
-                            storageRef.child(book.getBook_id() + ".jpg").delete();                       // remove the picture from the storage
+                        if (book.getImgURL()) {                                                     // if there picture..
+                            storageRef.child(book.getBook_id() + ".jpg").delete();                  // remove the picture from the storage
                         }
                         deleteFromMyBooks(cAuth.getCurrentUser().getUid(),book.getBook_id());       // remove from "my books" list in the User tree
                         notifyDataSetChanged();                                                     // (remove and) update the list view..
                     }
                 });
-
+                // user clicks on the negative button- No. do not do anything..
                 builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
@@ -159,11 +154,9 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
-
         final View result;
 
         if (convertView == null) {
-
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.book_profile, parent, false);
@@ -172,14 +165,14 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
             viewHolder.category = (TextView) convertView.findViewById(R.id.category_profile);
             viewHolder.author = (TextView) convertView.findViewById(R.id.author_name);
             viewHolder.condition = (TextView) convertView.findViewById(R.id.condition_profile);
-            viewHolder.delete = (Button) convertView.findViewById(R.id.button_profile);
+            viewHolder.delete = (Button) convertView.findViewById(R.id.delete_button_profile);
             viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.image_profile);
             viewHolder.bid=book.getBook_id();
 //            viewHolder.constraint=(ConstraintLayout)convertView.findViewById(R.id.book_Form);
 
             result=convertView;
-
             convertView.setTag(viewHolder);
+
         } else {
             viewHolder = (ProfileBookAdapter.ViewHolder) convertView.getTag();
             result=convertView;
@@ -200,6 +193,7 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         return convertView;
     }
 
+    // Method that gets the image url (or default..), and download the image from the storage.
     private void set_url_image(int position, final ProfileBookAdapter.ViewHolder viewHolder){
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         String book_img_name = "";
@@ -223,15 +217,6 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
         });
 
     }
-
-
-
-
-
-
-
-
-
 
 }
 

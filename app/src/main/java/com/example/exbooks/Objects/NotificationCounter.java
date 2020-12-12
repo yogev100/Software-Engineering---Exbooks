@@ -11,15 +11,15 @@ public class NotificationCounter {
     private final int MAX_NUMBER = 99;
     private int notification_number_counter = 0;
 
+    // Constructor
     public NotificationCounter(View view,int num){
         System.out.println(num+"in");
         notificationNumber=view.findViewById(R.id.notificationNumber);
         notification_number_counter=num;
         notificationNumber.setText(String.valueOf(notification_number_counter));
-
-
     }
 
+    // Method that increase the number of the notifications
     public void increaseNumber(int num){
         notification_number_counter=num;
 

@@ -31,7 +31,7 @@ public class ListProfile extends RecyclerView.Adapter<ListProfile.MyViewHolder> 
         MyViewHolder(View view) {
             super(view);
             bookName = view.findViewById(R.id.book_name_profile);
-            delete = view.findViewById(R.id.button_profile);
+            delete = view.findViewById(R.id.delete_button_profile);
             img = view.findViewById(R.id.image_profile);
         }
     }

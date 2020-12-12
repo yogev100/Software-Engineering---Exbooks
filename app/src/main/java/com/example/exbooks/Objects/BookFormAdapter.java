@@ -66,29 +66,28 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
 
     }
 
+    // onClick method, checks if the user clicks on the right position.
     @Override
     public void onClick(View v) {
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Book book=(Book)object;
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.bookId_Button:
                 System.out.println(screen);
                 if(screen.equals("search")) {
                     sendNotification(book, true);
-                    Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG)
-                            .setAction("No action", null).show();
+                    Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG).setAction("No action", null).show();
                     v.setClickable(false);
                     break;
                 }else if(screen.equals("match")){
                     sendNotification(book, false);
                     openPhoneDialog(book.getUid());
-					
                 }
         }
     }
+
 
     private void openPhoneDialog(String otherUserId) {
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
@@ -246,6 +245,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
         return convertView;
     }
 
+    // Method that gets the image url (or default..), and download the image from the storage.
     private void set_url_image(int position, final ViewHolder viewHolder){
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         String book_img_name = "";

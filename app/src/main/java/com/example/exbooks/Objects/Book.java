@@ -1,15 +1,17 @@
 package com.example.exbooks.Objects;
 
+// Enum variable that illustrates the condition of the book
 enum Condition{
     NEW,USED,TORN
 }
+
 public class  Book {
     private String book_name;
     private String author_name;
     private String category;
     private int num_pages;
     private Condition book_cond;
-    private boolean for_change;
+    private boolean for_change; // if for change- true, donate- false.
     private String book_id;
     private String uid;
     private String cityOwner;
@@ -42,6 +44,7 @@ public class  Book {
         this.book_id=other.getBook_id();
     }
 
+    // Enum init
     public void init_cond(int book_cond){
         switch (book_cond){
             case 0:
@@ -56,6 +59,7 @@ public class  Book {
         }
     }
 
+    // Enum to string with parameter
     public String cond_toString(Condition cond){
         switch (cond){
             case NEW:
@@ -66,7 +70,7 @@ public class  Book {
                 return "Used Book";
         }
     }
-
+    // Enum to string
     public String condString(){
         switch (book_cond){
             case NEW:

@@ -55,7 +55,7 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
         String wanterName;
 
     }
-
+    // Constructor
     public NotificationAdapter(ArrayList<Notification> data, Context context, FragmentManager supportFragmentManager) {
         super(context, R.layout.notification_view, data);
         this.dataSet = data;
@@ -64,27 +64,31 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
 
     }
 
+    // onClick method used to begin the action
     @Override
     public void onClick(View v) {
+        // get the click position and take the object.
         int position=(Integer) v.getTag();
         Object object= getItem(position);
         Notification notification =(Notification)object;
 
-        switch (v.getId())
-        {
+        // check if clicked at the button, at the right position..
+        switch (v.getId()) {
             case R.id.check_Button:
+                // if its the first person who wants.
                 if(notification.isFirst()) {
                     Intent intent = new Intent(mContext, MaybeMatch.class);
-                    intent.putExtra("wanterID",notification.getUserWantsTheBookId());
+                    intent.putExtra("wanterID", notification.getUserWantsTheBookId());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                     break;
-                }else{
+                }else{ // its the second person who wants.
                     openPhoneDialog(notification.getUserWantsTheBookId());
                 }
         }
     }
 
+    // Method that makes the dialog
     private void openPhoneDialog(String otherUserId) {
         DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         DatabaseReference cRef = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
@@ -123,6 +127,7 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
 
     private int lastPosition = -1;
 
+    // getView method used to
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
@@ -159,6 +164,7 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
         result.startAnimation(animation);
         lastPosition = position;
 
+        // if its the first person who wants, make this nofitication-
         if(notification.isFirst()) {
             viewHolder.notification_txt.setText("wants your book-" + notification.getBook().getBook_name() + ", check what books he can offer you.");
             viewHolder.ownerName.setText(notification.getWanterName() + ",");
@@ -166,7 +172,7 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
             viewHolder.checkButton.setText("Check");
             viewHolder.checkButton.setTag(position);
             viewHolder.bid = notification.getBook().getBook_id();
-        }else{
+        }else{ // its the second person who wants, make Match..
             viewHolder.notification_txt.setText("if you want to exchange the book "+notification.getBook().getBook_name()+" with "+notification.getWanterName()+" click"  );
             viewHolder.ownerName.setText("M-a-t-c-h !!");
             viewHolder.checkButton.setOnClickListener(this);
@@ -179,16 +185,20 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
         return convertView;
     }
 
+    // Method to take the image from the storage..
     private void set_url_image(int position, final ViewHolder viewHolder){
         final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         String book_img_name = "";
+        // check if there some picture, else take the default..
         if(dataSet.get(position).getBook().getImgURL()){
             book_img_name = viewHolder.bid+".jpg";
         }
         else{
             book_img_name = "no_image.png";
         }
+        // make the reference to this book
         StorageReference img_ref = storageRef.child(book_img_name);
+        // and download
         img_ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
