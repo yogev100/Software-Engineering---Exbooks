@@ -85,7 +85,6 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
                 if(m!=null){
                     num[0] = m.getNotification().size();
                     notificationCounter=new NotificationCounter(findViewById(R.id.bell),num[0]);
-                    notificationCounter.increaseNumber(num[0]);
                 }
             }
 
@@ -141,7 +140,6 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(ManagerMenu.this,NewManager.class);
             startActivity(intent);
         }else if(view == notification){
-            notificationCounter.increaseNumber(0);
             Intent intent = new Intent(ManagerMenu.this,NotificationScreen.class);
             startActivity(intent);
         }else if(view == createEvent){

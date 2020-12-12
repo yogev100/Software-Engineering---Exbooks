@@ -1,4 +1,4 @@
-package com.example.exbooks.Objects;
+package com.example.exbooks.Adapters;
 
 import android.content.Context;
 import android.net.Uri;
@@ -14,6 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.exbooks.Objects.Book;
+import com.example.exbooks.Objects.MatchDialog;
+import com.example.exbooks.Objects.Notification;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;

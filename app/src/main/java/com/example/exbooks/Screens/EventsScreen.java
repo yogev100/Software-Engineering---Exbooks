@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.Objects.Book;
-import com.example.exbooks.Objects.EventAdapter;
+import com.example.exbooks.Adapters.EventAdapter;
 import com.example.exbooks.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

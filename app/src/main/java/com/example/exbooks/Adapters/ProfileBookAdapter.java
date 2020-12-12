@@ -1,4 +1,4 @@
-package com.example.exbooks.Objects;
+package com.example.exbooks.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+
+import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;

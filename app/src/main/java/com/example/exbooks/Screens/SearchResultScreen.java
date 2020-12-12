@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.exbooks.Objects.Book;
-import com.example.exbooks.Objects.BookFormAdapter;
+import com.example.exbooks.Adapters.BookFormAdapter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.google.firebase.auth.FirebaseAuth;

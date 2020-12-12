@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.exbooks.Objects.Book;
-import com.example.exbooks.Objects.ProfileBookAdapter;
+import com.example.exbooks.Adapters.ProfileBookAdapter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;

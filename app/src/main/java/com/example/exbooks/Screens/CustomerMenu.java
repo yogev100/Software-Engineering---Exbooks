@@ -99,7 +99,6 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
                 if(c!=null){
                     numOfNotifications[0] = c.getNotification().size();
                     notificationCounter=new NotificationCounter(findViewById(R.id.bell),numOfNotifications[0]);
-                    notificationCounter.increaseNumber(numOfNotifications[0]);
                 }
             }
 

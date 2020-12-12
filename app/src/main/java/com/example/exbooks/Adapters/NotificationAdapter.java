@@ -1,4 +1,4 @@
-package com.example.exbooks.Objects;
+package com.example.exbooks.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.exbooks.Objects.MatchDialog;
+import com.example.exbooks.Objects.Notification;
 import com.example.exbooks.R;
 import com.example.exbooks.Screens.MaybeMatch;
 import com.example.exbooks.Screens.NotificationScreen;

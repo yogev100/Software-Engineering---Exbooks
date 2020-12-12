@@ -1,4 +1,4 @@
-package com.example.exbooks.Objects;
+package com.example.exbooks.Adapters;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,6 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+
+import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

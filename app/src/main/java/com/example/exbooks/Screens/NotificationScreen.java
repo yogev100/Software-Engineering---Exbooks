@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.Objects.Notification;
-import com.example.exbooks.Objects.NotificationAdapter;
+import com.example.exbooks.Adapters.NotificationAdapter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
