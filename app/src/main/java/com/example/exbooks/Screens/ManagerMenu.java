@@ -100,19 +100,18 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     private void CheckDonate() {
         String uid = cAuth.getCurrentUser().getUid();
         DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-        managerRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Manager manager = snapshot.getValue(Manager.class);
-                if(manager != null){
-                    current_donated = manager.getNum_of_books_donated();
-                    // visible/invisible the button according to the number of donated books.
-                    if(current_donated<minBookSizeForEvent){
+                Integer i = snapshot.getValue(Integer.class);
+                if(i!=null){
+                    if(i<minBookSizeForEvent){
                         createEvent.setVisibility(View.INVISIBLE);
                     }else{
                         createEvent.setVisibility(View.VISIBLE);
                     }
                 }
+
             }
 
             @Override

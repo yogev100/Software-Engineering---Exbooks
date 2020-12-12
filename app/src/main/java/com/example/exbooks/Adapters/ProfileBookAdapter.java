@@ -134,6 +134,7 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
                         }
                         deleteFromMyBooks(cAuth.getCurrentUser().getUid(),book.getBook_id());       // remove from "my books" list in the User tree
                         notifyDataSetChanged();                                                     // (remove and) update the list view..
+                        DonateCheck(book.isFor_change());
                     }
                 });
                 // user clicks on the negative button- No. do not do anything..
@@ -219,6 +220,27 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
             }
         });
 
+    }
+
+    /*
+        function that check if the deleted book is for donate and if it is - update the 'number of donated book' field in managers tree
+         */
+    private void DonateCheck(boolean for_change) {
+        if(!for_change){
+            final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+            managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Integer i = snapshot.getValue(Integer.class);
+                    managerRef.child("num_of_books_donated").setValue(--i);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
 }

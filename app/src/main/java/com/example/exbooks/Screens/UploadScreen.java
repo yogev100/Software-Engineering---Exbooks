@@ -201,25 +201,17 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
     }
 
     /*
-    function that check if the inserted book is for donate and if it is - update the 'number of donated book' field in all managers
+    function that check if the inserted book is for donate and if it is - update the 'number of donated book' field in managers tree
      */
     private void DonateCheck() {
         if(!for_change){
             final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-            managerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot m:snapshot.getChildren()) {
-                        System.out.println();
-                        Manager manager = m.getValue(Manager.class);
-                        if (manager != null) {
-                            String key = m.getKey();
-                            int num = manager.getNum_of_books_donated();
-                            System.out.println(num);
-                            managerRef.child(key).child("num_of_books_donated").setValue(++num);
-                            System.out.println(num);
-                        }
-                    }
+                    Integer i = snapshot.getValue(Integer.class);
+                    managerRef.child("num_of_books_donated").setValue(++i);
+
                 }
 
                 @Override
