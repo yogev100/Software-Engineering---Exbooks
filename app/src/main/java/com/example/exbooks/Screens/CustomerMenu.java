@@ -24,12 +24,15 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
     Button search,upload,events,profile,logout;
     ConstraintLayout notification;
     FirebaseAuth cAuth;
-//    ImageButton notification;
+    final int[] num = new int[1];
     NotificationCounter notificationCounter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_menu);
+
+        findNumOfNotification();
 
         search = (Button)findViewById(R.id.signup_button);
         search.setOnClickListener(this);
@@ -47,17 +50,10 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         logout.setOnClickListener(this);
 
 
-
-//        notification=(ImageButton)findViewById(R.id.notification_button);
         notification=(ConstraintLayout)findViewById(R.id.bell);
         notification.setOnClickListener(this);
-        int num=findNumOfNotification();
-        System.out.println(num+"out1");
-        notificationCounter=new NotificationCounter(findViewById(R.id.bell),num);
-        System.out.println(num+"out2");
-        notificationCounter.increaseNumber(num);
-        cAuth=FirebaseAuth.getInstance();
 
+        cAuth=FirebaseAuth.getInstance();
 
     }
 
@@ -86,34 +82,19 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private int findNumOfNotification() {
-//        DatabaseReference mRef= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
+    private void findNumOfNotification() {
         DatabaseReference cRef=FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
         final int[] num = new int[1];
-//        mRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Manager m = snapshot.getValue(Manager.class);
-//                if(m!=null){
-//                    num[0] = m.getNotification().size();
-//                    System.out.println(num[0]);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+
         cRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
                     num[0] = c.getNotification().size();
-                    System.out.println(num[0]);
-
+                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),num[0]);
+                    notificationCounter.increaseNumber(num[0]);
                 }
             }
 
@@ -123,6 +104,5 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        return num[0];
     }
 }

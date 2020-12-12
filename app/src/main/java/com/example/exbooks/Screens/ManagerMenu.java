@@ -66,34 +66,18 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
         CheckDonate();
 
-
-//        notification.get
-
-
-
-
-
-
-
-
     }
 
     private void findNumOfNotification() {
         DatabaseReference mRef=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-//        DatabaseReference cRef=FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        final int[] num = new int[1];
         mRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
-//                    num[0] = m.getNotification().size();
                     num[0] = m.getNotification().size();
-                    System.out.println("num inside on DataChange:"+num[0]);
-                    System.out.println(num[0]+"out1");
                     notificationCounter=new NotificationCounter(findViewById(R.id.bell),num[0]);
-                    System.out.println(num[0]+"out2");
                     notificationCounter.increaseNumber(num[0]);
                 }
             }
@@ -103,24 +87,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
             }
         });
-//        cRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Client c = snapshot.getValue(Client.class);
-//                if(c!=null){
-//                    num[0] = c.getNotification().size();
-//                    System.out.println(num[0]);
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-        System.out.println("num outside on DataChange:"+num[0]);
-//    return num[0];
+
     }
 
     private void CheckDonate() {
