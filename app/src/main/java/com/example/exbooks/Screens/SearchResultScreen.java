@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.Objects.BookFormAdapter;
 import com.example.exbooks.R;
@@ -20,9 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
+/**
+ * This class represents the results of the search books screen
+ * with that class the user can see the books that he find
+ */
 
 public class SearchResultScreen extends AppCompatActivity implements View.OnClickListener{
 

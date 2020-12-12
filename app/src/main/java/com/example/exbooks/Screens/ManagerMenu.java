@@ -19,6 +19,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * This class represents the Manager menu,
+ * the manager can find a book, upload a book, make an events, change his details from the profile,
+ * make a new manager account etc..
+ */
+
 public class ManagerMenu extends AppCompatActivity implements View.OnClickListener {
 
     Button search,upload,events,profile,logout,newManager,createEvent;
@@ -101,13 +107,10 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
                 Manager manager = snapshot.getValue(Manager.class);
                 if(manager != null){
                     current_donated = manager.getNum_of_books_donated();
-                    //System.out.println(current_donated);
-
                     // visible/invisible the button according to the number of donated books.
                     if(current_donated<minBookSizeForEvent){
                         createEvent.setVisibility(View.INVISIBLE);
-                    }
-                    else{
+                    }else{
                         createEvent.setVisibility(View.VISIBLE);
                     }
                 }
@@ -118,9 +121,6 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
             }
         });
-
-
-
     }
 
     @Override

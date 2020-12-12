@@ -19,6 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * This class used to make a new Manager.
+ * we can promote a client to a manager account
+ */
+
 public class NewManager extends AppCompatActivity implements View.OnClickListener{
     TextView mail;
     Button menu;
@@ -57,7 +62,6 @@ public class NewManager extends AppCompatActivity implements View.OnClickListene
 
     // Method that promote a Client to be Manager.
     private void PromoteClientToManager(final String email){
-//        System.out.println("In MAAGER PROMOTWE");
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -67,14 +71,11 @@ public class NewManager extends AppCompatActivity implements View.OnClickListene
                     // check if the client user is not null, and if this is his email..
                     if(cl!= null && cl.getEmail().equals(email)){
                         newManagerId=c.getKey(); //uid client
-//                        System.out.println(newManagerId);
                         DatabaseReference managers=FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-
                         // update the new manager at the Manager tree
                         managers.child(newManagerId).setValue(cl);
                         // and remove from the Client tree.
                         dbRef.child(newManagerId).removeValue();
-
                         Toast.makeText(NewManager.this, email+ " promoted to manager", Toast.LENGTH_LONG).show();
                     }
                 }

@@ -21,6 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the screen of the donated books events,
+ * the methods can find the number of donated books and make an event.
+ */
 public class EventsScreen extends AppCompatActivity implements View.OnClickListener{
 
     ArrayList<Book> bookModels;
@@ -82,7 +86,6 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
             String hourr = hour.getText().toString();
             String minutee = minute.getText().toString();
 
-//            System.out.println("in create click");
             if(monthh.isEmpty()){
                 month.setError("You must fill the month!");
                 month.requestFocus();
@@ -116,7 +119,6 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
             }
             if(EventAdapter.getNum_checked()>=MinNumBooksForEvent){
                 ArrayList<Book> selected_books = EventAdapter.getSelectedBooks();
-
             }
             else{
                 create.setError("You must choose at least "+MinNumBooksForEvent +" books");
@@ -124,8 +126,6 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(EventsScreen.this, "You must choose at least "+MinNumBooksForEvent +" books", Toast.LENGTH_LONG).show();
                 return;
             }
-
-
         }
     }
 }

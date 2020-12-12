@@ -6,11 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.exbooks.R;
 
+/**
+ * This class represents the search screen.
+ * With that screen the user can filter his search.
+ */
 public class SearchScreen extends AppCompatActivity implements View.OnClickListener {
     public String category;
     CheckBox roman,metach,bio,cooking,fantasy,children,horror,history,religous,politics,parenting,educational;
@@ -19,9 +21,10 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     CheckBox newCond,usedCond,tornCond;
     TextView authorView;
     TextView citySearch;
-
     Button search;
     CheckBox[] c;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +116,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     }
 
     /*
-    function that return true if all the category donsnt checked
+    function that return true if all the category does not checked
      */
     private boolean allempty(){
         for(int i=0;i<c.length;i++){

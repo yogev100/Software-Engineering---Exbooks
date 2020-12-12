@@ -20,6 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents a condition that the first person wants another persons book.
+ * we called that condition - MaybeMatch, because its not 100% match.
+ * its will be match if and only if the second parson wants some book of the first person.
+ */
 public class MaybeMatch extends AppCompatActivity {
     String wanterId;
     ArrayList<Book> bookModels;
@@ -76,7 +81,7 @@ public class MaybeMatch extends AppCompatActivity {
 
     }
 
-    //
+    // Method that go all over the books ID in the firebase, and show them with the adapter.
     private void getTheUserBooksByArray(final ArrayList<String> my_books) {
         DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("Books");
         bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -87,8 +92,6 @@ public class MaybeMatch extends AppCompatActivity {
                         Book b = book.getValue(Book.class);
                         if(b!=null) {
                             for (String a : my_books) {
-//                                System.out.println("a:"+a);
-//                                System.out.println("b:"+b.getBook_id());
                                 if(b.getBook_id().equals(a)&&b.isFor_change()){
                                     bookModels.add(new Book(b));
                                 }
@@ -106,6 +109,4 @@ public class MaybeMatch extends AppCompatActivity {
             }
         });
     }
-
-
 }

@@ -19,12 +19,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * This class represents the Client menu,
+ * the client can find a book, upload a book, check for events, change his details from the profile, etc..
+ */
+
 public class CustomerMenu extends AppCompatActivity implements View.OnClickListener {
 
     Button search,upload,events,profile,logout;
     ConstraintLayout notification;
     FirebaseAuth cAuth;
-    final int[] num = new int[1];
+    final int[] numOfNotifications = new int[1];
     NotificationCounter notificationCounter;
 
     @Override
@@ -82,19 +87,19 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    // This method find the number of the notification and update it on the bell
     private void findNumOfNotification() {
         DatabaseReference cRef=FirebaseDatabase.getInstance().getReference("Users").child("Clients");
         String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final int[] num = new int[1];
 
         cRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
-                    num[0] = c.getNotification().size();
-                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),num[0]);
-                    notificationCounter.increaseNumber(num[0]);
+                    numOfNotifications[0] = c.getNotification().size();
+                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),numOfNotifications[0]);
+                    notificationCounter.increaseNumber(numOfNotifications[0]);
                 }
             }
 
@@ -103,6 +108,5 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-
     }
 }

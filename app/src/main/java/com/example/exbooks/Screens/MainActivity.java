@@ -25,6 +25,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * This class is the entry screen of the App.
+ * You can to sign up, sign in and reset your password.
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView register;

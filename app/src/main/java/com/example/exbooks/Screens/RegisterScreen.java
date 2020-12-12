@@ -7,10 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,12 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-//import com.google.firebase.auth.AuthResult;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
-
+/**
+ * This class used to sign up to the Application. this is the register screen.
+ */
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
-    final String[] manager_emails = {"yogev2468@gmail.com"};
     EditText fullname;
     EditText password;
     EditText re_password;
@@ -57,6 +53,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         dbRef=FirebaseDatabase.getInstance().getReference().child("Users").child("Clients");
 
     }
+
     /*
     function that execute when the user click on the register button,
     check all the inserted data and register the new user.
@@ -92,11 +89,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         }
         if(mail.isEmpty()){
             email.setError("Email address required!");
-            email.requestFocus();
-            return;
-        }
-        if(!valid_mail(mail)){
-            email.setError("Email address is already exist!");
             email.requestFocus();
             return;
         }
@@ -151,9 +143,5 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-    }
-
-    private boolean valid_mail(String email) {
-        return true;
     }
 }

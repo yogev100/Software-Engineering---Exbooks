@@ -19,11 +19,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
@@ -43,6 +41,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+/**
+ * This class represents an upload book screen,
+ * the user can to upload a book with/without image and write information about the book, like:
+ * Book name, author, category, num of pages, condition and for change/for donate.
+ */
 
 public class UploadScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -136,7 +140,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         // image button pressed - get permissions for user camera
-        if (v == image_btn) {
+        if (v == image_btn){
             // request runtime permission
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
@@ -145,17 +149,12 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                     String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                     //show popup to request permissions
                     requestPermissions(permission, PERMISSION_CODE); //request for permission
-                }
-                else{
+                }else{
                     //permission already granted
                     openCamera();
                 }
             }
-            else{
-                //sys
-            }
-        }
-        else { // the user pressed on upload, execute check for data inserted
+        }else { // the user pressed on upload, execute check for data inserted
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -254,8 +253,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     //permission from popup was granted
                     openCamera();
-                }
-                else{
+                }else{
                     //permission from popup was denied
                     Toast.makeText(UploadScreen.this, "Permission denied", Toast.LENGTH_SHORT).show();
                 }
@@ -347,6 +345,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id), new_book);
+
                                     } else {
                                         Toast.makeText(UploadScreen.this,
                                                 "Failed to upload! Try again!",
@@ -380,6 +379,7 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
                         DatabaseReference managerRoot = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
                         DatabaseReference clientRoot = FirebaseDatabase.getInstance().getReference("Users").child("Clients");
                         addBookToDB(managerRoot, clientRoot, cAuth.getCurrentUser().getUid(), book_id,bookRef.child(new_book.getCategory()).child(book_id),new_book);
+
                     } else {
                         Toast.makeText(UploadScreen.this,
                                 "Failed to upload! Try again!",

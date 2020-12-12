@@ -26,6 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the profile screen of the user,
+ * At the client/manager users-
+ * the user can update his name, city and phone.
+ * the user can show his email and delete his books.
+ */
+
 public class ProfileScreen extends AppCompatActivity  implements View.OnClickListener {
 
     // components
@@ -256,7 +263,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     // isCityChanged method checks if the user's phone changed by comparison between DB and EditText field
     private boolean isCityChanged() {
         if (isClient) {
-            //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
             if (!_CITY.equals(city.getText().toString()) && !city.getText().toString().isEmpty()) {
                 CurrentUser.child("city").setValue(city.getText().toString());
                 return true;
@@ -264,7 +270,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 return false;
             }
         } else {
-            //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
             if (!_CITY.equals(city.getText().toString()) && !city.getText().toString().isEmpty()) {
                 CurrentUser.child("city").setValue(city.getText().toString());
                 return true;
@@ -277,7 +282,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     // isNameChanged method checks if the user's phone changed by comparison between DB and EditText field
     private boolean isNameChanged() {
         if (isClient) {
-            //ClientRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Clients"); // update if its changed..
             System.out.println(name.getText().toString());
             if (!_NAME.equals(name.getText().toString()) && !name.getText().toString().isEmpty())  {
                 CurrentUser.child("fullname").setValue(name.getText().toString());
@@ -286,7 +290,6 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
                 return false;
             }
         } else {
-            //ManagerRoot = FirebaseDatabase.getInstance().getReference().child("Users").child("Managers"); // update if its changed..
             if (!_NAME.equals(name.getText().toString()) && !name.getText().toString().isEmpty()) {
                 CurrentUser.child("fullname").setValue(name.getText().toString());
                 return true;

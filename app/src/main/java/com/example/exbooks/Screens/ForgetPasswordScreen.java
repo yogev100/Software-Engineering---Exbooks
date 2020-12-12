@@ -16,7 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
+/**
+ * This class used to reset the user password
+ */
 public class ForgetPasswordScreen extends AppCompatActivity implements View.OnClickListener {
     EditText email;
     Button sendpass;

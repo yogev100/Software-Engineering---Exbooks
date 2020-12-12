@@ -23,7 +23,10 @@ import android.widget.ScrollView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class NotificationScreen extends AppCompatActivity implements View.OnClickListener{
+/**
+ * This class used to manage the notification, update and show them.
+ */
+public class NotificationScreen extends AppCompatActivity{
     FirebaseAuth mAuth;
     DatabaseReference Mref;
     DatabaseReference Cref;
@@ -49,7 +52,7 @@ public class NotificationScreen extends AppCompatActivity implements View.OnClic
         NotificationUpload();
     }
 
-    //
+    // This method go all over the notification, add to the list and show them by the adapter.
     private void NotificationUpload() {
         Cref.child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -89,11 +92,6 @@ public class NotificationScreen extends AppCompatActivity implements View.OnClic
 
             }
         });
-
-    }
-
-    @Override
-    public void onClick(View v) {
 
     }
 }
