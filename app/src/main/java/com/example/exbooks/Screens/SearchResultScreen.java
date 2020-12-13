@@ -198,7 +198,7 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         else if(category.equals("Science fiction and fantasy")&&fantasy){
             return true;
         }
-        else if(category.equals("Children's and teenagers")&&children){
+        else if(category.equals("Children and teenager")&&children){
             return true;
         }
         else if(category.equals("Horror")&&horror){
