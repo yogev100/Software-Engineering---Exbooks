@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.exbooks.Adapters.EditProfilesAdapter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
@@ -20,12 +22,11 @@ import java.util.ArrayList;
 
 public class EditClientsScreen extends AppCompatActivity implements View.OnClickListener{
 
+
     Button back_menu_btn;
     ArrayList<Client> profilesModels;
     ListView listView;
-
-    String profile_name;
-    public static EditProfilesAdapter adapter;
+    private static EditProfilesAdapter adapter;
     DatabaseReference cRef= FirebaseDatabase.getInstance().getReference("Users").child("Clients");
 
 
@@ -38,12 +39,13 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
         back_menu_btn.setOnClickListener(this);
 
         listView=(ListView)findViewById(R.id.edit_clients_list);
+
         profilesModels=new ArrayList<>();
         myClientsListInit();
     }
 
 
-    // Method that init the book list.
+    // Method that init the clients list.
     public void myClientsListInit() {
         cRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,6 +70,7 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        // clicked on the "go back to menu" button.
         if (v == back_menu_btn){
             startActivity(new Intent(EditClientsScreen.this, ManagerMenu.class));
             finish();

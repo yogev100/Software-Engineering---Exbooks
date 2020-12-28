@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +18,7 @@ import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
 import com.example.exbooks.Screens.EditClientsScreen;
 import com.example.exbooks.Screens.ProfileScreen;
+import com.example.exbooks.Screens.UploadScreen;
 import com.example.exbooks.Users.Client;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +60,23 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
                 for (DataSnapshot client : snapshot.getChildren()) {
                     Client clientProfile = snapshot.getValue(Client.class);
                     if (clientProfile.getEmail() == clientsEmail ) {
+                        System.out.println("we need to open the client's profile !!!!!!!!!!!!!!!!!!!!!!!!");
+
+
+
+
+
+                        /**
+                         * we have a problem here.
+                         * the next intent here down- open my profile
+                         * i cant get to another client profile..
+                         */
+
+
+
+
+
+
                         Intent intent = new Intent(mContext, ProfileScreen.class);
                         mContext.startActivity(intent);
                     }
@@ -77,6 +96,7 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         Client client=(Client) object;
         String clientsEmail = client.getEmail();
 
+        // the manager clicked on some client edit button.
         switch (v.getId()) {
             // if the manager clicked on "EDIT PROFILE"-> go to the client's profile.
             case R.id.choose_this_profile_Button:
@@ -119,6 +139,16 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
+
+
+
+        /**
+         * we have a problem here.
+         * i cant init the clients details..
+         */
+
+
+
 
         viewHolder.Name.setText(client.getfullname());
         viewHolder.Email.setText(client.getEmail());

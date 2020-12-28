@@ -14,7 +14,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:background="#4E4E4E"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <Button
             android:id="@+id/choose_this_profile_Button"
@@ -29,8 +35,8 @@
 
         <TextView
             android:id="@+id/name_profile_TextView"
-            android:layout_width="154dp"
-            android:layout_height="25dp"
+            android:layout_width="213dp"
+            android:layout_height="33dp"
             android:layout_marginTop="8dp"
             android:text="name"
             android:textColor="#FFFFFF"
@@ -43,13 +49,14 @@
 
         <TextView
             android:id="@+id/email_profile_TextView"
-            android:layout_width="154dp"
-            android:layout_height="25dp"
+            android:layout_width="213dp"
+            android:layout_height="33dp"
             android:layout_marginTop="8dp"
             android:text="email"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/choose_this_profile_Button"
             app:layout_constraintHorizontal_bias="0.166"
             app:layout_constraintStart_toStartOf="parent"
