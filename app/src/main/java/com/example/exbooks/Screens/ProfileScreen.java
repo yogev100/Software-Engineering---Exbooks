@@ -43,6 +43,7 @@ public class ProfileScreen extends AppCompatActivity  implements View.OnClickLis
     String UID;
     ListView listView;
 
+
     // Auth and DB references
     FirebaseAuth cAuth;
     DatabaseReference ClientRoot;

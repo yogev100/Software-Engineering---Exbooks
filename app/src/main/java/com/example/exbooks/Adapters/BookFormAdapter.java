@@ -78,7 +78,7 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
         Book book=(Book)object;
 
         switch (v.getId()) {
-            case R.id.bookId_Button:
+            case R.id.choose_this_book_Button:
                 if(screen.equals("search")) {//if its the first notification sending in the search screen
                     sendNotification(book, true);
                     Snackbar.make(v, "Book request sent to the book owner", Snackbar.LENGTH_LONG).setAction("No action", null).show();
@@ -218,12 +218,12 @@ public class BookFormAdapter extends  ArrayAdapter<Book> implements View.OnClick
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.book_search_component, parent, false);
 
-            viewHolder.bookName = (TextView) convertView.findViewById(R.id.nameBookId_TextView);
+            viewHolder.bookName = (TextView) convertView.findViewById(R.id.name_profile_TextView);
             viewHolder.category = (TextView) convertView.findViewById(R.id.categoryBookId_TextView);
             viewHolder.author = (TextView) convertView.findViewById(R.id.authorBookId_TextView);
             viewHolder.cond = (TextView) convertView.findViewById(R.id.conditionBookId_TextView);
             viewHolder.city = (TextView) convertView.findViewById(R.id.cityBookId_TextView);
-            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.bookId_Button);
+            viewHolder.chooseButton = (Button) convertView.findViewById(R.id.choose_this_book_Button);
             viewHolder.bookImg = (ImageView) convertView.findViewById(R.id.ImageBookId_ImageView);
             viewHolder.bid=book.getBook_id();
 

@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ManagerMenu extends AppCompatActivity implements View.OnClickListener {
 
-    Button search,upload,events,profile,logout,newManager,createEvent;
+    Button search,upload,events,profile,logout,newManager,createEvent,editClients;
     ConstraintLayout notification;
     FirebaseAuth cAuth;
     NotificationCounter notificationCounter;
@@ -60,6 +60,9 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
         createEvent = (Button)findViewById(R.id.M_newevents_Button);
         createEvent.setOnClickListener(this);
+
+        editClients = (Button)findViewById(R.id.edit_clients);
+        editClients.setOnClickListener(this);
 
         logout = (Button)findViewById(R.id.M_logout_button);
         logout.setOnClickListener(this);
@@ -142,6 +145,9 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }else if(view == createEvent){
             Intent intent = new Intent(ManagerMenu.this,EventsScreen.class);
+            startActivity(intent);
+        }else if(view == editClients){
+            Intent intent = new Intent(ManagerMenu.this,EditClientsScreen.class);
             startActivity(intent);
         }else if(view == logout){
             cAuth.signOut();

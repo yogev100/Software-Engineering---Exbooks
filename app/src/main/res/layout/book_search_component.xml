@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/book_Form"
+        android:id="@+id/book_component"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -20,7 +20,7 @@
         android:padding="10dp">
 
         <Button
-            android:id="@+id/bookId_Button"
+            android:id="@+id/choose_this_book_Button"
             android:layout_width="91dp"
             android:layout_height="86dp"
             android:backgroundTint="#E9967A"
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nameBookId_TextView"
+            android:id="@+id/name_profile_TextView"
             android:layout_width="154dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -52,7 +52,7 @@
             android:textSize="18sp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView"
-            app:layout_constraintTop_toBottomOf="@+id/nameBookId_TextView" />
+            app:layout_constraintTop_toBottomOf="@+id/name_profile_TextView" />
 
         <TextView
             android:id="@+id/authorBookId_TextView"

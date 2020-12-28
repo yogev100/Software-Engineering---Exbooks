@@ -47,9 +47,9 @@ public class SearchResultScreen extends AppCompatActivity implements View.OnClic
         isClient(); // check client or manager
         VarInit(); // initializing all the variables
 
-        menu_btn = (Button)findViewById(R.id.backToMenuFromSearch_Button);
+        menu_btn = (Button)findViewById(R.id.backToMenuFromResultScreen);
         menu_btn.setOnClickListener(this);
-        listView=(ListView)findViewById(R.id.list_book_form);
+        listView=(ListView)findViewById(R.id.search_result_list);
         bookModels=new ArrayList<>();
         try {
             FindCorrectBooks(); // extract from firebase all the correct book to the user search
