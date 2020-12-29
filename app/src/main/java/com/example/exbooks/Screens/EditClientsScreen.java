@@ -35,11 +35,13 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_clients_screen);
 
+        // "go back to menu" button
         back_menu_btn = (Button)findViewById(R.id.backToMenuFromEditScreen);
         back_menu_btn.setOnClickListener(this);
 
         listView=(ListView)findViewById(R.id.edit_clients_list);
 
+        // list of clients
         profilesModels=new ArrayList<>();
         myClientsListInit();
     }
@@ -54,9 +56,10 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
                 // and add the clients to the list.
                     for (DataSnapshot client : snapshot.getChildren()) {
                         Client clientProfile = snapshot.getValue(Client.class);
-                        profilesModels.add(clientProfile);
+                        if(clientProfile != null){
+                            profilesModels.add(clientProfile);
+                        }
                     }
-
                 // turn the adapter on and set its on the listview.
                 adapter = new EditProfilesAdapter(profilesModels, EditClientsScreen.this);
                 listView.setAdapter(adapter);

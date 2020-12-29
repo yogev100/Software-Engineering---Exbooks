@@ -114,7 +114,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Client client = new Client(fullname.getText().toString(),
+                    final Client client = new Client(fullname.getText().toString(),
                             email.getText().toString(),password.getText().toString(),city.getText().toString(),phone.getText().toString());
 
                     //send it to firebase
@@ -122,6 +122,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid").setValue((FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                            client.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             if(task.isSuccessful()) {
                                 // Email verification
                                 user.sendEmailVerification();

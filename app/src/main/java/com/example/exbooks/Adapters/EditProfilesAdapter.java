@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 
 import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
+import com.example.exbooks.Screens.EditClientsProfileScreen;
 import com.example.exbooks.Screens.EditClientsScreen;
 import com.example.exbooks.Screens.ProfileScreen;
 import com.example.exbooks.Screens.UploadScreen;
@@ -41,6 +42,7 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         TextView Name;
         TextView Email;
         Button chooseButton;
+        String uid;
     }
 
     public EditProfilesAdapter(ArrayList<Client> data, Context context) {
@@ -50,34 +52,36 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
     }
 
 
-    public void goToClientsProfile(final String clientsEmail){
+    // onClick method, checks if the user clicks on the right position.
+    @Override
+    public void onClick(View v) {
+        final int position=(Integer) v.getTag();
+        Object object= getItem(position);
+        final Client client=(Client) object;
+        String clientsUid = client.getUid();
+
+        // the manager clicked on some client edit button.
+        switch (v.getId()) {
+            // if the manager clicked on "EDIT PROFILE"-> go to the client's profile.
+            case R.id.choose_this_profile_Button:
+                goToClientsProfile(clientsUid);
+        }
+    }
+
+
+    public void goToClientsProfile(final String clientsUid){
         cRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // go all over the books, and check- if its not null, go all over the categories-
                 // and add the books to the list.
-
                 for (DataSnapshot client : snapshot.getChildren()) {
                     Client clientProfile = snapshot.getValue(Client.class);
-                    if (clientProfile.getEmail() == clientsEmail ) {
+                    if (clientProfile.getUid() == clientsUid) {
                         System.out.println("we need to open the client's profile !!!!!!!!!!!!!!!!!!!!!!!!");
-
-
-
-
-
-                        /**
-                         * we have a problem here.
-                         * the next intent here down- open my profile
-                         * i cant get to another client profile..
-                         */
-
-
-
-
-
-
-                        Intent intent = new Intent(mContext, ProfileScreen.class);
+                        Intent intent = new Intent(mContext, EditClientsProfileScreen.class);
+                        String theUID=clientsUid;
+                        intent.putExtra(theUID,clientsUid);
                         mContext.startActivity(intent);
                     }
                 }
@@ -88,21 +92,7 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         });
     }
 
-    // onClick method, checks if the user clicks on the right position.
-    @Override
-    public void onClick(View v) {
-        int position=(Integer) v.getTag();
-        Object object= getItem(position);
-        Client client=(Client) object;
-        String clientsEmail = client.getEmail();
 
-        // the manager clicked on some client edit button.
-        switch (v.getId()) {
-            // if the manager clicked on "EDIT PROFILE"-> go to the client's profile.
-            case R.id.choose_this_profile_Button:
-                goToClientsProfile(clientsEmail);
-        }
-    }
 
 
     private int lastPosition = -1;
@@ -115,7 +105,6 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
-
         final View result;
 
         if (convertView == null) {
@@ -127,10 +116,11 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
             viewHolder.Name = (TextView) convertView.findViewById(R.id.name_profile_TextView);
             viewHolder.Email = (TextView) convertView.findViewById(R.id.email_profile_TextView);
             viewHolder.chooseButton = (Button) convertView.findViewById(R.id.choose_this_profile_Button);
+            viewHolder.uid=client.getUid();
 
             result=convertView;
-
             convertView.setTag(viewHolder);
+
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
@@ -139,21 +129,15 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
-
-
-
         /**
          * we have a problem here.
          * i cant init the clients details..
          */
-
-
-
-
         viewHolder.Name.setText(client.getfullname());
         viewHolder.Email.setText(client.getEmail());
         viewHolder.chooseButton.setOnClickListener(this);
         viewHolder.chooseButton.setTag(position);
+        viewHolder.uid=client.getUid();
 
         //Return the completed view to render on screen
         return convertView;

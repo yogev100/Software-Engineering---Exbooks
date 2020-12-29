@@ -24,6 +24,7 @@
         <activity android:name=".Screens.EventsScreen" />
         <activity android:name=".Screens.EditClientsScreen" />
         <activity android:name=".Screens.ProfileScreen" />
+        <activity android:name=".Screens.EditClientsProfileScreen" />
         <activity android:name=".Screens.UploadScreen" />
         <activity android:name=".Screens.MainActivity">
             <intent-filter>

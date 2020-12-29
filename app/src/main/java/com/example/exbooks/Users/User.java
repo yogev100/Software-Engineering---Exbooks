@@ -14,8 +14,7 @@ public abstract class User {
 
 
     public User(){}
-    public User(String fullname, String email,
-                String password, String city, String phone){
+    public User(String fullname, String email,String password, String city, String phone){
         this.fullname=fullname;
         this.email=email;
         this.password=password;
@@ -70,4 +69,5 @@ public abstract class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 }
