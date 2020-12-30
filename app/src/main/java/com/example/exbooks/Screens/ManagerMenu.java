@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.exbooks.Objects.NotificationCounter;
 import com.example.exbooks.R;
@@ -34,15 +35,20 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     final int[] numOfNotifications = new int[1];
     final int minBookSizeForEvent = 2;
     int current_donated;
+    private boolean event_exist = false;
+    String event_uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manger_menu);
-
+        assignEvent();
         findNumOfNotification();
 
+        cAuth=FirebaseAuth.getInstance();
+
         current_donated = 0;
+
         search = (Button)findViewById(R.id.M_signup_button);
         search.setOnClickListener(this);
 
@@ -60,6 +66,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
 
         createEvent = (Button)findViewById(R.id.M_newevents_Button);
         createEvent.setOnClickListener(this);
+        CheckDonate();
 
         editClients = (Button)findViewById(R.id.edit_clients);
         editClients.setOnClickListener(this);
@@ -70,10 +77,39 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
         notification=(ConstraintLayout)findViewById(R.id.bell);
         notification.setOnClickListener(this);
 
+    }
 
-        cAuth=FirebaseAuth.getInstance();
+    private void assignEvent() {
+        DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
+        managerRef.child("event_uid").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    event_uid = snapshot.getValue(String.class);
+                    System.out.println("uid:"+event_uid);
+                    if(event_uid != null && !event_uid.equals("")){
+                        System.out.println("exist ????????????");
+                        event_exist = true;
+                    }
+                if(!event_exist){
+                    System.out.println("no existttttttttttttt");
+                    events.setVisibility(View.INVISIBLE);
+                    ConstraintLayout constraintLayout = findViewById(R.id.ManagerMenu);
+                    ConstraintSet constraintSet = new ConstraintSet();
+                    constraintSet.clone(constraintLayout);
+                    constraintSet.connect(R.id.M_profile_button, ConstraintSet.TOP,R.id.M_upload_button,ConstraintSet.BOTTOM,16);
+                    constraintSet.applyTo(constraintLayout);
+                }
+                else{
+                    System.out.println("daskdmakdmak holutlultl");
+                    events.setVisibility(View.VISIBLE);
+                }
+            }
 
-        CheckDonate();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -102,8 +138,8 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
     // Method that checks if there enough donated books for event. and make the button visible/invisible in accordance
     private void CheckDonate() {
         String uid = cAuth.getCurrentUser().getUid();
-        DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-        managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference numRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
+        numRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Integer i = snapshot.getValue(Integer.class);
@@ -131,9 +167,9 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
         }else if(view == upload) {
             Intent intent = new Intent(ManagerMenu.this, UploadScreen.class);
             startActivity(intent);
-//        }else if(view == events){
-//            Intent intent = new Intent(ManagerMenu.this,EventsScreen.class);
-            startActivity(intent);
+        }else if(view == events){
+              Intent intent = new Intent(ManagerMenu.this,BookEventScreen.class);
+              startActivity(intent);
         }else if(view == profile){
             Intent intent = new Intent(ManagerMenu.this,ProfileScreen.class);
             startActivity(intent);

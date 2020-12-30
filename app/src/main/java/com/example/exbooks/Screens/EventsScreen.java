@@ -1,5 +1,6 @@
 package com.example.exbooks.Screens;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.exbooks.Objects.Book;
 import com.example.exbooks.Adapters.EventAdapter;
+import com.example.exbooks.Objects.Book;
+import com.example.exbooks.Objects.Event;
 import com.example.exbooks.R;
+import com.example.exbooks.Users.Manager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +35,9 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
     ListView listView;
     EditText month,day,hour,minute;
     private static EventAdapter adapter;
-    DatabaseReference books_ref;
+    private DatabaseReference books_ref;
+    private FirebaseAuth managerAuth;
+    private DatabaseReference managerRef;
     Button create;
     final int MinNumBooksForEvent = 2;
 
@@ -40,7 +46,8 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_screen);
         books_ref = FirebaseDatabase.getInstance().getReference("Books");
-
+        managerAuth = FirebaseAuth.getInstance();
+        managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         listView=(ListView)findViewById(R.id.list_event);
         bookModels=new ArrayList<>();
         month = (EditText)findViewById(R.id.month);
@@ -81,6 +88,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        ArrayList<Book> selected_books = new ArrayList<>();
         if(v==create){      // create an event.
             String monthh = month.getText().toString();
             String dayy = day.getText().toString();
@@ -120,7 +128,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
                 return;
             }
             if(EventAdapter.getNum_checked()>=MinNumBooksForEvent){
-                ArrayList<Book> selected_books = EventAdapter.getSelectedBooks();
+                selected_books = EventAdapter.getSelectedBooks();
             }
             else{
                 create.setError("You must choose at least "+MinNumBooksForEvent +" books");
@@ -128,6 +136,42 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(EventsScreen.this, "You must choose at least "+MinNumBooksForEvent +" books", Toast.LENGTH_LONG).show();
                 return;
             }
+            final String uid = managerAuth.getCurrentUser().getUid();
+            final Event event = new Event(selected_books, Day, Month, Hour, Minute);
+
+            // assign the created event to the manager and navigate to the menu screen
+            managerRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Manager manager = snapshot.getValue(Manager.class);
+                    if(manager != null){
+                        manager.setEvent(event);
+                        managerRef.child(uid).setValue(manager);
+                        Toast.makeText(EventsScreen.this, "The event is created!", Toast.LENGTH_LONG);
+                        startActivity(new Intent(EventsScreen.this, ManagerMenu.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(EventsScreen.this, "Something was wrong!", Toast.LENGTH_LONG);
+                }
+            });
+
+            //assign true to event_exist
+            final DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("ManagerTools").child("event_uid");
+            eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    eventRef.setValue(uid);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 }

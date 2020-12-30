@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.exbooks.Objects.NotificationCounter;
 import com.example.exbooks.R;
@@ -31,12 +32,14 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
     FirebaseAuth cAuth;
     final int[] numOfNotifications = new int[1];
     NotificationCounter notificationCounter;
+    private boolean event_exist = false;
+    String event_uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_menu);
-
+        assignEvent();
         findNumOfNotification();
 
         search = (Button)findViewById(R.id.signup_button);
@@ -62,6 +65,41 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void assignEvent() {
+        DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
+        managerRef.child("event_uid").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                event_uid = snapshot.getValue(String.class);
+                System.out.println("uid:"+event_uid);
+                if(event_uid != null && !event_uid.equals("")){
+                    System.out.println("exist ????????????");
+                    event_exist = true;
+                }
+                if(!event_exist){
+                    System.out.println("no existttttttttttttt");
+                    events.setVisibility(View.INVISIBLE);
+                    ConstraintLayout constraintLayout = findViewById(R.id.ManagerMenu);
+                    ConstraintSet constraintSet = new ConstraintSet();
+                    constraintSet.clone(constraintLayout);
+                    constraintSet.connect(R.id.M_profile_button, ConstraintSet.TOP,R.id.M_upload_button,ConstraintSet.BOTTOM,16);
+                    constraintSet.applyTo(constraintLayout);
+                }
+                else{
+                    System.out.println("daskdmakdmak holutlultl");
+                    events.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
     @Override
     public void onClick(View view) {
         if(view == search){
@@ -70,9 +108,9 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
         }else if(view == upload) {
             Intent intent = new Intent(CustomerMenu.this, UploadScreen.class);
             startActivity(intent);
-//        }else if(view == events){
-//            Intent intent = new Intent(CustomerMenu.this,EventsScreen.class);
-//            startActivity(intent);
+        }else if(view == events){
+            Intent intent = new Intent(CustomerMenu.this,BookEventScreen.class);
+            startActivity(intent);
         }else if(view == profile){
             Intent intent = new Intent(CustomerMenu.this,ProfileScreen.class);
             startActivity(intent);

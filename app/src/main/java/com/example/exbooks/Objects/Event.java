@@ -9,17 +9,18 @@ public class Event {
     private int month;
     private int hour;
     private int min;
-    private long duration;
+    private final int duration = 2;
     ArrayList<Book> books;
 
-    public Event(ArrayList<Book> books,int day,int month,int hour,int min,long duration){
+    public Event(){}
+
+    public Event(ArrayList<Book> books,int day,int month,int hour,int min){
         this.books=books;
         this.day=day;
         this.month=month;
         this.hour=hour;
         this.min=min;
-        this.duration=duration;
-    }
+   }
 
     public ArrayList<Book> getBooks() {
         return books;
@@ -51,10 +52,6 @@ public class Event {
 
     public void setDay(int day) {
         this.day = day;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     public void setHour(int hour) {

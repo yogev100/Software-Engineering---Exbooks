@@ -228,12 +228,12 @@ public class ProfileBookAdapter extends ArrayAdapter<Book> implements View.OnCli
          */
     private void DonateCheck(boolean for_change) {
         if(!for_change){ // if donate book
-            final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-            managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
+            final DatabaseReference numRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
+            numRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Integer i = snapshot.getValue(Integer.class);
-                    managerRef.child("num_of_books_donated").setValue(--i);     // the num of books is --. because of deletion.
+                    numRef.child("num_of_books_donated").setValue(--i);     // the num of books is --. because of deletion.
                 }
 
                 @Override

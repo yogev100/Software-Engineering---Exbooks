@@ -208,12 +208,17 @@ public class UploadScreen extends AppCompatActivity implements View.OnClickListe
      */
     private void DonateCheck() {
         if(!for_change){   // donated
-            final DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("Users").child("Managers");
-            managerRef.child("num_of_books_donated").addListenerForSingleValueEvent(new ValueEventListener() {
+            final DatabaseReference numRef = FirebaseDatabase.getInstance().getReference().child("ManagerTools").child("num_of_books_donated");
+            numRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Integer i = snapshot.getValue(Integer.class);
-                    managerRef.child("num_of_books_donated").setValue(++i);         // the num of books is ++, because we added a book.
+                    if (i != null) {
+                        numRef.setValue(++i);         // the num of books is ++, because we added a book.
+                    }
+                    else{
+                        numRef.setValue(1);
+                    }
                 }
 
                 @Override
