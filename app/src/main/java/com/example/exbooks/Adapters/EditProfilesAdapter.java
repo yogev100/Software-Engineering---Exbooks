@@ -2,6 +2,7 @@ package com.example.exbooks.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 
 import com.example.exbooks.R;
 import com.example.exbooks.Screens.EditClientsProfileScreen;
+import com.example.exbooks.Screens.MaybeMatch;
 import com.example.exbooks.Users.Client;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -59,33 +61,23 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         switch (v.getId()) {
             // if the manager clicked on "EDIT PROFILE"-> go to the client's profile.
             case R.id.choose_this_profile_Button:
-                System.out.println("choose_this_profile_Button !!!!!!!!!!!!!!!!!!!!!!!!");
                 goToClientsProfile(clientsUid);
         }
     }
 
 
     public void goToClientsProfile(final String clientsUid){
-        System.out.println("goToClientsProfile !!!!!!!!!!!!!!!!!!!!!!!!");
-        cRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        cRef.child(clientsUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("onDataChange !!!!!!!!!!!!!!!!!!!!!!!!");
-                // go all over the books, and check- if its not null, go all over the categories-
-                // and add the books to the list.
-                for (DataSnapshot client : snapshot.getChildren()) {
-                    Client clientProfile = client.getValue(Client.class);
-                    if (clientProfile.getUid().equals(clientsUid)) {
-                        System.out.println("we need to open the client's profile !!!!!!!!!!!!!!!!!!!!!!!!");
-                        Intent intent = new Intent(mContext, EditClientsProfileScreen.class);
-                        String theUID=clientsUid;
-                        intent.putExtra(theUID,clientsUid);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-//                        Intent intent = new Intent(mContext, MaybeMatch.class);
-//                        intent.putExtra("wanterID", notification.getUserWantsTheBookId());
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    }
+                Client clientProfile = snapshot.getValue(Client.class);
+                if(clientProfile != null){
+                    System.out.println("we need to open the client's profile !!!!!!!!!!!!!!!!!!!!!!!!");
+                    Intent intent = new Intent(mContext, EditClientsProfileScreen.class);
+                    //String theUID=clientsUid;
+                    intent.putExtra("theUID",clientsUid);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
                 }
             }
             @Override
@@ -93,7 +85,6 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
             }
         });
     }
-
 
 
 
@@ -131,10 +122,6 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
-        /**
-         * we have a problem here.
-         * i cant init the clients details..
-         */
         viewHolder.Name.setText(client.getfullname());
         viewHolder.Email.setText(client.getEmail());
         viewHolder.chooseButton.setOnClickListener(this);
