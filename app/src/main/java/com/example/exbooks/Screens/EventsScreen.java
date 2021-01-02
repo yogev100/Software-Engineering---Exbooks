@@ -1,6 +1,7 @@
 package com.example.exbooks.Screens;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exbooks.Adapters.EventAdapter;
@@ -23,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -86,6 +90,7 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         ArrayList<Book> selected_books = new ArrayList<>();
@@ -138,6 +143,10 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
             }
             final String uid = managerAuth.getCurrentUser().getUid();
             final Event event = new Event(selected_books, Day, Month, Hour, Minute);
+            // get the event date in milliseconds
+            final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            final LocalDateTime ldt = LocalDateTime.of(2021, Month, Day, Hour, Minute, 0);
+
 
             // assign the created event to the manager and navigate to the menu screen
             managerRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -159,12 +168,26 @@ public class EventsScreen extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-            //assign true to event_exist
+            //assign uid to event_uid
             final DatabaseReference eventRef = FirebaseDatabase.getInstance().getReference("ManagerTools").child("event_uid");
             eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                public void onDataChange(@NonNull DataSnapshot snapshot)
+                {
                     eventRef.setValue(uid);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            //assign true to event_exist
+            final DatabaseReference dateRef =  FirebaseDatabase.getInstance().getReference("ManagerTools").child("event_date");
+            dateRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    dateRef.setValue(dtf.format(ldt));
                 }
 
                 @Override

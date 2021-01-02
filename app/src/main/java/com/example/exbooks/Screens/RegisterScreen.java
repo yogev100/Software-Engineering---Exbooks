@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
+import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,6 +36,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
     private FirebaseAuth cAuth;
     private DatabaseReference dbRef;
+    private DatabaseReference managerRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         cAuth=FirebaseAuth.getInstance();
         dbRef=FirebaseDatabase.getInstance().getReference().child("Users").child("Clients");
+        managerRef=FirebaseDatabase.getInstance().getReference().child("Users").child("Managers");
 
     }
 
@@ -113,30 +118,57 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         cAuth.createUserWithEmailAndPassword(mail,pswrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    final Client client = new Client(fullname.getText().toString(),
-                            email.getText().toString(),password.getText().toString(),city.getText().toString(),phone.getText().toString());
+                if(task.isSuccessful()) {
+                    if (!email.getText().toString().equals("yogev2468@gmail.com")) {
+                        final Client client = new Client(fullname.getText().toString(),
+                                email.getText().toString(), password.getText().toString(), city.getText().toString(), phone.getText().toString());
 
-                    //send it to firebase
-                    dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(client).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid").setValue((FirebaseAuth.getInstance().getCurrentUser().getUid()));
-                            client.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            if(task.isSuccessful()) {
-                                // Email verification
-                                user.sendEmailVerification();
-                                Toast.makeText(RegisterScreen.this,"Registration successfully, mail verification sent to your email",Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(RegisterScreen.this, MainActivity.class));
-                                finish();
-                            }else{
-                                Toast.makeText(RegisterScreen.this,
-                                        "Failed to registered! Try again!",
-                                        Toast.LENGTH_LONG).show();
+                        //send it to firebase
+                        dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(client).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                dbRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid").setValue((FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                                client.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                if (task.isSuccessful()) {
+                                    // Email verification
+                                    user.sendEmailVerification();
+                                    Toast.makeText(RegisterScreen.this, "Registration successfully, mail verification sent to your email", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(RegisterScreen.this, MainActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(RegisterScreen.this,
+                                            "Failed to registered! Try again!",
+                                            Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+                    else{
+                        final Manager manager = new Manager(fullname.getText().toString(),
+                                email.getText().toString(), password.getText().toString(), city.getText().toString(), phone.getText().toString());
+
+                        //send it to firebase
+                        managerRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(manager).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                managerRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid").setValue((FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                                manager.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                if (task.isSuccessful()) {
+                                    // Email verification
+                                    user.sendEmailVerification();
+                                    Toast.makeText(RegisterScreen.this, "Registration successfully, mail verification sent to your email", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(RegisterScreen.this, MainActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(RegisterScreen.this,
+                                            "Failed to registered! Try again!",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    }
                 }
                 else{
                     Toast.makeText(RegisterScreen.this,

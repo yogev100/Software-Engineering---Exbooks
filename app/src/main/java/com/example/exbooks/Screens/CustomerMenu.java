@@ -1,14 +1,15 @@
 package com.example.exbooks.Screens;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.exbooks.Objects.NotificationCounter;
 import com.example.exbooks.R;
@@ -19,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class represents the Client menu,
@@ -32,7 +36,7 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
     FirebaseAuth cAuth;
     final int[] numOfNotifications = new int[1];
     NotificationCounter notificationCounter;
-    private boolean event_exist = false;
+    private boolean event_time_in = false;
     String event_uid;
 
     @Override
@@ -65,28 +69,66 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
 
     }
 
+//    private void assignEvent() {
+//        DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
+//        managerRef.child("event_uid").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                event_uid = snapshot.getValue(String.class);
+//                System.out.println("uid:"+event_uid);
+//                if(event_uid != null && !event_uid.equals("")){
+//                    System.out.println("exist ????????????");
+//                    event_exist = true;
+//                }
+//                if(!event_exist){
+//                    System.out.println("no existttttttttttttt");
+//                    events.setVisibility(View.INVISIBLE);
+//                    ConstraintLayout constraintLayout = findViewById(R.id.ManagerMenu);
+//                    ConstraintSet constraintSet = new ConstraintSet();
+//                    constraintSet.clone(constraintLayout);
+//                    constraintSet.connect(R.id.M_profile_button, ConstraintSet.TOP,R.id.M_upload_button,ConstraintSet.BOTTOM,16);
+//                    constraintSet.applyTo(constraintLayout);
+//                }
+//                else{
+//                    System.out.println("daskdmakdmak holutlultl");
+//                    events.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//    }
+
     private void assignEvent() {
-        DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
-        managerRef.child("event_uid").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        DatabaseReference eventTimeRef = FirebaseDatabase.getInstance().getReference("ManagerTools").child("event_date");
+        eventTimeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                event_uid = snapshot.getValue(String.class);
-                System.out.println("uid:"+event_uid);
-                if(event_uid != null && !event_uid.equals("")){
-                    System.out.println("exist ????????????");
-                    event_exist = true;
+                String date_event = snapshot.getValue(String.class);
+
+                if(date_event!=null){
+                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime dateTimeEvent = LocalDateTime.parse(date_event , formatter1);
+                    LocalDateTime currTimeMinus2 = LocalDateTime.now();
+                    LocalDateTime currTimeIsrael =LocalDateTime.of(currTimeMinus2.getYear(), currTimeMinus2.getMonth(), currTimeMinus2.getDayOfMonth(), currTimeMinus2.getHour()+2, currTimeMinus2.getMinute(), 0);
+                    LocalDateTime dateFinishEvent = LocalDateTime.of(dateTimeEvent.getYear(), dateTimeEvent.getMonth(), dateTimeEvent.getDayOfMonth(), dateTimeEvent.getHour()+2, dateTimeEvent.getMinute(), 0);
+
+                    if(currTimeIsrael.isAfter(dateTimeEvent) && currTimeIsrael.isBefore(dateFinishEvent)){
+                        event_time_in = true;
+                    }
                 }
-                if(!event_exist){
-                    System.out.println("no existttttttttttttt");
+
+                if(!event_time_in){
                     events.setVisibility(View.INVISIBLE);
-                    ConstraintLayout constraintLayout = findViewById(R.id.ManagerMenu);
-                    ConstraintSet constraintSet = new ConstraintSet();
-                    constraintSet.clone(constraintLayout);
-                    constraintSet.connect(R.id.M_profile_button, ConstraintSet.TOP,R.id.M_upload_button,ConstraintSet.BOTTOM,16);
-                    constraintSet.applyTo(constraintLayout);
+
                 }
                 else{
-                    System.out.println("daskdmakdmak holutlultl");
                     events.setVisibility(View.VISIBLE);
                 }
             }
