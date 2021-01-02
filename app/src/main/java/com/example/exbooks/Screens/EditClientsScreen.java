@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.exbooks.Adapters.EditProfilesAdapter;
 import com.example.exbooks.R;
@@ -55,13 +55,13 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
                 // go all over the clients, and check- if its not null
                 // and add the clients to the list.
                     for (DataSnapshot client : snapshot.getChildren()) {
-                        Client clientProfile = snapshot.getValue(Client.class);
+                        Client clientProfile = client.getValue(Client.class);
                         if(clientProfile != null){
                             profilesModels.add(clientProfile);
                         }
                     }
                 // turn the adapter on and set its on the listview.
-                adapter = new EditProfilesAdapter(profilesModels, EditClientsScreen.this);
+                adapter = new EditProfilesAdapter(profilesModels, getApplicationContext());
                 listView.setAdapter(adapter);
             }
 

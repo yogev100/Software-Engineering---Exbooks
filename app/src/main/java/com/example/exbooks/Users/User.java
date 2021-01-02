@@ -10,7 +10,8 @@ public abstract class User {
             email,
             password,
             city,
-            phone;
+            phone,
+            uid;
 
 
     public User(){}
@@ -28,6 +29,7 @@ public abstract class User {
         this.email = other.getEmail();
         this.password = other.getPassword();
         this.phone = other.getPhone();
+        this.uid = other.getUid();
     }
 
     public String getCity() {
@@ -70,4 +72,11 @@ public abstract class User {
         this.phone = phone;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

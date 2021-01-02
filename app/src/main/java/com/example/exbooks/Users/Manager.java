@@ -12,13 +12,11 @@ import java.util.ArrayList;
 public class Manager extends User {
     ArrayList<String> my_books; //field for save all books the manager uploaded
     ArrayList<Notification> notification; // field for save all notifications and show them to the manager
-    String uid;
 
     private Event event; // for create new event with all the fields
 
     // default constructor for firebase
     public Manager(){
-
         my_books=new ArrayList<String>();
         notification=new ArrayList<Notification>();
 
@@ -65,11 +63,4 @@ public class Manager extends User {
         this.notification = notification;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getUid() {
-        return uid;
-    }
 }

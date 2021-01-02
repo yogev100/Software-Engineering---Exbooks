@@ -10,16 +10,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.exbooks.Objects.Book;
 import com.example.exbooks.R;
 import com.example.exbooks.Screens.EditClientsProfileScreen;
-import com.example.exbooks.Screens.EditClientsScreen;
-import com.example.exbooks.Screens.ProfileScreen;
-import com.example.exbooks.Screens.UploadScreen;
 import com.example.exbooks.Users.Client;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -64,25 +59,32 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         switch (v.getId()) {
             // if the manager clicked on "EDIT PROFILE"-> go to the client's profile.
             case R.id.choose_this_profile_Button:
+                System.out.println("choose_this_profile_Button !!!!!!!!!!!!!!!!!!!!!!!!");
                 goToClientsProfile(clientsUid);
         }
     }
 
 
     public void goToClientsProfile(final String clientsUid){
+        System.out.println("goToClientsProfile !!!!!!!!!!!!!!!!!!!!!!!!");
         cRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("onDataChange !!!!!!!!!!!!!!!!!!!!!!!!");
                 // go all over the books, and check- if its not null, go all over the categories-
                 // and add the books to the list.
                 for (DataSnapshot client : snapshot.getChildren()) {
-                    Client clientProfile = snapshot.getValue(Client.class);
-                    if (clientProfile.getUid() == clientsUid) {
+                    Client clientProfile = client.getValue(Client.class);
+                    if (clientProfile.getUid().equals(clientsUid)) {
                         System.out.println("we need to open the client's profile !!!!!!!!!!!!!!!!!!!!!!!!");
                         Intent intent = new Intent(mContext, EditClientsProfileScreen.class);
                         String theUID=clientsUid;
                         intent.putExtra(theUID,clientsUid);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
+//                        Intent intent = new Intent(mContext, MaybeMatch.class);
+//                        intent.putExtra("wanterID", notification.getUserWantsTheBookId());
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
                 }
             }
