@@ -58,9 +58,15 @@ public class NotificationScreen extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
-                    for(Notification n:c.getNotification()){                                // go all over the notifications
-                        notification_model.add(new Notification(n,n.isFirst()));            // add the notification to the list
+                    ArrayList <Notification> empty_new = c.getNotification();
+                    int i=0;
+                    for(Notification n:c.getNotification()){                                // go all over the notification
+                        empty_new.get(i).setNewNotification(false);
+                        notification_model.add(new Notification(n,n.isFirst(),false));            // add the notification to the list
+                        i++;
                     }
+                    c.setNotification(empty_new);
+                    Cref.child(c.getUid()).setValue(c);
                     Collections.reverse(notification_model);                                // make it reverse, and show by the adapter.
                     adapter=new NotificationAdapter(notification_model,getApplicationContext(),getSupportFragmentManager());
                     listView.setAdapter(adapter);
@@ -77,9 +83,15 @@ public class NotificationScreen extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
+                    ArrayList <Notification> empty_new = m.getNotification();
+                    int i=0;
                     for(Notification n:m.getNotification()){                                // go all over the notifications
-                        notification_model.add(new Notification(n,n.isFirst()));            // add the notification to the list
+                        empty_new.get(i).setNewNotification(false);
+                        notification_model.add(new Notification(n,n.isFirst(),false));            // add the notification to the list
+                        i++;
                     }
+                    m.setNotification(empty_new);
+                    Cref.child(mAuth.getCurrentUser().getUid()).setValue(m);
                     Collections.reverse(notification_model);                                // make it reverse, and show by the adapter.
                     adapter=new NotificationAdapter(notification_model,getApplicationContext(),getSupportFragmentManager());
                     listView.setAdapter(adapter);

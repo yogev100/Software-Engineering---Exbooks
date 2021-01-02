@@ -9,21 +9,23 @@ public class Notification {
     private String userWantsTheBookId;
     private String wanterName;
     private boolean first;//if its the first notification, or false if its the second(match)
+    private boolean newNotification;
 
-    public Notification(){first=true;}
+    public Notification(){first=true;newNotification=true;}
     public Notification(String uid, String wanterName, Book book, boolean first){
         this.book=book;
         this.userWantsTheBookId=uid;
         this.wanterName=wanterName;
         this.first=first;
-
+        this.newNotification=false;
     }
 
-    public Notification(Notification other,boolean first){
+    public Notification(Notification other,boolean first, boolean newNotification){
         this.book=other.getBook();
         this.userWantsTheBookId=other.getUserWantsTheBookId();
         this.wanterName=other.getWanterName();
         this.first=first;
+        this.newNotification=newNotification;
     }
 
     public String getWanterName() {
@@ -56,5 +58,13 @@ public class Notification {
 
     public void setFirst(boolean first) {
         this.first = first;
+    }
+
+    public boolean isNewNotification() {
+        return newNotification;
+    }
+
+    public void setNewNotification(boolean newNotification) {
+        this.newNotification = newNotification;
     }
 }

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import com.example.exbooks.Objects.Notification;
 import com.example.exbooks.Objects.NotificationCounter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Manager;
@@ -137,8 +138,14 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Manager m = snapshot.getValue(Manager.class);
                 if(m!=null){
-                    numOfNotifications[0] = m.getNotification().size();
-                    notificationCounter=new NotificationCounter(findViewById(R.id.bell), numOfNotifications[0]);
+                    int size=0;
+                    for(Notification n:m.getNotification()){
+                        if(n.isNewNotification()){
+                            size++;
+                        }
+                    }
+                    numOfNotifications[0]=size;
+                    notificationCounter=new NotificationCounter(findViewById(R.id.bell), size);
                 }
             }
 

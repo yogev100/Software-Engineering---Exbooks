@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.exbooks.Objects.Notification;
 import com.example.exbooks.Objects.NotificationCounter;
 import com.example.exbooks.R;
 import com.example.exbooks.Users.Client;
@@ -177,8 +178,14 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Client c = snapshot.getValue(Client.class);
                 if(c!=null){
-                    numOfNotifications[0] = c.getNotification().size();
-                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),numOfNotifications[0]);
+                    int size=0;
+                    for(Notification n:c.getNotification()){
+                        if(n.isNewNotification()){
+                            size++;
+                        }
+                    }
+                    numOfNotifications[0]=size;
+                    notificationCounter=new NotificationCounter(findViewById(R.id.bell),size);
                 }
             }
 
