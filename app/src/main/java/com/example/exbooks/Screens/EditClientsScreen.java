@@ -20,6 +20,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * That class represents the edit clients screen, meaning- scrollView of clients.
+ * (we can see the clients name, email, and choose button.. from the adapter.
+ *
+ */
+
 public class EditClientsScreen extends AppCompatActivity implements View.OnClickListener{
 
 
@@ -39,6 +45,7 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
         back_menu_btn = (Button)findViewById(R.id.backToMenuFromEditScreen);
         back_menu_btn.setOnClickListener(this);
 
+        // listView to shows the list of clients
         listView=(ListView)findViewById(R.id.edit_clients_list);
 
         // list of clients
@@ -79,6 +86,4 @@ public class EditClientsScreen extends AppCompatActivity implements View.OnClick
             finish();
         }
     }
-
-
 }

@@ -27,6 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
+/**
+ *
+ * This class represents the adapter for the EditProfile scrollView
+ * that shows name,email and choose button.
+ *
+ */
 public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.OnClickListener{
 
     private ArrayList<Client> dataSet;
@@ -65,17 +72,18 @@ public class EditProfilesAdapter extends ArrayAdapter<Client> implements View.On
         }
     }
 
-
+    // goToClientsProfile method use to open the clients profile- to show the info and edit..
     public void goToClientsProfile(final String clientsUid){
         cRef.child(clientsUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // get the client and check if is'nt null..
                 Client clientProfile = snapshot.getValue(Client.class);
                 if(clientProfile != null){
-                    System.out.println("we need to open the client's profile !!!!!!!!!!!!!!!!!!!!!!!!");
+                    // make the intent and put extra information..
                     Intent intent = new Intent(mContext, EditClientsProfileScreen.class);
-                    //String theUID=clientsUid;
                     intent.putExtra("theUID",clientsUid);
+                    // flag activity new task- flag that meaning we need to open new intent inside..
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                 }
