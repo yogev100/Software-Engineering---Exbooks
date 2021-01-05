@@ -13,7 +13,6 @@
         android:id="@+id/search_button"
         android:layout_width="290dp"
         android:layout_height="43dp"
-        android:layout_marginTop="8dp"
         android:text="חיפוש"
         android:textSize="18sp"
         app:backgroundTint="#E9967A"
@@ -21,8 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clean_textview"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/citySearch_textView"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -174,21 +172,6 @@
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/usedCond_checkBox"
         app:layout_constraintTop_toTopOf="@+id/newCond_checkBox" />
-
-    <TextView
-        android:id="@+id/clean_textview"
-        android:layout_width="80dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:text="נקה הכל"
-        android:textColor="#5579E6"
-        android:textColorLink="#A33E3E"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/citySearch_textView" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/bookName_Textview"
