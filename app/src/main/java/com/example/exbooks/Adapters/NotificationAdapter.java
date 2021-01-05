@@ -1,6 +1,5 @@
 package com.example.exbooks.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,20 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.exbooks.Objects.MatchDialog;
 import com.example.exbooks.Objects.Notification;
 import com.example.exbooks.R;
 import com.example.exbooks.Screens.MaybeMatch;
-import com.example.exbooks.Screens.NotificationScreen;
 import com.example.exbooks.Users.Client;
 import com.example.exbooks.Users.Manager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -173,7 +168,7 @@ public class NotificationAdapter extends  ArrayAdapter<Notification> implements 
 
         // if its the first person who wants, make this nofitication-
         if(notification.isFirst()) {
-            viewHolder.notification_txt.setText("wants your book-" + notification.getBook().getBook_name() + ", check what books he can offer you.");
+            viewHolder.notification_txt.setText("wants your book-" + notification.getBook().getBook_name() + ", check which books he can offer you.");
             viewHolder.ownerName.setText(notification.getWanterName() + ",");
             viewHolder.checkButton.setOnClickListener(this);
             viewHolder.checkButton.setText("Check");

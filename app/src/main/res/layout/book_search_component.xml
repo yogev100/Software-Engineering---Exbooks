@@ -24,8 +24,8 @@
             android:layout_width="91dp"
             android:layout_height="86dp"
             android:backgroundTint="#E9967A"
-            android:text="בחר"
-            android:textSize="18sp"
+            android:text="Choose"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -21,14 +21,18 @@
 
         <Button
             android:id="@+id/check_Button"
-            android:layout_width="65dp"
-            android:layout_height="60dp"
+            android:layout_width="82dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="2dp"
             android:backgroundTint="#E9967A"
             android:text="Check"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/conditionBookId_TextView1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.515" />
 
         <TextView
             android:id="@+id/ownerId_notifi_textview"
@@ -39,6 +43,7 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/check_Button"
             app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView1"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,11 +51,12 @@
             android:id="@+id/conditionBookId_TextView1"
             android:layout_width="227dp"
             android:layout_height="35dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:text="wants you book - bookname, check what book he can offer you."
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/check_Button"
             app:layout_constraintStart_toEndOf="@+id/ImageBookId_ImageView1"
             app:layout_constraintTop_toBottomOf="@+id/ownerId_notifi_textview" />
 
