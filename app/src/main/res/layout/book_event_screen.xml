@@ -5,7 +5,7 @@
     android:id="@+id/book_event"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eae39c">
+    android:background="#EDC8BB">
 
     <Button
         android:id="@+id/back_from_event"
