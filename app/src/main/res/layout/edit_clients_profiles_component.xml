@@ -34,16 +34,16 @@
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:layout_constraintVertical_bias="0.0">-->
 
-        <Button
-            android:id="@+id/choose_this_profile_Button"
-            android:layout_width="120dp"
-            android:layout_height="87dp"
-            android:backgroundTint="#E9967A"
-            android:text="ערוך משתמש"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/choose_this_profile_Button"
+        android:layout_width="120dp"
+        android:layout_height="87dp"
+        android:backgroundTint="#E9967A"
+        android:text="EDIT"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/name_profile_TextView"

@@ -70,40 +70,6 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
 
     }
 
-//    private void assignEvent() {
-//        DatabaseReference managerRef = FirebaseDatabase.getInstance().getReference("ManagerTools");
-//        managerRef.child("event_uid").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                event_uid = snapshot.getValue(String.class);
-//                System.out.println("uid:"+event_uid);
-//                if(event_uid != null && !event_uid.equals("")){
-//                    System.out.println("exist ????????????");
-//                    event_exist = true;
-//                }
-//                if(!event_exist){
-//                    System.out.println("no existttttttttttttt");
-//                    events.setVisibility(View.INVISIBLE);
-//                    ConstraintLayout constraintLayout = findViewById(R.id.ManagerMenu);
-//                    ConstraintSet constraintSet = new ConstraintSet();
-//                    constraintSet.clone(constraintLayout);
-//                    constraintSet.connect(R.id.M_profile_button, ConstraintSet.TOP,R.id.M_upload_button,ConstraintSet.BOTTOM,16);
-//                    constraintSet.applyTo(constraintLayout);
-//                }
-//                else{
-//                    System.out.println("daskdmakdmak holutlultl");
-//                    events.setVisibility(View.VISIBLE);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//    }
-
     private void assignEvent() {
 
         DatabaseReference eventTimeRef = FirebaseDatabase.getInstance().getReference("ManagerTools").child("event_date");
