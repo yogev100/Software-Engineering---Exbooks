@@ -15,7 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
@@ -25,11 +28,13 @@ import java.util.Collections;
 /**
  * This class used to manage the notification, update and show them.
  */
-public class NotificationScreen extends AppCompatActivity{
+public class NotificationScreen extends AppCompatActivity implements View.OnClickListener {
     FirebaseAuth mAuth;
     DatabaseReference Mref;
     DatabaseReference Cref;
+    Button menu;
     ScrollView sv;
+    boolean isClient;
 
     private static NotificationAdapter adapter;
     ListView listView;
@@ -48,6 +53,10 @@ public class NotificationScreen extends AppCompatActivity{
         Mref= FirebaseDatabase.getInstance().getReference("Users").child("Managers");
         Cref= FirebaseDatabase.getInstance().getReference("Users").child("Clients");
 
+        menu=(Button)findViewById(R.id.back_to_menu_button);
+        menu.setOnClickListener(this);
+
+        isClient=getIntent().getBooleanExtra("isClient",true);
         NotificationUpload();
     }
 
@@ -104,5 +113,20 @@ public class NotificationScreen extends AppCompatActivity{
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==menu){
+            Intent intent;
+            if(isClient){
+                intent = new Intent(NotificationScreen.this, CustomerMenu.class);
+            }
+            else{
+                intent = new Intent(NotificationScreen.this, ManagerMenu.class);
+            }
+            startActivity(intent);
+            finish();
+        }
     }
 }

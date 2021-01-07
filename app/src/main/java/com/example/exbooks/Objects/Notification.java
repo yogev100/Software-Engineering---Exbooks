@@ -17,7 +17,7 @@ public class Notification {
         this.userWantsTheBookId=uid;
         this.wanterName=wanterName;
         this.first=first;
-        this.newNotification=false;
+        this.newNotification=true;
     }
 
     public Notification(Notification other,boolean first, boolean newNotification){

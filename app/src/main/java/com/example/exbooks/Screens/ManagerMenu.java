@@ -200,6 +200,7 @@ public class ManagerMenu extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }else if(view == notification){
             Intent intent = new Intent(ManagerMenu.this,NotificationScreen.class);
+            intent.putExtra("isClient",false);
             startActivity(intent);
         }else if(view == createEvent){
             Intent intent = new Intent(ManagerMenu.this,EventsScreen.class);

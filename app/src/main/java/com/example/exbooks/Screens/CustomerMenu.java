@@ -159,6 +159,7 @@ public class CustomerMenu extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }else if(view == notification){
             Intent intent = new Intent(CustomerMenu.this,NotificationScreen.class);
+            intent.putExtra("isClient",true);
             startActivity(intent);
         }else if(view == logout){
             cAuth.signOut();
